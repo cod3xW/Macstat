@@ -4189,6 +4189,17 @@ setTimeout(loadDashboard, 500);
 
 
 
+
+// ── GO TO MATCH DETAIL ──
+function goToMatchDetail(fixtureId) {
+  // Switch to live page
+  goPage('live', document.querySelectorAll('.nav-item')[1]);
+  // Wait for page to render then open match detail
+  setTimeout(function() {
+    openMatchDetail(fixtureId);
+  }, 300);
+}
+
 // ═══ DASHBOARD ═══
 let dashboardLoaded = false;
 let liveRefreshTimer = null;
@@ -4220,7 +4231,7 @@ async function loadDashboardLive() {
 
     // Show max 6 matches
     el.innerHTML = matches.slice(0, 6).map(m => `
-      <div class="live-score-mini" onclick="goPage('live', document.querySelectorAll('.nav-item')[1]); setTimeout(() => openMatchDetail(${m.fixture.id}), 500);">
+      <div class="live-score-mini" onclick="goToMatchDetail(${m.fixture.id});">
         <div class="live-score-mini-teams">
           <div class="live-score-mini-row">
             <img src="${m.teams.home.logo}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
@@ -4267,7 +4278,7 @@ async function loadDashboardToday() {
         ? '<div class="today-score-nums" style="color:var(--accent)">' + (m.goals.home ?? 0) + ' – ' + (m.goals.away ?? 0) + '</div>'
         : '<div class="today-time">' + time + '</div>';
 
-      return `<div class="today-match-item" onclick="goPage('live', document.querySelectorAll('.nav-item')[1]);">
+      return `<div class="today-match-item" onclick="goToMatchDetail(${m.fixture.id});">
         <div class="today-team-left">
           <img src="${m.teams.home.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
           <div class="today-team-name">${m.teams.home.name}</div>
