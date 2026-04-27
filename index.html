@@ -1095,6 +1095,312 @@ body {
 
 
 
+
+/* ── DASHBOARD ── */
+.live-score-mini {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.live-score-mini:hover { border-color: var(--accent); }
+
+.live-score-mini-teams {
+  flex: 1;
+}
+
+.live-score-mini-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.live-score-mini-name {
+  font-size: 12px;
+  font-weight: 600;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.live-score-mini-score {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.live-score-mini-status {
+  font-size: 9px;
+  color: var(--accent2);
+  font-weight: 700;
+  text-align: center;
+  min-width: 28px;
+}
+
+.live-badge-mini {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: rgba(255,61,107,0.1);
+  border: 1px solid rgba(255,61,107,0.3);
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--accent2);
+}
+
+.today-match-item {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.today-match-item:hover { border-color: var(--accent); }
+
+.today-team-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.today-team-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.today-team-name {
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+}
+
+.today-score-center {
+  text-align: center;
+}
+
+.today-score-nums {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.today-time {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.today-league {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.form-team-row {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-rank {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 16px;
+  color: var(--muted);
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.form-team-name {
+  font-size: 12px;
+  font-weight: 600;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.form-badges {
+  display: flex;
+  gap: 3px;
+}
+
+.form-badge {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.form-badge.W { background: rgba(0,240,168,0.2); color: var(--accent); }
+.form-badge.D { background: rgba(255,204,68,0.2); color: var(--gold); }
+.form-badge.L { background: rgba(255,61,107,0.2); color: var(--accent2); }
+
+.form-pts {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  color: var(--accent);
+  min-width: 28px;
+  text-align: right;
+}
+
+.stat-widget-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.stat-widget-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.stat-widget-val {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 22px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-widget-team {
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-widget-label {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+
+.motw-card {
+  background: linear-gradient(135deg, #0a1a20, #0a1020);
+  border: 1px solid rgba(0,240,168,0.2);
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.motw-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle at top right, rgba(0,240,168,0.06), transparent 70%);
+}
+
+.motw-league {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.motw-teams {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.motw-team {
+  text-align: center;
+}
+
+.motw-team-logo {
+  width: 40px; height: 40px;
+  object-fit: contain;
+  margin: 0 auto 6px;
+  display: block;
+}
+
+.motw-team-name {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.motw-vs {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 20px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.motw-date {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: center;
+}
+
+.motw-time {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 2px;
+}
+
+.motw-analyze-btn {
+  width: 100%;
+  padding: 10px;
+  background: rgba(0,240,168,0.1);
+  border: 1px solid rgba(0,240,168,0.3);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 12px;
+  font-family: "DM Sans", sans-serif;
+  transition: background 0.2s;
+}
+
+.motw-analyze-btn:hover { background: rgba(0,240,168,0.2); }
+
 /* ── UPCOMING MATCH CARD ── */
 .upcoming-match-card {
   background: var(--s2);
@@ -1904,6 +2210,55 @@ body {
         <div id="upcoming-matches-list"></div>
       </div>
     </div>
+  </div>
+
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="dashboard-wrap" style="padding-bottom:10px;">
+
+    <!-- CANLI SKORLAR -->
+    <div class="section" style="margin-top:16px;">
+      <div class="section-title">🔴 Canlı Skorlar</div>
+      <div id="live-scores-widget" style="display:flex;flex-direction:column;gap:6px;">
+        <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
+      </div>
+      <div style="text-align:center;margin-top:8px;">
+        <span style="font-size:10px;color:var(--muted);cursor:pointer;" onclick="loadDashboardLive()">🔄 Yenile</span>
+      </div>
+    </div>
+
+    <!-- BUGÜNÜN MAÇ LARİ -->
+    <div class="section" style="margin-top:16px;">
+      <div class="section-title">📅 Bugünün Maçları</div>
+      <div id="today-widget" style="display:flex;flex-direction:column;gap:6px;">
+        <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- FORM TABLOSU -->
+    <div class="section" style="margin-top:16px;">
+      <div class="section-title">🔥 Süper Lig Form Tablosu</div>
+      <div id="form-widget" style="display:flex;flex-direction:column;gap:5px;">
+        <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- İSTATİSTİK KARTLARI -->
+    <div class="section" style="margin-top:16px;">
+      <div class="section-title">📈 Sezon İstatistikleri</div>
+      <div id="stats-widget" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div class="loading-wrap" style="padding:20px;grid-column:span 2;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- HAFTANIN MAÇI -->
+    <div class="section" style="margin-top:16px;padding-bottom:16px;">
+      <div class="section-title">🏆 Haftanın Maçı</div>
+      <div id="match-of-week-widget">
+        <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- RESULTS -->
@@ -3125,6 +3480,7 @@ function goPage(name, el) {
   // Load data on page switch
   if (name === 'live') loadLiveMatches();
   if (name === 'leagues') loadLeague('203', 'Süper Lig');
+  if (name === 'analysis') loadDashboard();
 }
 
 // ═══ LIVE MATCHES ═══
@@ -3721,7 +4077,241 @@ function switchLiveTab(el, mode) {
 
 // Start in both mode
 switchLiveTab(document.querySelector('.live-tab'), 'lv-both');
+// Load dashboard on start
+setTimeout(loadDashboard, 500);
 
+
+
+// ═══ DASHBOARD ═══
+let dashboardLoaded = false;
+let liveRefreshTimer = null;
+
+function loadDashboard() {
+  if (dashboardLoaded) return;
+  dashboardLoaded = true;
+  loadDashboardLive();
+  loadDashboardToday();
+  loadDashboardForm();
+  loadDashboardStats();
+  // Auto refresh live scores every 60 seconds
+  if (liveRefreshTimer) clearInterval(liveRefreshTimer);
+  liveRefreshTimer = setInterval(loadDashboardLive, 60000);
+}
+
+// ── CANLI SKORLAR ──
+async function loadDashboardLive() {
+  const el = document.getElementById('live-scores-widget');
+  try {
+    const res = await fetch('/api/fixtures?action=live');
+    const data = await res.json();
+    const matches = data.response || [];
+
+    if (!matches.length) {
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">⏰ Şu an canlı maç yok</div>';
+      return;
+    }
+
+    // Show max 6 matches
+    el.innerHTML = matches.slice(0, 6).map(m => `
+      <div class="live-score-mini" onclick="goPage('live', document.querySelectorAll('.nav-item')[1]); setTimeout(() => openMatchDetail(${m.fixture.id}), 500);">
+        <div class="live-score-mini-teams">
+          <div class="live-score-mini-row">
+            <img src="${m.teams.home.logo}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
+            <div class="live-score-mini-name">${m.teams.home.name}</div>
+          </div>
+          <div class="live-score-mini-row">
+            <img src="${m.teams.away.logo}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
+            <div class="live-score-mini-name">${m.teams.away.name}</div>
+          </div>
+        </div>
+        <div>
+          <div class="live-score-mini-score">${m.goals.home ?? 0} – ${m.goals.away ?? 0}</div>
+          <div class="live-badge-mini"><div style="width:5px;height:5px;background:var(--accent2);border-radius:50%;animation:pulse-anim 1s infinite;"></div>${m.fixture.status.elapsed || m.fixture.status.short}'</div>
+        </div>
+      </div>
+    `).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">⚠️ Yüklenemedi</div>';
+  }
+}
+
+// ── BUGÜNÜN MAÇ LARİ ──
+async function loadDashboardToday() {
+  const el = document.getElementById('today-widget');
+  try {
+    const res = await fetch('/api/fixtures?action=today');
+    const data = await res.json();
+    const matches = (data.response || [])
+      .filter(m => ['NS','1H','HT','2H','ET','P'].includes(m.fixture.status.short))
+      .slice(0, 8);
+
+    if (!matches.length) {
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">📅 Bugün maç yok</div>';
+      return;
+    }
+
+    el.innerHTML = matches.map(m => {
+      const isLive = ['1H','HT','2H','ET','P'].includes(m.fixture.status.short);
+      const time = isLive
+        ? '<span style="color:var(--accent2);font-weight:700;">' + (m.fixture.status.elapsed || m.fixture.status.short) + "'</span>"
+        : new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+
+      const score = isLive
+        ? '<div class="today-score-nums" style="color:var(--accent)">' + (m.goals.home ?? 0) + ' – ' + (m.goals.away ?? 0) + '</div>'
+        : '<div class="today-time">' + time + '</div>';
+
+      return `<div class="today-match-item" onclick="goPage('live', document.querySelectorAll('.nav-item')[1]);">
+        <div class="today-team-left">
+          <img src="${m.teams.home.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
+          <div class="today-team-name">${m.teams.home.name}</div>
+        </div>
+        <div class="today-score-center">
+          ${score}
+          <div class="today-league">${m.league.name}</div>
+        </div>
+        <div class="today-team-right">
+          <div class="today-team-name" style="text-align:right;">${m.teams.away.name}</div>
+          <img src="${m.teams.away.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+  }
+}
+
+// ── FORM TABLOSU ──
+async function loadDashboardForm() {
+  const el = document.getElementById('form-widget');
+  try {
+    const res = await fetch('/api/fixtures?action=standings&league=203');
+    const data = await res.json();
+    const standings = data.response?.[0]?.league?.standings?.[0] || [];
+
+    if (!standings.length) {
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Veri yok</div>';
+      return;
+    }
+
+    // Sort by form (last 5 matches)
+    const withForm = standings.map(s => ({
+      ...s,
+      formScore: (s.form || '').split('').reduce((acc, c) => acc + (c==='W'?3:c==='D'?1:0), 0)
+    })).sort((a,b) => b.formScore - a.formScore).slice(0, 8);
+
+    el.innerHTML = withForm.map((s, i) => {
+      const formChars = (s.form || '').split('').slice(-5);
+      return `<div class="form-team-row">
+        <div class="form-rank">${i+1}</div>
+        <img src="${s.team.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
+        <div class="form-team-name">${s.team.name}</div>
+        <div class="form-badges">
+          ${formChars.map(c => `<div class="form-badge ${c}">${c}</div>`).join('')}
+        </div>
+        <div class="form-pts">${s.points}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+  }
+}
+
+// ── İSTATİSTİK KARTLARI ──
+async function loadDashboardStats() {
+  const el = document.getElementById('stats-widget');
+  try {
+    const res = await fetch('/api/fixtures?action=standings&league=203');
+    const data = await res.json();
+    const standings = data.response?.[0]?.league?.standings?.[0] || [];
+
+    if (!standings.length) return;
+
+    // Most goals scored
+    const mostGoals = [...standings].sort((a,b) => b.all.goals.for - a.all.goals.for)[0];
+    // Least conceded
+    const leastConceded = [...standings].sort((a,b) => a.all.goals.against - b.all.goals.against)[0];
+    // Most wins
+    const mostWins = [...standings].sort((a,b) => b.all.win - a.all.win)[0];
+    // Best home
+    const bestHome = [...standings].sort((a,b) => b.home.win - a.home.win)[0];
+    // Best away
+    const bestAway = [...standings].sort((a,b) => b.away.win - a.away.win)[0];
+    // Most draws
+    const mostDraws = [...standings].sort((a,b) => b.all.draw - a.all.draw)[0];
+
+    const cards = [
+      {icon:'⚽', val: mostGoals.all.goals.for, team: mostGoals.team.name, label: 'En Çok Gol', logo: mostGoals.team.logo},
+      {icon:'🛡️', val: leastConceded.all.goals.against, team: leastConceded.team.name, label: 'En Az Yenilen', logo: leastConceded.team.logo},
+      {icon:'🏆', val: mostWins.all.win, team: mostWins.team.name, label: 'En Çok Galibiyet', logo: mostWins.team.logo},
+      {icon:'🏠', val: bestHome.home.win + 'G', team: bestHome.team.name, label: 'En İyi Ev Sahibi', logo: bestHome.team.logo},
+      {icon:'✈️', val: bestAway.away.win + 'G', team: bestAway.team.name, label: 'En İyi Deplasman', logo: bestAway.team.logo},
+      {icon:'🤝', val: mostDraws.all.draw, team: mostDraws.team.name, label: 'En Çok Beraberlik', logo: mostDraws.team.logo},
+    ];
+
+    el.innerHTML = cards.map(c => `
+      <div class="stat-widget-card">
+        <div class="stat-widget-icon">${c.icon}</div>
+        <img src="${c.logo}" style="width:24px;height:24px;object-fit:contain;margin:0 auto 4px;display:block;" onerror="this.style.display='none'">
+        <div class="stat-widget-val">${c.val}</div>
+        <div class="stat-widget-team">${c.team}</div>
+        <div class="stat-widget-label">${c.label}</div>
+      </div>
+    `).join('');
+
+    // Also load match of the week
+    loadMatchOfWeek();
+  } catch(e) {
+    el.innerHTML = '<div style="grid-column:span 2;text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+  }
+}
+
+// ── HAFTANIN MAÇI ──
+async function loadMatchOfWeek() {
+  const el = document.getElementById('match-of-week-widget');
+  try {
+    const res = await fetch('/api/fixtures?action=upcoming&league=203');
+    const data = await res.json();
+    const matches = data.response || [];
+
+    if (!matches.length) {
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Yaklaşan maç bulunamadı</div>';
+      return;
+    }
+
+    // Pick the most anticipated match (top teams by standings)
+    const topTeamIds = [645, 611, 549, 998]; // GS, FB, BJK, TS
+    let featured = matches.find(m => topTeamIds.includes(m.teams.home.id) && topTeamIds.includes(m.teams.away.id));
+    if (!featured) featured = matches[0];
+
+    const date = new Date(featured.fixture.date).toLocaleDateString('tr-TR', {day:'numeric', month:'long', weekday:'long'});
+    const time = new Date(featured.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+
+    el.innerHTML = `
+      <div class="motw-card" onclick="analyzeUpcomingMatch(${featured.fixture.id}, ${featured.teams.home.id}, ${featured.teams.away.id}, '${featured.teams.home.name.replace(/'/g,"\'")}', '${featured.teams.away.name.replace(/'/g,"\'")}', '${featured.teams.home.logo}', '${featured.teams.away.logo}', '${featured.league.name}')">
+        <div class="motw-league">
+          <img src="${featured.league.logo}" style="width:14px;height:14px;object-fit:contain;" onerror="this.style.display='none'">
+          ${featured.league.name} • ${featured.league.round || ''}
+        </div>
+        <div class="motw-teams">
+          <div class="motw-team">
+            <img class="motw-team-logo" src="${featured.teams.home.logo}" onerror="this.style.display='none'">
+            <div class="motw-team-name">${featured.teams.home.name}</div>
+          </div>
+          <div class="motw-vs">VS</div>
+          <div class="motw-team">
+            <img class="motw-team-logo" src="${featured.teams.away.logo}" onerror="this.style.display='none'">
+            <div class="motw-team-name">${featured.teams.away.name}</div>
+          </div>
+        </div>
+        <div class="motw-date">${date}</div>
+        <div class="motw-time">${time}</div>
+        <button class="motw-analyze-btn">🔍 Bu Maçı Analiz Et</button>
+      </div>
+    `;
+  } catch(e) {
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+  }
+}
 
 // ═══ TEAM SEARCH ═══
 let searchTimeout = null;
