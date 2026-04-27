@@ -2771,6 +2771,35 @@ body {
   </div>
 </div>
 
+
+<!-- ═══ GEÇMİŞ MAÇLAR SAYFASI ═══ -->
+<div class="page" id="page-history">
+
+  <!-- Team Selector -->
+  <div style="padding:14px 16px 10px;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">GEÇMİŞ MAÇLAR</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:1px;">Takım seç, tüm istatistikleri gör</div>
+  </div>
+
+  <!-- Team picker button -->
+  <div style="padding:0 16px 14px;">
+    <div class="team-btn" onclick="openPicker('history')" style="width:100%;display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;text-align:left;">
+      <img id="history-crest" src="https://media.api-sports.io/football/teams/645.png" style="width:44px;height:44px;object-fit:contain;">
+      <div style="flex:1">
+        <div style="font-size:16px;font-weight:700;" id="history-team-name">Galatasaray</div>
+        <div style="font-size:9px;color:var(--muted);" id="history-team-league">Süper Lig</div>
+      </div>
+      <div style="color:var(--muted);font-size:18px;">›</div>
+    </div>
+  </div>
+
+  <!-- Stats Overview -->
+  <div id="history-content" style="padding:0 16px;">
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+  </div>
+
+</div>
+
 <!-- ═══ BOTTOM NAV ═══ -->
 <div class="bottom-nav">
   <div class="nav-item active" onclick="goPage('analysis',this)">
@@ -2780,6 +2809,10 @@ body {
   <div class="nav-item" onclick="goPage('live',this)">
     <div class="nav-icon">🔴</div>
     <div class="nav-label">CANLI</div>
+  </div>
+  <div class="nav-item" onclick="goPage('history',this)">
+    <div class="nav-icon">📋</div>
+    <div class="nav-label">GEÇMİŞ</div>
   </div>
   <div class="nav-item" onclick="goPage('leagues',this)">
     <div class="nav-icon">🏆</div>
@@ -2995,6 +3028,14 @@ function selectTeam(id, name, league, crest) {
     document.getElementById('main-crest').src = crest;
     document.getElementById('main-name').textContent = name;
     document.getElementById('main-league').textContent = league;
+  } else if (pickerTarget === 'history') {
+    selectedHistoryTeam = {id, name, league, crest};
+    document.getElementById('history-crest').src = crest;
+    document.getElementById('history-team-name').textContent = name;
+    document.getElementById('history-team-league').textContent = league;
+    closePicker();
+    loadHistoryPage();
+    return;
   } else if (pickerTarget === 'home') {
     selectedHome = team;
   } else {
@@ -3590,6 +3631,7 @@ function goPage(name, el) {
   if (name === 'live') loadLiveMatches();
   if (name === 'leagues') loadLeague('203', 'Süper Lig');
   if (name === 'analysis') loadDashboard();
+  if (name === 'history') loadHistoryPage();
 }
 
 // ═══ LIVE MATCHES ═══
