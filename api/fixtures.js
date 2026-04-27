@@ -1,6 +1,5 @@
 export default async function handler(req, res) {
   const { team, search, action, league, id } = req.query;
-
   let url;
 
   if (action === 'search') {
@@ -16,6 +15,14 @@ export default async function handler(req, res) {
     url = `https://v3.football.api-sports.io/fixtures?league=${league}&next=10`;
   } else if (action === 'match') {
     url = `https://v3.football.api-sports.io/fixtures?id=${id}`;
+  } else if (action === 'statistics') {
+    url = `https://v3.football.api-sports.io/fixtures/statistics?fixture=${id}`;
+  } else if (action === 'lineups') {
+    url = `https://v3.football.api-sports.io/fixtures/lineups?fixture=${id}`;
+  } else if (action === 'players') {
+    url = `https://v3.football.api-sports.io/fixtures/players?fixture=${id}`;
+  } else if (action === 'events') {
+    url = `https://v3.football.api-sports.io/fixtures/events?fixture=${id}`;
   } else {
     url = `https://v3.football.api-sports.io/fixtures?team=${team}&last=10`;
   }
