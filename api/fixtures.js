@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const { team, search, action, league } = req.query;
+  const { team, search, action, league, id } = req.query;
 
   let url;
 
@@ -11,9 +11,11 @@ export default async function handler(req, res) {
     const today = new Date().toISOString().split('T')[0];
     url = `https://v3.football.api-sports.io/fixtures?date=${today}`;
   } else if (action === 'standings') {
-    url = `https://v3.football.api-sports.io/standings?league=${league}&season=2024`;
+    url = `https://v3.football.api-sports.io/standings?league=${league}&season=2025`;
   } else if (action === 'upcoming') {
     url = `https://v3.football.api-sports.io/fixtures?league=${league}&next=10`;
+  } else if (action === 'match') {
+    url = `https://v3.football.api-sports.io/fixtures?id=${id}`;
   } else {
     url = `https://v3.football.api-sports.io/fixtures?team=${team}&last=10`;
   }
