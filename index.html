@@ -1384,6 +1384,7 @@ body {
     <div class="tab-btn" onclick="switchLeague(this,'135','Serie A')">🇮🇹 Serie A</div>
     <div class="tab-btn" onclick="switchLeague(this,'61','Ligue 1')">🇫🇷 Ligue 1</div>
     <div class="tab-btn" onclick="switchLeague(this,'2','Şamp. Ligi')">🏆 Şamp. Ligi</div>
+    <div class="tab-btn" onclick="switchLeague(this,'1','Dünya Kupası')">🌍 Dünya Kupası</div>
   </div>
 
   <!-- League Sub Tabs -->
@@ -2474,8 +2475,47 @@ function flashEvent(x, y, color) {
   setTimeout(() => f.remove(), 1100);
 }
 
-let liveMin = 67, liveHomeGoals = 2, liveAwayGoals = 1;
+// ═══ PITCH PLAYERS ═══
+const pitch = document.getElementById('pitch');
+const pitchBall = document.getElementById('pitch-ball');
+let hDots = [], aDots = [];
 
+function initPitchPlayers() {
+  const p = document.getElementById('pitch');
+  if (!p || hDots.length > 0) return;
+  [[15,30],[15,70],[35,20],[35,80],[42,50]].forEach(([x,y]) => {
+    const d = document.createElement('div');
+    d.className = 'pitch-player home';
+    d.style.left = x+'%'; d.style.top = y+'%';
+    p.appendChild(d); hDots.push(d);
+  });
+  [[85,30],[85,70],[65,20],[65,80],[58,50]].forEach(([x,y]) => {
+    const d = document.createElement('div');
+    d.className = 'pitch-player away';
+    d.style.left = x+'%'; d.style.top = y+'%';
+    p.appendChild(d); aDots.push(d);
+  });
+}
+
+function movePlayers() {
+  [...hDots,...aDots].forEach(d => {
+    const newL = Math.max(5, Math.min(95, parseFloat(d.style.left) + (Math.random()-0.5)*7));
+    const newT = Math.max(10, Math.min(90, parseFloat(d.style.top) + (Math.random()-0.5)*12));
+    d.style.left = newL + '%'; d.style.top = newT + '%';
+  });
+}
+
+function flashEvent(x, y, color) {
+  const p = document.getElementById('pitch');
+  if (!p) return;
+  const f = document.createElement('div');
+  f.className = 'event-flash';
+  f.style.left = x+'%'; f.style.top = y+'%'; f.style.background = color;
+  p.appendChild(f);
+  setTimeout(() => f.remove(), 1100);
+}
+
+initPitchPlayers();
 function addLiveEvent(ev, prepend = false) {
   const div = document.createElement('div');
   div.className = 'event-row';
@@ -2484,77 +2524,90 @@ function addLiveEvent(ev, prepend = false) {
     <div class="event-type-icon ${ev.type}">${ev.icon}</div>
     <div class="event-content">
       <div class="event-title ${ev.type==='goal'?'goal':''}">${ev.title}</div>
-      <div class="event-subtitle">${ev.sub}</div>
+      <div class="event-subtitle">${ev.sub || ''}</div>
     </div>`;
   const list = document.getElementById('events-list');
-  prepend ? list.prepend(div) : list.appendChild(div);
+  if (list) prepend ? list.prepend(div) : list.appendChild(div);
 }
 
-const initLiveEvents = [
-  {min:12,type:'goal',icon:'⚽',title:'GOL! Icardi',sub:'Galatasaray • Asist: Coman'},
-  {min:28,type:'yellow',icon:'🟨',title:'Sarı Kart',sub:'Szymanski — Fenerbahçe'},
-  {min:35,type:'corner',icon:'🚩',title:'Korner',sub:'Galatasaray kullanıyor'},
-  {min:41,type:'danger',icon:'🔥',title:'Tehlikeli Atak!',sub:'Fenerbahçe — Direkten döndü'},
-  {min:45,type:'goal',icon:'⚽',title:'GOL! Batshuayi',sub:'Fenerbahçe • Asist: Fred'},
-  {min:52,type:'sub',icon:'🔄',title:'Değişiklik',sub:'GS: Mertens → Aktürkoğlu'},
-  {min:63,type:'goal',icon:'⚽',title:'GOL! Coman',sub:'Galatasaray • Asist: Icardi'},
-];
+async function openMatchDetail(fixtureId) {
+  document.getElementById('live-list-view').style.display = 'none';
+  document.getElementById('live-detail-view').style.display = 'block';
 
-initLiveEvents.forEach(e => addLiveEvent(e));
+  document.getElementById('events-list').innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  document.getElementById('chat-msgs').innerHTML = '<div style="padding:12px 8px;text-align:center;font-size:10px;color:var(--muted);">💬 İlk yorumu sen yap!</div>';
 
-const scheduledEvents = [
-  {delay:7000,min:68,type:'corner',icon:'🚩',title:'Korner',sub:'Galatasaray',x:5,y:50,color:'rgba(255,255,255,0.25)',poss:60},
-  {delay:18000,min:71,type:'yellow',icon:'🟨',title:'Sarı Kart',sub:'Fred — Fenerbahçe',x:55,y:40,color:'rgba(255,204,68,0.5)',poss:57},
-  {delay:32000,min:75,type:'danger',icon:'🔥',title:'Tehlikeli Atak!',sub:'Fenerbahçe şutu üstten geçti',x:88,y:45,color:'rgba(255,120,0,0.4)',poss:54},
-  {delay:48000,min:79,type:'goal',icon:'⚽',title:'GOL! Icardi (2. Gol)',sub:'Galatasaray • Asist: Aktürkoğlu',x:90,y:50,color:'rgba(0,240,168,0.6)',poss:62,goal:true},
-  {delay:63000,min:83,type:'sub',icon:'🔄',title:'Değişiklik',sub:'FB: Batshuayi → Dzeko',x:50,y:50,color:'rgba(91,159,255,0.3)',poss:55},
-  {delay:78000,min:87,type:'red-card',icon:'🟥',title:'KIRMIZI KART!',sub:'Fenerbahçe — Szymanski (2. Sarı)',x:60,y:35,color:'rgba(255,61,107,0.6)',poss:68},
-];
+  try {
+    const res = await fetch(`/api/fixtures?action=match&id=${fixtureId}`);
+    const data = await res.json();
+    const match = data.response?.[0];
+    if (!match) throw new Error('No match');
 
-scheduledEvents.forEach(ev => {
-  setTimeout(() => {
-    pitchBall.style.left = (ev.x||50) + '%';
-    pitchBall.style.top = (ev.y||50) + '%';
-    if (ev.color) flashEvent(ev.x, ev.y, ev.color);
-    movePlayers();
-    liveMin = ev.min;
-    document.getElementById('live-min').textContent = '⏱ ' + liveMin + "'";
-    if (ev.poss) {
-      document.getElementById('poss-bar').style.width = ev.poss + '%';
-      document.getElementById('poss-home').textContent = ev.poss + '%';
-      document.getElementById('poss-away').textContent = (100-ev.poss) + '%';
-    }
-    if (ev.goal) {
-      liveHomeGoals++;
-      document.getElementById('live-score').textContent = liveHomeGoals + ' – ' + liveAwayGoals;
-      const overlay = document.getElementById('goal-overlay');
-      overlay.classList.add('show');
-      setTimeout(() => overlay.classList.remove('show'), 2600);
-      ['#00f0a8','#ffcc44','#ffffff','#ff3d6b'].forEach(color => {
-        for (let i=0; i<10; i++) {
-          const c = document.createElement('div');
-          c.className = 'confetti';
-          c.style.cssText = `left:${Math.random()*100}vw;background:${color};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*0.5}s`;
-          document.body.appendChild(c);
-          setTimeout(() => c.remove(), 3500);
-        }
+    // Set scoreboard
+    const home = match.teams.home;
+    const away = match.teams.away;
+    const goals = match.goals;
+    const fixture = match.fixture;
+
+    document.getElementById('detail-home-name').textContent = home.name;
+    document.getElementById('detail-away-name').textContent = away.name;
+    document.getElementById('detail-home-short').textContent = home.name.substring(0,3).toUpperCase() + ' • ' + match.league.name;
+    document.getElementById('detail-away-short').textContent = away.name.substring(0,3).toUpperCase();
+    document.getElementById('detail-home-crest').src = home.logo;
+    document.getElementById('detail-away-crest').src = away.logo;
+    document.getElementById('detail-score').textContent = (goals.home ?? '-') + ' – ' + (goals.away ?? '-');
+    document.getElementById('detail-min').textContent = fixture.status.elapsed ? '⏱ ' + fixture.status.elapsed + "'" : fixture.status.short;
+    document.getElementById('detail-league-name').textContent = match.league.name + ' • ' + match.league.round;
+
+    // Load events
+    const eventsList = document.getElementById('events-list');
+    eventsList.innerHTML = '';
+    const events = match.events || [];
+
+    if (!events.length) {
+      eventsList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;">Henüz olay yok</div>';
+    } else {
+      events.forEach(ev => {
+        let type = 'corner', icon = '⚡';
+        if (ev.type === 'Goal') { type = 'goal'; icon = '⚽'; }
+        else if (ev.type === 'Card' && ev.detail === 'Yellow Card') { type = 'yellow'; icon = '🟨'; }
+        else if (ev.type === 'Card' && ev.detail === 'Red Card') { type = 'red-card'; icon = '🟥'; }
+        else if (ev.type === 'subst') { type = 'sub'; icon = '🔄'; }
+
+        const title = ev.type === 'Goal' ? `GOL! ${ev.player.name}` :
+                      ev.type === 'Card' ? `${ev.detail} — ${ev.player.name}` :
+                      ev.type === 'subst' ? `${ev.player.name} → ${ev.assist?.name || ''}` : ev.detail;
+
+        const sub = ev.team.name + (ev.assist?.name && ev.type === 'Goal' ? ` • Asist: ${ev.assist.name}` : '');
+
+        addLiveEvent({min: ev.time.elapsed, type, icon, title, sub});
+
+        if (ev.type === 'Goal') sendGoalNotification(home.name, away.name, `${goals.home}-${goals.away}`);
       });
-      setTimeout(() => addChatMsg('GOL GOL GOL!!! 🔥⚽', randomChatName()), 600);
     }
-    addLiveEvent(ev, true);
-  }, ev.delay);
-});
 
-setInterval(() => {
-  pitchBall.style.left = (20+Math.random()*60) + '%';
-  pitchBall.style.top = (15+Math.random()*70) + '%';
-}, 3200);
+    // Animate pitch ball
+    setInterval(() => {
+      if (pitchBall) {
+        pitchBall.style.left = (20+Math.random()*60) + '%';
+        pitchBall.style.top = (15+Math.random()*70) + '%';
+      }
+    }, 3000);
+    setInterval(movePlayers, 4000);
 
-setInterval(movePlayers, 3800);
+  } catch(e) {
+    document.getElementById('events-list').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+  }
+}
 
-// ═══ CHAT ═══
-const chatNames = ['UltrAslan99','FBli_Kemal','Derbi_Kral','MacSever','TaktikAdam','GolMakinesi','AliVeli','Tribün42','GS_Fan','FB_Fan'];
-const chatAutoMsgs = ['Icardi formda 🔥','harika maç bu','GS üstün oynuyor','hakem çok kötü ya','gol geliyor hissediyorum','savunma delik gibi','bu tempo devam etmez','kart görmeli o oyuncu','güzel futbol izliyoruz','bu maç efsane olacak'];
+function backToLiveList() {
+  document.getElementById('live-detail-view').style.display = 'none';
+  document.getElementById('live-list-view').style.display = 'block';
+}
+
+setInterval(movePlayers, 4000);
+
+// ═══ CHAT — SADECE GERÇEK KULLANICI ═══
 const bannedPatterns = [
   /zenci|arap\s*piç|ermeni\s*dölü|kürt\s*piç|rum\s*dölü/i,
   /allah[a-zçğışöü]*\s*(sik|oç|göt|bok)|peygamber[a-z]*\s*(sik|oç)/i,
@@ -2562,7 +2615,6 @@ const bannedPatterns = [
   /atatürk[a-zçğışöü]*\s*(sik|oç|bok|piç)/i,
 ];
 
-function randomChatName() { return chatNames[Math.floor(Math.random()*chatNames.length)]; }
 function isBanned(text) { return bannedPatterns.some(p => p.test(text)); }
 
 function addChatMsg(text, name, own = false) {
@@ -2570,16 +2622,8 @@ function addChatMsg(text, name, own = false) {
   div.className = 'chat-msg';
   div.innerHTML = `<div class="chat-msg-name">${name}</div><div class="chat-msg-bubble${own?' own':''}">${text}</div>`;
   const msgs = document.getElementById('chat-msgs');
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
+  if (msgs) { msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; }
 }
-
-[{n:'UltrAslan99',t:'maç başladı gelin 🔥'},{n:'FBli_Kemal',t:'hakem bize çalmıyor'},{n:'TaktikAdam',t:'GS baskısı çok iyi'},{n:'MacSever',t:'efsane derbi!'}]
-  .forEach((m,i) => setTimeout(() => addChatMsg(m.t, m.n), i*600));
-
-setInterval(() => {
-  if (Math.random() > 0.45) addChatMsg(chatAutoMsgs[Math.floor(Math.random()*chatAutoMsgs.length)], randomChatName());
-}, 4200);
 
 function sendChat() {
   const input = document.getElementById('chat-input');
