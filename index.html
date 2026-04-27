@@ -1282,64 +1282,198 @@ body {
 
 <!-- ═══ CANLI MAÇ SAYFASI ═══ -->
 <div class="page" id="page-live">
-  <div class="live-scoreboard">
-    <div class="live-score-row">
-      <div class="live-team">
-        <div style="font-size:22px">🦅</div>
-        <div>
-          <div class="live-team-name">Galatasaray</div>
-          <div class="live-team-short">GS • Süper Lig</div>
+
+  <!-- LIVE MATCHES LIST -->
+  <div id="live-list-view">
+    <div style="padding:14px 16px 10px; display:flex; align-items:center; justify-content:space-between;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">CANLI MAÇLAR</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:1px;">Gerçek zamanlı güncelleme</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:5px;background:rgba(255,61,107,0.12);border:1px solid rgba(255,61,107,0.3);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--accent2);">
+        <div style="width:6px;height:6px;background:var(--accent2);border-radius:50%;animation:pulse-anim 1.2s infinite;"></div>
+        CANLI
+      </div>
+    </div>
+    <div id="live-matches-container" style="padding:0 16px;">
+      <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Canlı maçlar yükleniyor...</div></div>
+    </div>
+  </div>
+
+  <!-- MATCH DETAIL VIEW -->
+  <div id="live-detail-view" style="display:none;">
+    <div style="padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);">
+      <button onclick="backToLiveList()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-size:12px;cursor:pointer;">← Geri</button>
+      <div style="font-size:12px;font-weight:600;" id="detail-league-name">Süper Lig</div>
+    </div>
+
+    <div class="live-scoreboard">
+      <div class="live-score-row">
+        <div class="live-team">
+          <img id="detail-home-crest" src="" style="width:28px;height:28px;object-fit:contain;" onerror="this.style.display='none'">
+          <div>
+            <div class="live-team-name" id="detail-home-name">-</div>
+            <div class="live-team-short" id="detail-home-short">-</div>
+          </div>
+        </div>
+        <div class="live-score-center">
+          <div class="live-score-nums" id="detail-score">- : -</div>
+          <div class="live-score-min" id="detail-min">-</div>
+        </div>
+        <div class="live-team away">
+          <img id="detail-away-crest" src="" style="width:28px;height:28px;object-fit:contain;" onerror="this.style.display='none'">
+          <div>
+            <div class="live-team-name" id="detail-away-name">-</div>
+            <div class="live-team-short" id="detail-away-short">-</div>
+          </div>
         </div>
       </div>
-      <div class="live-score-center">
-        <div class="live-score-nums" id="live-score">2 – 1</div>
-        <div class="live-score-min" id="live-min">⏱ 67'</div>
+    </div>
+
+    <div class="pitch-container">
+      <div class="pitch" id="pitch">
+        <div class="pitch-lines"></div>
+        <div class="pitch-circle"></div>
+        <div class="pitch-dot"></div>
+        <div class="goal-area left"></div>
+        <div class="goal-area right"></div>
+        <div class="poss-bar" id="poss-bar" style="width:50%"></div>
+        <div class="poss-label home" id="poss-home">50%</div>
+        <div class="poss-label away" id="poss-away">50%</div>
+        <div class="pitch-ball" id="pitch-ball" style="left:50%;top:50%"></div>
       </div>
-      <div class="live-team away">
-        <div style="font-size:22px">⭐</div>
-        <div>
-          <div class="live-team-name">Fenerbahçe</div>
-          <div class="live-team-short">FB • Süper Lig</div>
+    </div>
+
+    <div class="live-tabs">
+      <div class="live-tab active" onclick="switchLiveTab(this,'lv-both')">⊞ Tümü</div>
+      <div class="live-tab" onclick="switchLiveTab(this,'lv-events')">⚡ Olaylar</div>
+      <div class="live-tab" onclick="switchLiveTab(this,'lv-chat')">💬 Sohbet</div>
+    </div>
+
+    <div class="live-main">
+      <div class="events-col" id="lv-events-col">
+        <div id="events-list"></div>
+      </div>
+      <div class="chat-col" id="lv-chat-col">
+        <div class="chat-msgs" id="chat-msgs"></div>
+        <div class="chat-input-row">
+          <input class="chat-input-field" id="chat-input" placeholder="Yorum yaz..." maxlength="100" onkeydown="if(event.key==='Enter')sendChat()">
+          <button class="chat-send-btn" onclick="sendChat()">➤</button>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="pitch-container">
-    <div class="pitch" id="pitch">
-      <div class="pitch-lines"></div>
-      <div class="pitch-circle"></div>
-      <div class="pitch-dot"></div>
-      <div class="goal-area left"></div>
-      <div class="goal-area right"></div>
-      <div class="poss-bar" id="poss-bar" style="width:58%"></div>
-      <div class="poss-label home" id="poss-home">58%</div>
-      <div class="poss-label away" id="poss-away">42%</div>
-      <div class="pitch-ball" id="pitch-ball" style="left:55%;top:45%"></div>
-    </div>
-  </div>
-
-  <div class="live-tabs">
-    <div class="live-tab active" onclick="switchLiveTab(this,'lv-both')">⊞ Tümü</div>
-    <div class="live-tab" onclick="switchLiveTab(this,'lv-events')">⚡ Olaylar</div>
-    <div class="live-tab" onclick="switchLiveTab(this,'lv-chat')">💬 Sohbet</div>
-  </div>
-
-  <div class="live-main">
-    <div class="events-col" id="lv-events-col">
-      <div id="events-list"></div>
-    </div>
-    <div class="chat-col" id="lv-chat-col">
-      <div class="chat-msgs" id="chat-msgs"></div>
-      <div class="chat-input-row">
-        <input class="chat-input-field" id="chat-input" placeholder="Yorum yaz..." maxlength="100" onkeydown="if(event.key==='Enter')sendChat()">
-        <button class="chat-send-btn" onclick="sendChat()">➤</button>
       </div>
     </div>
   </div>
 
   <div class="goal-overlay" id="goal-overlay"><div class="goal-text">GOL!</div></div>
   <div class="toast" id="toast">🚫 Bu mesaj engellendi</div>
+</div>
+
+<!-- ═══ LİGLER SAYFASI ═══ -->
+<div class="page" id="page-leagues">
+  <div style="padding:14px 16px 10px;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">LİGLER</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:1px;">Puan tablosu & fikstür</div>
+  </div>
+
+  <!-- League Tabs -->
+  <div style="display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);padding:0 16px;">
+    <div class="tab-btn active" onclick="switchLeague(this,'203','Süper Lig')">🇹🇷 Süper Lig</div>
+    <div class="tab-btn" onclick="switchLeague(this,'39','Premier Lig')">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier Lig</div>
+    <div class="tab-btn" onclick="switchLeague(this,'140','La Liga')">🇪🇸 La Liga</div>
+    <div class="tab-btn" onclick="switchLeague(this,'78','Bundesliga')">🇩🇪 Bundesliga</div>
+    <div class="tab-btn" onclick="switchLeague(this,'135','Serie A')">🇮🇹 Serie A</div>
+    <div class="tab-btn" onclick="switchLeague(this,'61','Ligue 1')">🇫🇷 Ligue 1</div>
+    <div class="tab-btn" onclick="switchLeague(this,'2','Şamp. Ligi')">🏆 Şamp. Ligi</div>
+  </div>
+
+  <!-- League Sub Tabs -->
+  <div style="display:flex;border-bottom:1px solid var(--border);background:var(--s1);">
+    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);cursor:pointer;" onclick="switchLeagueTab(this,'standings')">📊 Puan Tablosu</div>
+    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;" onclick="switchLeagueTab(this,'fixtures')">📅 Fikstür</div>
+  </div>
+
+  <!-- Standings -->
+  <div id="league-standings" style="padding:12px 16px;">
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+  </div>
+
+  <!-- Fixtures -->
+  <div id="league-fixtures" style="padding:12px 16px;display:none;">
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+  </div>
+</div>
+
+<!-- ═══ AYARLAR SAYFASI ═══ -->
+<div class="page" id="page-settings">
+  <div style="padding:14px 16px 10px;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">AYARLAR</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:1px;">Uygulama tercihleri</div>
+  </div>
+
+  <div style="padding:0 16px;display:flex;flex-direction:column;gap:10px;">
+
+    <!-- Tema -->
+    <div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;">
+      <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🎨 Tema</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div id="theme-dark-btn" onclick="setTheme('dark')" style="background:var(--s2);border:2px solid var(--accent);border-radius:10px;padding:12px;text-align:center;cursor:pointer;">
+          <div style="font-size:22px;margin-bottom:4px;">🌙</div>
+          <div style="font-size:12px;font-weight:700;">Karanlık</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px;">Aktif</div>
+        </div>
+        <div id="theme-light-btn" onclick="setTheme('light')" style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;">
+          <div style="font-size:22px;margin-bottom:4px;">☀️</div>
+          <div style="font-size:12px;font-weight:700;">Aydınlık</div>
+          <div style="font-size:9px;color:var(--muted);margin-top:2px;">Pasif</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bildirimler -->
+    <div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;">
+      <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🔔 Bildirimler</div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div>
+          <div style="font-size:13px;font-weight:600;">⚽ Gol Bildirimi</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Gol olduğunda bildirim al</div>
+        </div>
+        <div id="notif-toggle" onclick="toggleNotification()" style="width:44px;height:24px;background:var(--accent);border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s;">
+          <div id="notif-thumb" style="position:absolute;top:2px;left:22px;width:20px;height:20px;background:#000;border-radius:50%;transition:left 0.2s;"></div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:13px;font-weight:600;">🟥 Kırmızı Kart Bildirimi</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px;">Kırmızı kart olduğunda bildirim al</div>
+        </div>
+        <div id="card-toggle" onclick="toggleCardNotif()" style="width:44px;height:24px;background:var(--s3);border:1px solid var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s;">
+          <div id="card-thumb" style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:var(--muted);border-radius:50%;transition:left 0.2s;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hakkında -->
+    <div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;">
+      <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">ℹ️ Hakkında</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Versiyon</span>
+          <span style="font-weight:700;">1.0.0</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Veri Kaynağı</span>
+          <span style="font-weight:700;">API-Football</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Güncelleme</span>
+          <span style="font-weight:700;color:var(--accent);">Canlı</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- ═══ TEAM PICKER ═══ -->
@@ -1363,11 +1497,11 @@ body {
     <div class="nav-icon">🔴</div>
     <div class="nav-label">CANLI</div>
   </div>
-  <div class="nav-item" onclick="goPage('analysis',this)">
+  <div class="nav-item" onclick="goPage('leagues',this)">
     <div class="nav-icon">🏆</div>
     <div class="nav-label">LİGLER</div>
   </div>
-  <div class="nav-item" onclick="goPage('analysis',this)">
+  <div class="nav-item" onclick="goPage('settings',this)">
     <div class="nav-icon">⚙️</div>
     <div class="nav-label">AYARLAR</div>
   </div>
@@ -1964,6 +2098,349 @@ function goPage(name, el) {
   document.getElementById('page-' + name).classList.add('active');
   if (el) el.classList.add('active');
   window.scrollTo(0,0);
+
+  // Load data on page switch
+  if (name === 'live') loadLiveMatches();
+  if (name === 'leagues') loadLeague('203', 'Süper Lig');
+}
+
+// ═══ LIVE MATCHES ═══
+let currentLiveFixtureId = null;
+let liveRefreshInterval = null;
+
+async function loadLiveMatches() {
+  const container = document.getElementById('live-matches-container');
+  if (!container) return;
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Canlı maçlar yükleniyor...</div></div>';
+
+  try {
+    const res = await fetch('/api/fixtures?action=live');
+    const data = await res.json();
+    const matches = data.response || [];
+
+    if (!matches.length) {
+      container.innerHTML = `
+        <div style="text-align:center;padding:40px 20px;">
+          <div style="font-size:40px;margin-bottom:12px;">⏰</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px;">Şu an canlı maç yok</div>
+          <div style="font-size:11px;color:var(--muted);">Maç saatlerinde tekrar kontrol et</div>
+        </div>
+        <div style="padding:0 0 10px;">
+          <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding:0 2px;">📅 Bugünün Maçları</div>
+          <div id="today-matches-list"><div class="loading-wrap"><div class="spinner"></div></div></div>
+        </div>`;
+      loadTodayMatches();
+      return;
+    }
+
+    // Group by league
+    const byLeague = {};
+    matches.forEach(m => {
+      const lg = m.league.name;
+      if (!byLeague[lg]) byLeague[lg] = {logo: m.league.logo, matches: []};
+      byLeague[lg].matches.push(m);
+    });
+
+    container.innerHTML = Object.entries(byLeague).map(([league, data]) => `
+      <div style="margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <img src="${data.logo}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;">${league}</div>
+        </div>
+        ${data.matches.map(m => `
+          <div onclick="openMatchDetail(${m.fixture.id})" style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:6px;cursor:pointer;transition:border-color 0.2s;" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='var(--border)'">
+            <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <img src="${m.teams.home.logo}" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+                <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.teams.home.name}</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--accent);">${m.goals.home ?? '-'} – ${m.goals.away ?? '-'}</div>
+                <div style="font-size:9px;color:var(--accent2);font-weight:700;">${m.fixture.status.elapsed ? m.fixture.status.elapsed+"'" : m.fixture.status.short}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+                <div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;">${m.teams.away.name}</div>
+                <img src="${m.teams.away.logo}" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+
+  } catch(e) {
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Veri yüklenemedi</div></div>';
+  }
+}
+
+async function loadTodayMatches() {
+  try {
+    const res = await fetch('/api/fixtures?action=today');
+    const data = await res.json();
+    const matches = (data.response || []).slice(0, 15);
+    const list = document.getElementById('today-matches-list');
+    if (!list) return;
+
+    if (!matches.length) {
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Bugün maç yok</div>';
+      return;
+    }
+
+    list.innerHTML = matches.map(m => {
+      const time = new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+      const status = m.fixture.status.short;
+      const isFinished = status === 'FT';
+      return `
+        <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px 13px;margin-bottom:6px;">
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:7px;">
+              <img src="${m.teams.home.logo}" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
+              <div style="font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${m.teams.home.name}</div>
+            </div>
+            <div style="text-align:center;min-width:60px;">
+              ${isFinished
+                ? `<div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;">${m.goals.home} – ${m.goals.away}</div><div style="font-size:8px;color:var(--muted);">MS</div>`
+                : `<div style="font-size:12px;font-weight:700;color:var(--accent);">${time}</div><div style="font-size:8px;color:var(--muted);">${m.league.name}</div>`
+              }
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;justify-content:flex-end;">
+              <div style="font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;">${m.teams.away.name}</div>
+              <img src="${m.teams.away.logo}" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display='none'">
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {}
+}
+
+function openMatchDetail(fixtureId) {
+  document.getElementById('live-list-view').style.display = 'none';
+  document.getElementById('live-detail-view').style.display = 'block';
+  currentLiveFixtureId = fixtureId;
+  startDetailSimulation();
+}
+
+function backToLiveList() {
+  document.getElementById('live-detail-view').style.display = 'none';
+  document.getElementById('live-list-view').style.display = 'block';
+  currentLiveFixtureId = null;
+}
+
+function startDetailSimulation() {
+  // Set demo data
+  document.getElementById('detail-home-name').textContent = 'Ev Sahibi';
+  document.getElementById('detail-away-name').textContent = 'Deplasman';
+  document.getElementById('detail-score').textContent = '0 – 0';
+  document.getElementById('detail-min').textContent = '⏱ 1\'';
+  document.getElementById('detail-league-name').textContent = 'Canlı Maç';
+}
+
+// ═══ LEAGUES ═══
+let currentLeagueId = '203';
+let currentLeagueTab = 'standings';
+
+async function loadLeague(leagueId, leagueName) {
+  currentLeagueId = leagueId;
+  if (currentLeagueTab === 'standings') loadStandings(leagueId);
+  else loadFixtures(leagueId);
+}
+
+function switchLeague(el, leagueId, leagueName) {
+  document.querySelectorAll('#page-leagues .tab-btn').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  loadLeague(leagueId, leagueName);
+}
+
+function switchLeagueTab(el, tab) {
+  document.querySelectorAll('#page-leagues [onclick^="switchLeagueTab"]').forEach(t => {
+    t.style.color = 'var(--muted)';
+    t.style.borderBottomColor = 'transparent';
+  });
+  el.style.color = 'var(--accent)';
+  el.style.borderBottomColor = 'var(--accent)';
+  currentLeagueTab = tab;
+  document.getElementById('league-standings').style.display = tab === 'standings' ? 'block' : 'none';
+  document.getElementById('league-fixtures').style.display = tab === 'fixtures' ? 'block' : 'none';
+  if (tab === 'standings') loadStandings(currentLeagueId);
+  else loadFixtures(currentLeagueId);
+}
+
+async function loadStandings(leagueId) {
+  const container = document.getElementById('league-standings');
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+
+  try {
+    const res = await fetch(`/api/fixtures?action=standings&league=${leagueId}`);
+    const data = await res.json();
+    const standings = data.response?.[0]?.league?.standings?.[0] || data.response || [];
+
+    if (!standings.length) {
+      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">Puan tablosu bulunamadı</div></div>';
+      return;
+    }
+
+    container.innerHTML = `
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:11px;">
+          <thead>
+            <tr style="color:var(--muted);font-size:9px;letter-spacing:1px;text-transform:uppercase;">
+              <th style="text-align:left;padding:8px 4px;width:24px;">#</th>
+              <th style="text-align:left;padding:8px 4px;">Takım</th>
+              <th style="padding:8px 4px;text-align:center;">O</th>
+              <th style="padding:8px 4px;text-align:center;">G</th>
+              <th style="padding:8px 4px;text-align:center;">B</th>
+              <th style="padding:8px 4px;text-align:center;">M</th>
+              <th style="padding:8px 4px;text-align:center;">A</th>
+              <th style="padding:8px 4px;text-align:center;color:var(--accent);">P</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${standings.map((s, i) => `
+              <tr style="border-top:1px solid var(--border);${i < 4 ? 'border-left:2px solid var(--accent);' : i > standings.length-4 ? 'border-left:2px solid var(--accent2);' : ''}">
+                <td style="padding:8px 4px;font-weight:700;font-family:'Bebas Neue',sans-serif;font-size:15px;color:${i<4?'var(--accent)':i>standings.length-4?'var(--accent2)':'var(--muted)'};">${s.rank}</td>
+                <td style="padding:8px 4px;">
+                  <div style="display:flex;align-items:center;gap:6px;">
+                    <img src="${s.team.logo}" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
+                    <span style="font-weight:600;white-space:nowrap;">${s.team.name}</span>
+                  </div>
+                </td>
+                <td style="padding:8px 4px;text-align:center;color:var(--muted);">${s.all.played}</td>
+                <td style="padding:8px 4px;text-align:center;color:var(--accent);">${s.all.win}</td>
+                <td style="padding:8px 4px;text-align:center;color:var(--gold);">${s.all.draw}</td>
+                <td style="padding:8px 4px;text-align:center;color:var(--accent2);">${s.all.lose}</td>
+                <td style="padding:8px 4px;text-align:center;color:var(--muted);">${s.goalsDiff > 0 ? '+' : ''}${s.goalsDiff}</td>
+                <td style="padding:8px 4px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:var(--accent);">${s.points}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  } catch(e) {
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Yüklenemedi</div></div>';
+  }
+}
+
+async function loadFixtures(leagueId) {
+  const container = document.getElementById('league-fixtures');
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fikstür yükleniyor...</div></div>';
+
+  try {
+    const res = await fetch(`/api/fixtures?action=upcoming&league=${leagueId}`);
+    const data = await res.json();
+    const matches = (data.response || []).slice(0, 10);
+
+    if (!matches.length) {
+      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">Fikstür bulunamadı</div></div>';
+      return;
+    }
+
+    container.innerHTML = matches.map(m => {
+      const date = new Date(m.fixture.date).toLocaleDateString('tr-TR', {day:'numeric', month:'short', weekday:'short'});
+      const time = new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+      return `
+        <div style="background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px 13px;margin-bottom:6px;">
+          <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">${date} • ${time} • ${m.league.round || ''}</div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;">
+            <div style="display:flex;align-items:center;gap:7px;">
+              <img src="${m.teams.home.logo}" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+              <div style="font-size:12px;font-weight:700;">${m.teams.home.name}</div>
+            </div>
+            <div style="text-align:center;background:var(--s2);border-radius:8px;padding:4px 10px;">
+              <div style="font-size:10px;font-weight:700;color:var(--accent);">${time}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:7px;justify-content:flex-end;">
+              <div style="font-size:12px;font-weight:700;text-align:right;">${m.teams.away.name}</div>
+              <img src="${m.teams.away.logo}" style="width:22px;height:22px;object-fit:contain;" onerror="this.style.display='none'">
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Yüklenemedi</div></div>';
+  }
+}
+
+// ═══ SETTINGS ═══
+let notifEnabled = true;
+let cardNotifEnabled = false;
+let currentTheme = 'dark';
+
+function setTheme(theme) {
+  currentTheme = theme;
+  if (theme === 'light') {
+    document.documentElement.style.setProperty('--bg', '#f0f0f8');
+    document.documentElement.style.setProperty('--s1', '#e8e8f0');
+    document.documentElement.style.setProperty('--s2', '#dcdce8');
+    document.documentElement.style.setProperty('--s3', '#d0d0e0');
+    document.documentElement.style.setProperty('--border', '#c0c0d8');
+    document.documentElement.style.setProperty('--text', '#0a0a18');
+    document.documentElement.style.setProperty('--muted', '#7070a0');
+    document.getElementById('theme-light-btn').style.borderColor = 'var(--accent)';
+    document.getElementById('theme-light-btn').style.borderWidth = '2px';
+    document.getElementById('theme-dark-btn').style.borderColor = 'var(--border)';
+    document.getElementById('theme-dark-btn').style.borderWidth = '1px';
+    document.querySelector('#theme-light-btn div:last-child').textContent = 'Aktif';
+    document.querySelector('#theme-dark-btn div:last-child').textContent = 'Pasif';
+  } else {
+    document.documentElement.style.setProperty('--bg', '#06060e');
+    document.documentElement.style.setProperty('--s1', '#0e0e1a');
+    document.documentElement.style.setProperty('--s2', '#161624');
+    document.documentElement.style.setProperty('--s3', '#1e1e30');
+    document.documentElement.style.setProperty('--border', '#2a2a40');
+    document.documentElement.style.setProperty('--text', '#f0f0f8');
+    document.documentElement.style.setProperty('--muted', '#6060a0');
+    document.getElementById('theme-dark-btn').style.borderColor = 'var(--accent)';
+    document.getElementById('theme-dark-btn').style.borderWidth = '2px';
+    document.getElementById('theme-light-btn').style.borderColor = 'var(--border)';
+    document.getElementById('theme-light-btn').style.borderWidth = '1px';
+    document.querySelector('#theme-dark-btn div:last-child').textContent = 'Aktif';
+    document.querySelector('#theme-light-btn div:last-child').textContent = 'Pasif';
+  }
+}
+
+function toggleNotification() {
+  notifEnabled = !notifEnabled;
+  const toggle = document.getElementById('notif-toggle');
+  const thumb = document.getElementById('notif-thumb');
+  if (notifEnabled) {
+    toggle.style.background = 'var(--accent)';
+    thumb.style.left = '22px';
+    thumb.style.background = '#000';
+    if (Notification.permission !== 'granted') Notification.requestPermission();
+  } else {
+    toggle.style.background = 'var(--s3)';
+    toggle.style.border = '1px solid var(--border)';
+    thumb.style.left = '2px';
+    thumb.style.background = 'var(--muted)';
+  }
+}
+
+function toggleCardNotif() {
+  cardNotifEnabled = !cardNotifEnabled;
+  const toggle = document.getElementById('card-toggle');
+  const thumb = document.getElementById('card-thumb');
+  if (cardNotifEnabled) {
+    toggle.style.background = 'var(--accent)';
+    toggle.style.border = 'none';
+    thumb.style.left = '22px';
+    thumb.style.background = '#000';
+    if (Notification.permission !== 'granted') Notification.requestPermission();
+  } else {
+    toggle.style.background = 'var(--s3)';
+    toggle.style.border = '1px solid var(--border)';
+    thumb.style.left = '2px';
+    thumb.style.background = 'var(--muted)';
+  }
+}
+
+function sendGoalNotification(homeTeam, awayTeam, score) {
+  if (!notifEnabled) return;
+  if (Notification.permission === 'granted') {
+    new Notification('⚽ GOL!', {
+      body: `${homeTeam} ${score} ${awayTeam}`,
+      icon: '/favicon.ico'
+    });
+  }
 }
 
 // ═══ LIVE MATCH ═══
