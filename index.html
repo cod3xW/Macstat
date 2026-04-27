@@ -482,7 +482,7 @@ async function analyze() {
       fetch(`/api/fixtures?team=${selectedHome.id}`).then(r => r.json()),
       fetch(`/api/fixtures?team=${selectedAway.id}`).then(r => r.json())
     ]);
-    const hm = hd.matches || [], am = ad.matches || [];
+    const hm = hd.response || [], am = ad.response || [];
     renderMatches(hm, selectedHome.id, 'home-matches-list');
     renderMatches(am, selectedAway.id, 'away-matches-list');
     renderStats(hm, am, selectedHome.id, selectedAway.id);
@@ -500,21 +500,23 @@ function renderMatches(matches, teamId, containerId) {
   const c = document.getElementById(containerId);
   if (!matches.length) { c.innerHTML = '<div class="loading">Maç bulunamadı</div>'; return; }
   c.innerHTML = matches.slice(0,10).map(m => {
-    const isHome = m.homeTeam.id === teamId;
-    const myScore = isHome ? m.score.fullTime.home : m.score.fullTime.away;
-    const oppScore = isHome ? m.score.fullTime.away : m.score.fullTime.home;
-    const opponent = isHome ? m.awayTeam.shortName : m.homeTeam.shortName;
+    const isHome = m.teams.home.id === teamId;
+    const myScore = isHome ? m.goals.home : m.goals.away;
+    const oppScore = isHome ? m.goals.away : m.goals.home;
+    const opponent = isHome ? m.teams.away.name : m.teams.home.name;
     const venue = isHome ? 'Ev' : 'Dep';
+    const winner = m.teams.home.winner ? 'home' : m.teams.away.winner ? 'away' : 'draw';
     let result, cls;
-    if (m.score.winner==='DRAW') { result='B'; cls='draw'; }
-    else if ((m.score.winner==='HOME_TEAM'&&isHome)||(m.score.winner==='AWAY_TEAM'&&!isHome)) { result='G'; cls='win'; }
+    if (winner==='draw') { result='B'; cls='draw'; }
+    else if ((winner==='home'&&isHome)||(winner==='away'&&!isHome)) { result='G'; cls='win'; }
     else { result='M'; cls='loss'; }
-    const date = new Date(m.utcDate).toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+    const date = new Date(m.fixture.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+    const referee = m.fixture.referee ? m.fixture.referee.split(',')[0] : '';
     return `<div class="match-item ${cls}">
       <div class="result-badge ${cls}">${result}</div>
       <div class="match-mid">
         <div class="match-teams">${isHome?'vs':'@'} ${opponent}</div>
-        <div class="match-sub"><span>${m.competition.name}</span><span>${date}</span><span>${venue}</span></div>
+        <div class="match-sub"><span>${m.league.name}</span><span>${date}</span><span>${referee}</span></div>
       </div>
       <div class="match-score ${cls}">${myScore}–${oppScore}</div>
     </div>`;
@@ -525,12 +527,13 @@ function renderStats(hm, am, hid, aid) {
   const calc = (matches, tid) => {
     let gf=0,ga=0,w=0,d=0,l=0;
     matches.forEach(m => {
-      const isHome = m.homeTeam.id===tid;
-      const myG = isHome?m.score.fullTime.home:m.score.fullTime.away;
-      const oppG = isHome?m.score.fullTime.away:m.score.fullTime.home;
+      const isHome = m.teams.home.id===tid;
+      const myG = isHome ? m.goals.home : m.goals.away;
+      const oppG = isHome ? m.goals.away : m.goals.home;
       gf+=myG; ga+=oppG;
-      if(m.score.winner==='DRAW') d++;
-      else if((m.score.winner==='HOME_TEAM'&&isHome)||(m.score.winner==='AWAY_TEAM'&&!isHome)) w++;
+      const winner = m.teams.home.winner ? 'home' : m.teams.away.winner ? 'away' : 'draw';
+      if(winner==='draw') d++;
+      else if((winner==='home'&&isHome)||(winner==='away'&&!isHome)) w++;
       else l++;
     });
     const n=matches.length||1;
