@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacStat Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080810;
+  --surface: #10101a;
+  --surface2: #18182a;
+  --surface3: #20203a;
+  --border: #252535;
+  --accent: #00e5a0;
+  --red: #ff4f4f;
+  --gold: #ffd166;
+  --blue: #4f8eff;
+  --text: #eeeef5;
+  --muted: #5a5a7a;
+  --muted2: #3a3a5a;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+/* ─── HEADER ─── */
+header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: rgba(8,8,16,0.96);
+  backdrop-filter: blur(16px);
+  z-index: 200;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 3px;
+}
+.logo .green { color: var(--accent); }
+
+.premium-pill {
+  background: linear-gradient(135deg, #ffd166, #ff9900);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border: none;
+}
+
+/* ─── PAGES ─── */
+.page { display: none; padding-bottom: 90px; }
+.page.active { display: block; }
+
+/* ─── HOME ─── */
+.hero {
+  padding: 20px 18px 0;
+}
+
+.hero-label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.matchup-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.matchup-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.teams-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.team-select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.team-select:hover { border-color: var(--accent); }
+
+.team-emoji { font-size: 28px; margin-bottom: 4px; }
+.team-name-small { font-size: 12px; font-weight: 600; line-height: 1.2; }
+.team-league { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+.vs-circle {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  color: var(--muted);
+  margin: 0 auto;
+}
+
+.analyze-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  border: none;
+  border-radius: 12px;
+  color: #000;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.analyze-btn:active { transform: scale(0.98); opacity: 0.9; }
+
+/* ─── QUICK STATS ROW ─── */
+.quick-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 14px 18px 0;
+}
+
+.quick-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.quick-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  line-height: 1;
+}
+.quick-val.g { color: var(--accent); }
+.quick-val.r { color: var(--red); }
+.quick-val.y { color: var(--gold); }
+
+.quick-label { font-size: 10px; color: var(--muted); margin-top: 3px; letter-spacing: 0.5px; }
+
+/* ─── AI SCORE CARD ─── */
+.ai-card {
+  margin: 14px 18px 0;
+  background: linear-gradient(135deg, #0d1f1a, #0d1525);
+  border: 1px solid rgba(0,229,160,0.3);
+  border-radius: 18px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 150px; height: 150px;
+  background: radial-gradient(circle at top right, rgba(0,229,160,0.08), transparent 70%);
+}
+
+.ai-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ai-badge {
+  background: rgba(0,229,160,0.15);
+  border: 1px solid rgba(0,229,160,0.3);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.ai-title { font-size: 14px; font-weight: 600; }
+
+.ai-predictions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ai-pred {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+}
+
+.ai-pred-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+}
+.ai-pred-pct.home { color: var(--accent); }
+.ai-pred-pct.draw { color: var(--gold); }
+.ai-pred-pct.away { color: var(--red); }
+
+.ai-pred-label { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+.ai-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface3);
+  display: flex;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.ai-bar-h { background: var(--accent); border-radius: 3px 0 0 3px; }
+.ai-bar-d { background: var(--gold); }
+.ai-bar-a { background: var(--red); border-radius: 0 3px 3px 0; flex: 1; }
+
+.ai-insight {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  padding: 10px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  border-left: 2px solid var(--accent);
+}
+
+/* ─── SECTION HEADER ─── */
+.section-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 8px;
+}
+
+.section-hd-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--muted);
+}
+
+.section-tag {
+  font-size: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  color: var(--muted);
+}
+
+/* ─── TABS ─── */
+.tabs-wrap {
+  padding: 0 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tabs-wrap::-webkit-scrollbar { display: none; }
+
+.tab {
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* ─── MATCH ITEMS ─── */
+.match-list { padding: 0 18px; display: flex; flex-direction: column; gap: 7px; }
+
+.match-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.match-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.match-item.win::before { background: var(--accent); }
+.match-item.loss::before { background: var(--red); }
+.match-item.draw::before { background: var(--muted); }
+
+.result-badge {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+}
+.result-badge.win { background: rgba(0,229,160,0.12); color: var(--accent); }
+.result-badge.loss { background: rgba(255,79,79,0.12); color: var(--red); }
+.result-badge.draw { background: rgba(90,90,122,0.2); color: var(--muted); }
+
+.match-mid { flex: 1; min-width: 0; }
+.match-teams { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.match-sub { font-size: 10px; color: var(--muted); margin-top: 2px; display: flex; gap: 8px; }
+
+.match-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+.match-score.win { color: var(--accent); }
+.match-score.loss { color: var(--red); }
+.match-score.draw { color: var(--muted); }
+
+/* ─── STAT BARS ─── */
+.stats-section { padding: 0 18px; display: flex; flex-direction: column; gap: 8px; }
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 11px 13px;
+}
+
+.stat-name {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.stat-bar-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  gap: 8px;
+  align-items: center;
+}
+
+.s-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  text-align: center;
+}
+.s-val.h { color: var(--accent); }
+.s-val.a { color: var(--red); }
+
+.bar-track {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg);
+  display: flex;
+  overflow: hidden;
+}
+.bar-h { background: var(--accent); transition: width 1.2s cubic-bezier(.4,0,.2,1); }
+.bar-a { background: var(--red); flex: 1; }
+
+/* ─── TIMING STATS ─── */
+.timing-grid {
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.timing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px;
+}
+
+.timing-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.timing-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.timing-team { font-size: 11px; font-weight: 600; }
+.timing-val { font-family: 'Bebas Neue', sans-serif; font-size: 15px; }
+.timing-val.g { color: var(--accent); }
+.timing-val.r { color: var(--red); }
+
+.timing-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
+/* ─── HOME/AWAY CARD ─── */
+.ha-grid {
+  padding: 0 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ha-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px;
+  text-align: center;
+}
+
+.ha-icon { font-size: 22px; margin-bottom: 6px; }
+.ha-team { font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 10px; }
+
+.ha-stat-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.ha-stat {
+  text-align: center;
+}
+.ha-stat-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+}
+.ha-stat-val.g { color: var(--accent); }
+.ha-stat-val.r { color: var(--red); }
+.ha-stat-val.y { color: var(--gold); }
+.ha-stat-label { font-size: 10px; color: var(--muted); }
+
+/* ─── CARD/FOUL ─── */
+.referee-card {
+  margin: 0 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.ref-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ref-label { font-size: 12px; font-weight: 500; }
+.ref-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+.ref-vals { display: flex; gap: 10px; align-items: center; }
+
+.ref-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+}
+.ref-val.y { color: var(--gold); }
+.ref-val.r { color: var(--red); }
+
+.ref-divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+.ref-insight {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ─── PLAYER CARDS ─── */
+.players-section { padding: 0 18px; display: flex; flex-direction: column; gap: 8px; }
+
+.player-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 14px;
+}
+
+.player-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 11px;
+}
+
+.player-left { display: flex; align-items: center; gap: 10px; }
+
+.p-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  border: 1px solid var(--border);
+}
+
+.p-name { font-size: 14px; font-weight: 600; }
+.p-info { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.p-rating {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  line-height: 1;
+}
+.p-rating.top { color: var(--accent); }
+.p-rating.mid { color: var(--gold); }
+.p-rating.low { color: var(--red); }
+
+.p-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.p-stat { text-align: center; }
+.p-stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 17px; }
+.p-stat-label { font-size: 9px; color: var(--muted); }
+
+.team-divider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+.team-divider-line { flex: 1; height: 1px; background: var(--border); }
+.team-divider-text {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ─── ALARM CARD ─── */
+.alarm-card {
+  margin: 0 18px;
+  background: linear-gradient(135deg, #0d1525, #0d1a20);
+  border: 1px solid rgba(79,142,255,0.3);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.alarm-header {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+
+.alarm-icon { font-size: 24px; }
+.alarm-title { font-size: 14px; font-weight: 700; }
+.alarm-sub { font-size: 11px; color: var(--muted); }
+
+.alarm-match {
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.alarm-match-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.alarm-match-time { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+
+.alarm-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alarm-label { font-size: 11px; color: var(--muted); }
+
+.toggle {
+  width: 40px; height: 22px;
+  background: var(--surface3);
+  border-radius: 11px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.toggle.on { background: var(--accent); }
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--muted);
+  transition: transform 0.2s, background 0.2s;
+}
+.toggle.on .toggle-thumb {
+  transform: translateX(18px);
+  background: #000;
+}
+
+/* ─── PREMIUM LOCK ─── */
+.premium-lock {
+  margin: 10px 18px 0;
+  background: var(--surface);
+  border: 1px solid rgba(255,209,102,0.3);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.premium-lock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,209,102,0.04), rgba(255,153,0,0.04));
+}
+.lock-emoji { font-size: 28px; margin-bottom: 8px; }
+.lock-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.lock-desc { font-size: 12px; color: var(--muted); margin: 6px 0 14px; line-height: 1.5; }
+.lock-btn {
+  background: linear-gradient(135deg, #ffd166, #ff9900);
+  border: none;
+  border-radius: 10px;
+  padding: 11px 28px;
+  color: #000;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ─── KG CARD ─── */
+.kg-card {
+  margin: 0 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.kg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.kg-label { font-size: 13px; font-weight: 600; }
+.kg-sub { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+.kg-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+}
+.kg-pct.high { color: var(--accent); }
+.kg-pct.mid { color: var(--gold); }
+.kg-pct.low { color: var(--red); }
+
+.kg-mini-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: var(--surface3);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.kg-mini-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.kg-divider { height: 1px; background: var(--border); margin: 10px 0; }
+
+/* ─── PREMIUM PAGE ─── */
+.premium-page { padding: 28px 18px 100px; text-align: center; }
+
+.prem-star { font-size: 52px; margin-bottom: 16px; }
+.prem-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--gold);
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+.prem-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+
+.feature-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.feat-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.feat-item:last-child { margin-bottom: 0; }
+
+.feat-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.feat-icon.green { background: rgba(0,229,160,0.1); }
+.feat-icon.gold { background: rgba(255,209,102,0.1); }
+.feat-icon.blue { background: rgba(79,142,255,0.1); }
+.feat-icon.red { background: rgba(255,79,79,0.1); }
+
+.feat-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+.feat-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+.price-card {
+  background: linear-gradient(135deg, rgba(255,209,102,0.08), rgba(255,153,0,0.08));
+  border: 1px solid rgba(255,209,102,0.3);
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 12px;
+}
+
+.price-amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  color: var(--gold);
+  line-height: 1;
+}
+.price-period { font-size: 18px; color: var(--muted); }
+.price-alt { font-size: 12px; color: var(--muted); margin: 6px 0 18px; }
+
+.buy-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #ffd166, #ff9900);
+  border: none;
+  border-radius: 12px;
+  color: #000;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.prem-note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+/* ─── BOTTOM NAV ─── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-width: 430px;
+  margin: 0 auto;
+  background: rgba(8,8,16,0.97);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 10px 0 22px;
+  backdrop-filter: blur(16px);
+  z-index: 200;
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.nav-emoji { font-size: 20px; }
+.nav-label { font-size: 10px; color: var(--muted); font-weight: 500; }
+.nav-item.active .nav-label { color: var(--accent); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.4s ease forwards; }
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.pulse { animation: pulse 2s infinite; }
+
+/* ─── LIVE DOT ─── */
+.live-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  margin-right: 4px;
+  animation: pulse 1.2s infinite;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Mac<span class="green">Stat</span> <span style="font-size:13px;color:var(--muted);letter-spacing:1px">PRO</span></div>
+  <button class="premium-pill" onclick="goPage('premium')">⭐ Premium Al</button>
+</header>
+
+<!-- ═══ ANASAYFA ═══ -->
+<div class="page active" id="page-home">
+
+  <div class="hero">
+    <div class="hero-label">📊 Maç Analizi</div>
+    <div class="matchup-card">
+      <div class="teams-row">
+        <div class="team-select" onclick="pickTeam('home')">
+          <div class="team-emoji" id="home-emoji">🦅</div>
+          <div class="team-name-small" id="home-name">Galatasaray</div>
+          <div class="team-league">Süper Lig</div>
+        </div>
+        <div><div class="vs-circle">VS</div></div>
+        <div class="team-select" onclick="pickTeam('away')">
+          <div class="team-emoji" id="away-emoji">⭐</div>
+          <div class="team-name-small" id="away-name">Fenerbahçe</div>
+          <div class="team-league">Süper Lig</div>
+        </div>
+      </div>
+      <button class="analyze-btn" onclick="showAnalysis()">🔍 Analiz Et — ⭐ Premium</button>
+    </div>
+  </div>
+
+  <!-- Analysis (hidden until clicked) -->
+  <div id="analysis-wrap" style="display:none">
+
+    <!-- Quick H2H -->
+    <div class="quick-row fade-up">
+      <div class="quick-card">
+        <div class="quick-val g">4</div>
+        <div class="quick-label">GS Galibiyet</div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-val y">2</div>
+        <div class="quick-label">Beraberlik</div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-val r">3</div>
+        <div class="quick-label">FB Galibiyet</div>
+      </div>
+    </div>
+
+    <!-- AI SCORE -->
+    <div class="ai-card fade-up" style="margin-top:14px">
+      <div class="ai-header">
+        <div class="ai-badge">🤖 YAPAY ZEKA</div>
+        <div class="ai-title">Tahmin Skoru</div>
+      </div>
+      <div class="ai-predictions">
+        <div class="ai-pred">
+          <div class="ai-pred-pct home">62%</div>
+          <div class="ai-pred-label">🦅 GS Kazanır</div>
+        </div>
+        <div class="ai-pred">
+          <div class="ai-pred-pct draw">18%</div>
+          <div class="ai-pred-label">Beraberlik</div>
+        </div>
+        <div class="ai-pred">
+          <div class="ai-pred-pct away">20%</div>
+          <div class="ai-pred-label">⭐ FB Kazanır</div>
+        </div>
+      </div>
+      <div class="ai-bar">
+        <div class="ai-bar-h" style="width:62%"></div>
+        <div class="ai-bar-d" style="width:18%"></div>
+        <div class="ai-bar-a"></div>
+      </div>
+      <div class="ai-insight">
+        💡 Galatasaray son 5 maçta ev sahibi olarak ortalama 2.8 gol attı. Fenerbahçe deplasmanın son 3'ünü kaybetti. Form farkı belirgin.
+      </div>
+    </div>
+
+    <!-- KG VAR/YOK -->
+    <div class="section-hd">
+      <div class="section-hd-title">⚡ KG & ALT/ÜST ANALİZİ</div>
+      <div class="section-tag" style="color:var(--gold);border-color:rgba(255,209,102,0.4)">⭐ PREMIUM</div>
+    </div>
+    <div class="kg-card">
+      <div class="kg-row">
+        <div>
+          <div class="kg-label">KG Var İhtimali</div>
+          <div class="kg-sub">Son 8 maçın 6'sında her iki takım da gol attı</div>
+        </div>
+        <div class="kg-pct high">75%</div>
+      </div>
+      <div class="kg-mini-bar"><div class="kg-mini-fill" style="width:75%"></div></div>
+
+      <div class="kg-row">
+        <div>
+          <div class="kg-label">2.5 Üstü İhtimali</div>
+          <div class="kg-sub">Son 5 karşılaşmada ort. 3.4 gol</div>
+        </div>
+        <div class="kg-pct high">68%</div>
+      </div>
+      <div class="kg-mini-bar"><div class="kg-mini-fill" style="width:68%; background: var(--gold)"></div></div>
+
+      <div class="kg-divider"></div>
+
+      <div class="kg-row" style="margin-bottom:0">
+        <div>
+          <div class="kg-label">İlk Yarı Gol</div>
+          <div class="kg-sub">Son 6 derbinin 4'ünde ilk 45'te gol vardı</div>
+        </div>
+        <div class="kg-pct mid">66%</div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div style="margin-top:16px">
+      <div class="tabs-wrap">
+        <div class="tab active" onclick="switchTab(this,'t-recent')">Son Maçlar</div>
+        <div class="tab" onclick="switchTab(this,'t-stats')">İstatistik</div>
+        <div class="tab" onclick="switchTab(this,'t-timing')">Dakika</div>
+        <div class="tab" onclick="switchTab(this,'t-ha')">Ev/Dep</div>
+        <div class="tab" onclick="switchTab(this,'t-cards')">Kart & Faul</div>
+        <div class="tab" onclick="switchTab(this,'t-players')">Oyuncular</div>
+        <div class="tab" onclick="switchTab(this,'t-alarm')">🔔 Alarm</div>
+      </div>
+    </div>
+
+    <!-- ── TAB: SON MAÇLAR ── -->
+    <div id="t-recent">
+      <div class="section-hd">
+        <div class="section-hd-title">🦅 GALATASARAY — SON MAÇ VERİLERİ</div>
+        <div class="section-tag" style="color:var(--gold);border-color:rgba(255,209,102,0.4)">⭐ PREMIUM</div>
+      </div>
+      <div class="match-list">
+        <div class="match-item win">
+          <div class="result-badge win">G</div>
+          <div class="match-mid">
+            <div class="match-teams">Galatasaray — Trabzonspor</div>
+            <div class="match-sub"><span>Süper Lig</span><span>20 Nis 2025</span></div>
+          </div>
+          <div class="match-score win">3–1</div>
+        </div>
+        <div class="match-item draw">
+          <div class="result-badge draw">B</div>
+          <div class="match-mid">
+            <div class="match-teams">Beşiktaş — Galatasaray</div>
+            <div class="match-sub"><span>Süper Lig</span><span>13 Nis 2025</span></div>
+          </div>
+          <div class="match-score draw">1–1</div>
+        </div>
+        <div class="match-item win">
+          <div class="result-badge win">G</div>
+          <div class="match-mid">
+            <div class="match-teams">Galatasaray — Başakşehir</div>
+            <div class="match-sub"><span>Süper Lig</span><span>6 Nis 2025</span></div>
+          </div>
+          <div class="match-score win">4–0</div>
+        </div>
+      </div>
+
+      <!-- all data premium -->
+
+      <div class="section-hd" style="margin-top:14px">
+        <div class="section-hd-title">⭐ FENERBAHÇE — SON MAÇ VERİLERİ</div>
+        <div class="section-tag" style="color:var(--gold);border-color:rgba(255,209,102,0.4)">⭐ PREMIUM</div>
+      </div>
+      <div class="match-list">
+        <div class="match-item win">
+          <div class="result-badge win">G</div>
+          <div class="match-mid">
+            <div class="match-teams">Fenerbahçe — Sivasspor</div>
+            <div class="match-sub"><span>Süper Lig</span><span>19 Nis 2025</span></div>
+          </div>
+          <div class="match-score win">2–0</div>
+        </div>
+        <div class="match-item loss">
+          <div class="result-badge loss">M</div>
+          <div class="match-mid">
+            <div class="match-teams">Ankaragücü — Fenerbahçe</div>
+            <div class="match-sub"><span>Süper Lig</span><span>12 Nis 2025</span></div>
+          </div>
+          <div class="match-score loss">2–1</div>
+        </div>
+        <div class="match-item win">
+          <div class="result-badge win">G</div>
+          <div class="match-mid">
+            <div class="match-teams">Fenerbahçe — Kasımpaşa</div>
+            <div class="match-sub"><span>Süper Lig</span><span>5 Nis 2025</span></div>
+          </div>
+          <div class="match-score win">3–2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: İSTATİSTİK ── -->
+    <div id="t-stats" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">📈 TAKIM KARŞILAŞTIRMASI</div>
+        <div class="section-tag">Son 3 Maç Ort.</div>
+      </div>
+      <div class="stats-section">
+        <div class="stat-card">
+          <div class="stat-name">Gol Ortalaması</div>
+          <div class="stat-bar-row">
+            <div class="s-val h">2.7</div>
+            <div class="bar-track"><div class="bar-h" style="width:62%"></div><div class="bar-a"></div></div>
+            <div class="s-val a">1.7</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-name">İsabetli Şut</div>
+          <div class="stat-bar-row">
+            <div class="s-val h">6.3</div>
+            <div class="bar-track"><div class="bar-h" style="width:55%"></div><div class="bar-a"></div></div>
+            <div class="s-val a">5.1</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-name">Top Hakimiyeti %</div>
+          <div class="stat-bar-row">
+            <div class="s-val h">57</div>
+            <div class="bar-track"><div class="bar-h" style="width:57%"></div><div class="bar-a"></div></div>
+            <div class="s-val a">43</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-name">Korner</div>
+          <div class="stat-bar-row">
+            <div class="s-val h">5.7</div>
+            <div class="bar-track"><div class="bar-h" style="width:53%"></div><div class="bar-a"></div></div>
+            <div class="s-val a">5.0</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-name">Yenilen Gol Ort.</div>
+          <div class="stat-bar-row">
+            <div class="s-val h">0.7</div>
+            <div class="bar-track"><div class="bar-h" style="width:35%"></div><div class="bar-a"></div></div>
+            <div class="s-val a">1.3</div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /t-stats -->
+
+    <!-- ── TAB: DAKİKA ANALİZİ ── -->
+    <div id="t-timing" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">⏱️ DAKİKA ANALİZİ</div>
+        <div class="section-tag">⭐ PREMIUM</div>
+      </div>
+      <div class="timing-grid">
+        <div class="timing-card">
+          <div class="timing-label">İlk 15 Dak. Gol</div>
+          <div class="timing-row">
+            <div><div class="timing-team">🦅 GS</div></div>
+            <div class="timing-val g">8</div>
+          </div>
+          <div class="timing-divider"></div>
+          <div class="timing-row">
+            <div><div class="timing-team">⭐ FB</div></div>
+            <div class="timing-val r">3</div>
+          </div>
+        </div>
+        <div class="timing-card">
+          <div class="timing-label">Son 15 Dak. Gol</div>
+          <div class="timing-row">
+            <div><div class="timing-team">🦅 GS</div></div>
+            <div class="timing-val g">5</div>
+          </div>
+          <div class="timing-divider"></div>
+          <div class="timing-row">
+            <div><div class="timing-team">⭐ FB</div></div>
+            <div class="timing-val g">7</div>
+          </div>
+        </div>
+        <div class="timing-card">
+          <div class="timing-label">İlk Yarı Gol Ort.</div>
+          <div class="timing-row">
+            <div><div class="timing-team">🦅 GS</div></div>
+            <div class="timing-val g">1.4</div>
+          </div>
+          <div class="timing-divider"></div>
+          <div class="timing-row">
+            <div><div class="timing-team">⭐ FB</div></div>
+            <div class="timing-val r">0.8</div>
+          </div>
+        </div>
+        <div class="timing-card">
+          <div class="timing-label">İkinci Yarı Gol</div>
+          <div class="timing-row">
+            <div><div class="timing-team">🦅 GS</div></div>
+            <div class="timing-val g">1.3</div>
+          </div>
+          <div class="timing-divider"></div>
+          <div class="timing-row">
+            <div><div class="timing-team">⭐ FB</div></div>
+            <div class="timing-val g">0.9</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin: 10px 18px 0; background:rgba(0,229,160,0.06); border:1px solid rgba(0,229,160,0.2); border-radius:10px; padding:12px;">
+        <div style="font-size:12px; color:var(--accent); font-weight:600; margin-bottom:4px;">💡 İddaa İpucu</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.5;">GS ilk 15 dakikada FB'ye göre 2.7x daha fazla gol atıyor. "İlk Gol GS" kuponu için güçlü referans.</div>
+      </div>
+    </div>
+
+    <!-- ── TAB: EV/DEPLASMAN ── -->
+    <div id="t-ha" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">🏠 EV / DEPLASMAN PERFORMANSI</div>
+        <div class="section-tag">⭐ PREMIUM</div>
+      </div>
+      <div class="ha-grid">
+        <div class="ha-card">
+          <div class="ha-icon">🏠</div>
+          <div class="ha-team">GS Evde (10 maç)</div>
+          <div class="ha-stat-row">
+            <div class="ha-stat"><div class="ha-stat-val g">7</div><div class="ha-stat-label">Galibiyet</div></div>
+            <div class="ha-stat"><div class="ha-stat-val y">2</div><div class="ha-stat-label">Beraberlik</div></div>
+            <div class="ha-stat"><div class="ha-stat-val r">1</div><div class="ha-stat-label">Mağlup</div></div>
+          </div>
+        </div>
+        <div class="ha-card">
+          <div class="ha-icon">✈️</div>
+          <div class="ha-team">GS Deplasmanda</div>
+          <div class="ha-stat-row">
+            <div class="ha-stat"><div class="ha-stat-val g">4</div><div class="ha-stat-label">Galibiyet</div></div>
+            <div class="ha-stat"><div class="ha-stat-val y">3</div><div class="ha-stat-label">Beraberlik</div></div>
+            <div class="ha-stat"><div class="ha-stat-val r">3</div><div class="ha-stat-label">Mağlup</div></div>
+          </div>
+        </div>
+        <div class="ha-card">
+          <div class="ha-icon">🏠</div>
+          <div class="ha-team">FB Evde (10 maç)</div>
+          <div class="ha-stat-row">
+            <div class="ha-stat"><div class="ha-stat-val g">6</div><div class="ha-stat-label">Galibiyet</div></div>
+            <div class="ha-stat"><div class="ha-stat-val y">2</div><div class="ha-stat-label">Beraberlik</div></div>
+            <div class="ha-stat"><div class="ha-stat-val r">2</div><div class="ha-stat-label">Mağlup</div></div>
+          </div>
+        </div>
+        <div class="ha-card">
+          <div class="ha-icon">✈️</div>
+          <div class="ha-team">FB Deplasmanda</div>
+          <div class="ha-stat-row">
+            <div class="ha-stat"><div class="ha-stat-val g">3</div><div class="ha-stat-label">Galibiyet</div></div>
+            <div class="ha-stat"><div class="ha-stat-val y">2</div><div class="ha-stat-label">Beraberlik</div></div>
+            <div class="ha-stat"><div class="ha-stat-val r">5</div><div class="ha-stat-label">Mağlup</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="margin: 10px 18px 0; background:rgba(255,209,102,0.06); border:1px solid rgba(255,209,102,0.2); border-radius:10px; padding:12px;">
+        <div style="font-size:12px; color:var(--gold); font-weight:600; margin-bottom:4px;">💡 İddaa İpucu</div>
+        <div style="font-size:11px; color:var(--muted); line-height:1.5;">FB son 10 deplasmanın 5'ini kaybetti. GS evinde %70 galibiyet oranıyla bu maçta favorisi açık.</div>
+      </div>
+    </div>
+
+    <!-- ── TAB: KART & FAUL ── -->
+    <div id="t-cards" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">🟨 KART & FAUL TRENDLERİ</div>
+        <div class="section-tag">⭐ PREMIUM</div>
+      </div>
+      <div class="referee-card">
+        <div class="ref-row">
+          <div>
+            <div class="ref-label">Hakem: Ali Palabıyık</div>
+            <div class="ref-sub">Bu sezon 18 maç yönetti</div>
+          </div>
+          <div class="ref-vals">
+            <div style="text-align:center">
+              <div class="ref-val y">4.8</div>
+              <div style="font-size:9px; color:var(--muted)">Sarı/maç</div>
+            </div>
+            <div style="text-align:center">
+              <div class="ref-val r">0.4</div>
+              <div style="font-size:9px; color:var(--muted)">Kırmızı/maç</div>
+            </div>
+          </div>
+        </div>
+        <div class="ref-divider"></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:10px;">
+          <div class="timing-card" style="margin:0">
+            <div class="timing-label">🦅 GS Sarı (Ort.)</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--gold); text-align:center">2.1</div>
+          </div>
+          <div class="timing-card" style="margin:0">
+            <div class="timing-label">⭐ FB Sarı (Ort.)</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--gold); text-align:center">2.7</div>
+          </div>
+        </div>
+        <div class="ref-insight">
+          Bu hakem yönetimindeki maçlarda toplam kart ortalaması <strong style="color:var(--gold)">4.8</strong>. Yüksek kart oynayanlar için güçlü referans.
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: OYUNCULAR ── -->
+    <div id="t-players" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">👟 OYUNCU KARŞILAŞTIRMASI</div>
+        <div class="section-tag">⭐ PREMIUM</div>
+      </div>
+      <div class="players-section">
+        <div class="team-divider">
+          <div class="team-divider-line"></div>
+          <div class="team-divider-text">🦅 Galatasaray</div>
+          <div class="team-divider-line"></div>
+        </div>
+        <div class="player-card">
+          <div class="player-top">
+            <div class="player-left">
+              <div class="p-avatar">🇷🇴</div>
+              <div>
+                <div class="p-name">Florinel Coman</div>
+                <div class="p-info">Kanat • #7</div>
+              </div>
+            </div>
+            <div class="p-rating top">8.6</div>
+          </div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="p-stat-val">7</div><div class="p-stat-label">Gol</div></div>
+            <div class="p-stat"><div class="p-stat-val">5</div><div class="p-stat-label">Asist</div></div>
+            <div class="p-stat"><div class="p-stat-val">18</div><div class="p-stat-label">Şut</div></div>
+            <div class="p-stat"><div class="p-stat-val">88</div><div class="p-stat-label">Pas%</div></div>
+            <div class="p-stat"><div class="p-stat-val">3</div><div class="p-stat-label">Sarı</div></div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-top">
+            <div class="player-left">
+              <div class="p-avatar">🇧🇷</div>
+              <div>
+                <div class="p-name">Mauro Icardi</div>
+                <div class="p-info">Forvet • #9</div>
+              </div>
+            </div>
+            <div class="p-rating top">8.2</div>
+          </div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="p-stat-val">12</div><div class="p-stat-label">Gol</div></div>
+            <div class="p-stat"><div class="p-stat-val">3</div><div class="p-stat-label">Asist</div></div>
+            <div class="p-stat"><div class="p-stat-val">31</div><div class="p-stat-label">Şut</div></div>
+            <div class="p-stat"><div class="p-stat-val">79</div><div class="p-stat-label">Pas%</div></div>
+            <div class="p-stat"><div class="p-stat-val">2</div><div class="p-stat-label">Sarı</div></div>
+          </div>
+        </div>
+
+        <div class="team-divider" style="margin-top:4px">
+          <div class="team-divider-line"></div>
+          <div class="team-divider-text">⭐ Fenerbahçe</div>
+          <div class="team-divider-line"></div>
+        </div>
+        <div class="player-card">
+          <div class="player-top">
+            <div class="player-left">
+              <div class="p-avatar">🇧🇪</div>
+              <div>
+                <div class="p-name">Michy Batshuayi</div>
+                <div class="p-info">Forvet • #23</div>
+              </div>
+            </div>
+            <div class="p-rating mid">7.4</div>
+          </div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="p-stat-val">8</div><div class="p-stat-label">Gol</div></div>
+            <div class="p-stat"><div class="p-stat-val">2</div><div class="p-stat-label">Asist</div></div>
+            <div class="p-stat"><div class="p-stat-val">22</div><div class="p-stat-label">Şut</div></div>
+            <div class="p-stat"><div class="p-stat-val">75</div><div class="p-stat-label">Pas%</div></div>
+            <div class="p-stat"><div class="p-stat-val">4</div><div class="p-stat-label">Sarı</div></div>
+          </div>
+        </div>
+        <div class="player-card">
+          <div class="player-top">
+            <div class="player-left">
+              <div class="p-avatar">🇧🇷</div>
+              <div>
+                <div class="p-name">Fred</div>
+                <div class="p-info">Orta Saha • #8</div>
+              </div>
+            </div>
+            <div class="p-rating mid">7.8</div>
+          </div>
+          <div class="p-stats">
+            <div class="p-stat"><div class="p-stat-val">3</div><div class="p-stat-label">Gol</div></div>
+            <div class="p-stat"><div class="p-stat-val">6</div><div class="p-stat-label">Asist</div></div>
+            <div class="p-stat"><div class="p-stat-val">10</div><div class="p-stat-label">Şut</div></div>
+            <div class="p-stat"><div class="p-stat-val">92</div><div class="p-stat-label">Pas%</div></div>
+            <div class="p-stat"><div class="p-stat-val">5</div><div class="p-stat-label">Sarı</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ALARM ── -->
+    <div id="t-alarm" style="display:none">
+      <div class="section-hd">
+        <div class="section-hd-title">🔔 MAÇ ALARMI</div>
+        <div class="section-tag">⭐ PREMIUM</div>
+      </div>
+      <div class="alarm-card">
+        <div class="alarm-header">
+          <div class="alarm-icon">🔔</div>
+          <div>
+            <div class="alarm-title">Maç Hatırlatıcısı</div>
+            <div class="alarm-sub">Maç başlamadan bildirim al, erken oyna</div>
+          </div>
+        </div>
+
+        <div class="alarm-match">
+          <div class="alarm-match-name">🦅 Galatasaray vs ⭐ Fenerbahçe</div>
+          <div class="alarm-match-time">📅 Cumartesi, 3 Mayıs 2025 · 20:00</div>
+          <div class="alarm-toggle-row">
+            <div class="alarm-label">2 saat önce bildir</div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="alarm-toggle-row" style="margin-top:8px">
+            <div class="alarm-label">30 dakika önce bildir</div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+          </div>
+          <div class="alarm-toggle-row" style="margin-top:8px">
+            <div class="alarm-label">Analiz hazır bildirimi</div>
+            <div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+
+        <div style="font-size:11px; color:var(--muted); text-align:center">
+          Favori maçlarını takibe alarak tüm bildirimleri yönet
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /analysis-wrap -->
+</div><!-- /page-home -->
+
+<!-- ═══ PREMIUM SAYFASI ═══ -->
+<div class="page" id="page-premium">
+  <div class="premium-page">
+    <div class="prem-star">⭐</div>
+    <div class="prem-title">PREMIUM</div>
+    <div class="prem-sub">İddiacılar için tam güç.<br>Daha fazla veri, daha erken karar.</div>
+
+    <div class="feature-list">
+      <div class="feat-item">
+        <div class="feat-icon green">🤖</div>
+        <div>
+          <div class="feat-name">Yapay Zeka Tahmin Skoru</div>
+          <div class="feat-desc">Her maç için GS/Beraberlik/FB olasılık yüzdeleri ve AI yorumu</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon gold">📊</div>
+        <div>
+          <div class="feat-name">Son 10 Maç Verisi</div>
+          <div class="feat-desc">Ücretsizde 3 maç, Premium'da tam 10 maç geçmişi</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon green">⚡</div>
+        <div>
+          <div class="feat-name">KG Var/Yok & Alt/Üst Analizi</div>
+          <div class="feat-desc">Her iki takım için gol ihtimali, 2.5 üstü/altı verileri</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon blue">⏱️</div>
+        <div>
+          <div class="feat-name">İlk 15 & Son 15 Dakika İstatistikleri</div>
+          <div class="feat-desc">Hangi takım hangi dakikada tehlikeli? Erken gol verileri.</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon gold">🏠</div>
+        <div>
+          <div class="feat-name">Ev/Deplasman Performans Ayrımı</div>
+          <div class="feat-desc">Ev ve deplasman galibiyet oranları ayrı ayrı gösterilir</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon red">🟨</div>
+        <div>
+          <div class="feat-name">Kart & Faul Trendleri</div>
+          <div class="feat-desc">Hakem bazlı kart ortalaması, takım başına sarı/kırmızı verileri</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon green">👟</div>
+        <div>
+          <div class="feat-name">Tam Kadro Oyuncu Karşılaştırması</div>
+          <div class="feat-desc">Her pozisyonda rakip oyuncuyla gol, asist, pas, şut karşılaştırması</div>
+        </div>
+      </div>
+      <div class="feat-item">
+        <div class="feat-icon blue">🔔</div>
+        <div>
+          <div class="feat-name">Maç Alarmı</div>
+          <div class="feat-desc">Maç başlamadan önce bildirim al, erken kuponu hazırla</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-amount">₺99<span style="font-size:28px">.99</span><span class="price-period">/ay</span></div>
+      <div class="price-alt">veya ₺799/yıl · %33 tasarruf et</div>
+      <button class="buy-btn">Premium'a Başla</button>
+    </div>
+
+    <div class="prem-note">İstediğin zaman iptal et · Güvenli ödeme · Reklamsız</div>
+  </div>
+</div>
+
+<!-- ═══ PREMIUM MODAL ═══ -->
+<div id="premium-modal" style="display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); align-items:flex-end; justify-content:center;">
+  <div style="background:var(--surface); border:1px solid rgba(255,209,102,0.3); border-radius:24px 24px 0 0; padding:28px 22px 40px; width:100%; max-width:430px; animation:fadeUp 0.35s ease;">
+    <div style="text-align:center; margin-bottom:20px;">
+      <div style="font-size:44px; margin-bottom:10px;">⭐</div>
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--gold); letter-spacing:3px; margin-bottom:6px;">BU İÇERİK PREMIUM</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.5;">Maç analizleri, istatistikler, oyuncu karşılaştırmaları ve yapay zeka tahminlerine erişmek için Premium üye ol.</div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:18px;">
+      <div style="display:flex; align-items:center; gap:10px; background:rgba(0,229,160,0.06); border-radius:10px; padding:10px 12px;">
+        <span style="font-size:16px">🤖</span>
+        <span style="font-size:12px; color:var(--text);">Yapay Zeka Tahmin Skoru</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; background:rgba(0,229,160,0.06); border-radius:10px; padding:10px 12px;">
+        <span style="font-size:16px">📊</span>
+        <span style="font-size:12px; color:var(--text);">Son 10 Maç — Tüm İstatistikler</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; background:rgba(0,229,160,0.06); border-radius:10px; padding:10px 12px;">
+        <span style="font-size:16px">⏱️</span>
+        <span style="font-size:12px; color:var(--text);">Dakika, Ev/Dep, Kart & Oyuncu Analizi</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; background:rgba(0,229,160,0.06); border-radius:10px; padding:10px 12px;">
+        <span style="font-size:16px">🔔</span>
+        <span style="font-size:12px; color:var(--text);">Maç Alarmı & Bildirimler</span>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,rgba(255,209,102,0.1),rgba(255,153,0,0.1)); border:1px solid rgba(255,209,102,0.3); border-radius:14px; padding:16px; text-align:center; margin-bottom:14px;">
+      <div style="font-family:'Bebas Neue',sans-serif; font-size:40px; color:var(--gold); line-height:1;">₺99<span style="font-size:22px">.99</span><span style="font-size:18px; color:var(--muted)">/ay</span></div>
+      <div style="font-size:11px; color:var(--muted); margin-bottom:14px;">veya ₺799/yıl · %33 tasarruf</div>
+      <button onclick="goPage('premium'); closePremiumModal();" style="width:100%; padding:14px; background:linear-gradient(135deg,#ffd166,#ff9900); border:none; border-radius:10px; color:#000; font-weight:700; font-size:15px; cursor:pointer;">Premium'a Geç</button>
+    </div>
+
+    <button onclick="closePremiumModal()" style="width:100%; padding:12px; background:transparent; border:1px solid var(--border); border-radius:10px; color:var(--muted); font-size:13px; cursor:pointer; font-family:'Outfit',sans-serif;">Şimdi Değil</button>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<div class="bottom-nav">
+  <div class="nav-item active" onclick="goPage('home',this)">
+    <div class="nav-emoji">🔍</div>
+    <div class="nav-label">Analiz</div>
+  </div>
+  <div class="nav-item" onclick="goPage('home',this)">
+    <div class="nav-emoji">🏆</div>
+    <div class="nav-label">Ligler</div>
+  </div>
+  <div class="nav-item" onclick="goPage('home',this)">
+    <div class="nav-emoji"><span class="live-dot"></span>🔴</div>
+    <div class="nav-label">Canlı</div>
+  </div>
+  <div class="nav-item" onclick="goPage('premium',this)">
+    <div class="nav-emoji">⭐</div>
+    <div class="nav-label">Premium</div>
+  </div>
+</div>
+
+<script>
+  function closePremiumModal() {
+    document.getElementById('premium-modal').style.display = 'none';
+  }
+
+  const tabs = ['t-recent','t-stats','t-timing','t-ha','t-cards','t-players','t-alarm'];
+
+  function showAnalysis() {
+    // Show premium modal
+    document.getElementById('premium-modal').style.display = 'flex';
+  }
+
+  function switchTab(el, id) {
+    document.getElementById('premium-modal').style.display = 'flex';
+  }
+
+  function goPage(name, navEl) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  const teams = [
+    {emoji:'🦅', name:'Galatasaray'},
+    {emoji:'⭐', name:'Fenerbahçe'},
+    {emoji:'🦢', name:'Beşiktaş'},
+    {emoji:'🦁', name:'Trabzonspor'},
+    {emoji:'🔴', name:'Arsenal'},
+    {emoji:'👑', name:'Real Madrid'},
+    {emoji:'🔵', name:'Barcelona'},
+    {emoji:'🔵', name:'Man City'},
+    {emoji:'🔴', name:'Liverpool'},
+  ];
+
+  let teamIdx = { home: 0, away: 1 };
+
+  function pickTeam(side) {
+    teamIdx[side] = (teamIdx[side] + 1) % teams.length;
+    const t = teams[teamIdx[side]];
+    document.getElementById(side + '-emoji').textContent = t.emoji;
+    document.getElementById(side + '-name').textContent = t.name;
+  }
+</script>
+</body>
+</html>
