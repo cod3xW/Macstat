@@ -33,8 +33,10 @@ body {
   font-family: 'DM Sans', sans-serif;
   min-height: 100vh;
   max-width: 430px;
+  width: 100%;
   margin: 0 auto;
   overflow-x: hidden;
+  position: relative;
 }
 
 /* ── HEADER ── */
@@ -714,6 +716,11 @@ body {
   backdrop-filter: blur(10px);
   align-items: flex-end;
   justify-content: center;
+  max-width: 430px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  width: 100%;
 }
 
 .picker-overlay.open { display: flex; }
@@ -1095,6 +1102,11 @@ body {
   z-index: 400;
   background: var(--bg);
   overflow-y: auto;
+  max-width: 430px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  width: 100%;
 }
 
 .match-detail-overlay.open { display: block; }
@@ -1442,6 +1454,11 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  max-width: 430px;
+  left: 50%;
+  transform: translateX(-50%);
+  right: auto;
+  width: 100%;
 }
 
 .auth-card {
@@ -3390,7 +3407,7 @@ function selectTeamFromSearch(id, name, crest, league) {
 let currentDetailFixtureId = null;
 let detailDataCache = {};
 
-async function openMatchDetail(fixtureId, matchData) {
+async async function openMatchDetail(fixtureId, matchData) {
   currentDetailFixtureId = fixtureId;
   detailDataCache = {};
   document.getElementById('match-detail-overlay').classList.add('open');
@@ -3402,6 +3419,14 @@ async function openMatchDetail(fixtureId, matchData) {
   // Set basic info from matchData if available
   if (matchData) {
     setDetailScoreboard(matchData);
+  } else {
+    // Fetch match data if not provided
+    try {
+      const res = await fetch(`/api/fixtures?action=match&id=${fixtureId}`);
+      const data = await res.json();
+      const match = data.response?.[0];
+      if (match) setDetailScoreboard(match);
+    } catch(e) {}
   }
 
   // Load events first
