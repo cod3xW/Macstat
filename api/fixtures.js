@@ -13,6 +13,8 @@ export default async function handler(req, res) {
     url = `https://v3.football.api-sports.io/standings?league=${league}&season=2025`;
   } else if (action === 'upcoming') {
     url = `https://v3.football.api-sports.io/fixtures?league=${league}&next=10`;
+  } else if (action === 'nextmatches') {
+    url = `https://v3.football.api-sports.io/fixtures?team=${team}&next=5`;
   } else if (action === 'match') {
     url = `https://v3.football.api-sports.io/fixtures?id=${id}`;
   } else if (action === 'statistics') {
