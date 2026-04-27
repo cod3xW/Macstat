@@ -2444,39 +2444,7 @@ function sendGoalNotification(homeTeam, awayTeam, score) {
   }
 }
 
-// ═══ LIVE MATCH ═══
-const pitch = document.getElementById('pitch');
-const pitchBall = document.getElementById('pitch-ball');
-
-function addPlayerDot(cls, x, y) {
-  const d = document.createElement('div');
-  d.className = 'pitch-player ' + cls;
-  d.style.left = x + '%'; d.style.top = y + '%';
-  pitch.appendChild(d);
-  return d;
-}
-
-const hDots = [addPlayerDot('home',15,30),addPlayerDot('home',15,70),addPlayerDot('home',35,20),addPlayerDot('home',35,80),addPlayerDot('home',42,50)];
-const aDots = [addPlayerDot('away',85,30),addPlayerDot('away',85,70),addPlayerDot('away',65,20),addPlayerDot('away',65,80),addPlayerDot('away',58,50)];
-
-function movePlayers() {
-  [...hDots,...aDots].forEach(d => {
-    const newL = Math.max(5, Math.min(95, parseFloat(d.style.left) + (Math.random()-0.5)*7));
-    const newT = Math.max(10, Math.min(90, parseFloat(d.style.top) + (Math.random()-0.5)*12));
-    d.style.left = newL + '%'; d.style.top = newT + '%';
-  });
-}
-
-function flashEvent(x, y, color) {
-  const f = document.createElement('div');
-  f.className = 'event-flash';
-  f.style.left = x+'%'; f.style.top = y+'%'; f.style.background = color;
-  pitch.appendChild(f);
-  setTimeout(() => f.remove(), 1100);
-}
-
 // ═══ PITCH PLAYERS ═══
-const pitch = document.getElementById('pitch');
 const pitchBall = document.getElementById('pitch-ball');
 let hDots = [], aDots = [];
 
@@ -2516,6 +2484,7 @@ function flashEvent(x, y, color) {
 }
 
 initPitchPlayers();
+
 function addLiveEvent(ev, prepend = false) {
   const div = document.createElement('div');
   div.className = 'event-row';
