@@ -1,0 +1,2 @@
+# Macstat
+Macstats in Claude
