@@ -1094,6 +1094,204 @@ body {
 
 
 
+
+/* ── UPCOMING MATCH CARD ── */
+.upcoming-match-card {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.upcoming-match-card:hover { border-color: var(--accent); }
+
+.upcoming-match-vs {
+  flex: 1;
+}
+
+.upcoming-match-teams {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.upcoming-team-logo {
+  width: 20px; height: 20px;
+  object-fit: contain;
+}
+
+.upcoming-vs-text {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.upcoming-match-meta {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.upcoming-match-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  text-align: right;
+  min-width: 50px;
+}
+
+/* ── MATCH RESULT DETAIL IN ANALYSIS ── */
+.match-card-clickable {
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.match-card-clickable:hover {
+  border-color: var(--accent) !important;
+}
+
+.match-card-clickable:active {
+  transform: scale(0.98);
+}
+
+/* ── BETTER LINEUP PITCH ── */
+.lineup-pitch-v2 {
+  width: 100%;
+  height: 380px;
+  background: linear-gradient(180deg, #1a5e2a 0%, #1e7030 25%, #1e7030 75%, #1a5e2a 100%);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 2px solid rgba(255,255,255,0.08);
+}
+
+.pitch-stripe {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent,
+    transparent 38px,
+    rgba(0,0,0,0.06) 38px,
+    rgba(0,0,0,0.06) 76px
+  );
+}
+
+.pitch-border {
+  position: absolute;
+  inset: 6px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+}
+
+.pitch-center-line-h {
+  position: absolute;
+  top: 50%; left: 6px; right: 6px;
+  height: 1.5px;
+  background: rgba(255,255,255,0.3);
+}
+
+.pitch-center-circle-v2 {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px; height: 70px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+}
+
+.pitch-penalty-top {
+  position: absolute;
+  top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 45%; height: 18%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-top: none;
+}
+
+.pitch-penalty-bottom {
+  position: absolute;
+  bottom: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 45%; height: 18%;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-bottom: none;
+}
+
+.pitch-goal-top {
+  position: absolute;
+  top: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 18%; height: 6%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-top: none;
+}
+
+.pitch-goal-bottom {
+  position: absolute;
+  bottom: 6px; left: 50%;
+  transform: translateX(-50%);
+  width: 18%; height: 6%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  border-bottom: none;
+}
+
+.lineup-player-v2 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.lineup-dot-v2 {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 800;
+  margin: 0 auto 3px;
+  border: 2px solid rgba(255,255,255,0.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.lineup-dot-v2.home { background: var(--accent); color: #000; }
+.lineup-dot-v2.away { background: var(--accent2); color: #fff; }
+
+.lineup-name-v2 {
+  font-size: 8px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  max-width: 52px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: rgba(0,0,0,0.4);
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+/* ── LIVE MATCH SIMULATION ── */
+.sim-player {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 1.5s ease, top 1.5s ease;
+  z-index: 5;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.sim-player.home { background: var(--accent); color: var(--accent); }
+.sim-player.away { background: var(--accent2); color: var(--accent2); }
+
 /* ── MATCH DETAIL PAGE ── */
 .match-detail-overlay {
   display: none;
@@ -1678,24 +1876,33 @@ body {
 <div class="page active" id="page-analysis">
 
   <div class="hero">
-    <div class="hero-label">Maç Seç & Analiz Et</div>
+    <div class="hero-label">Takım Seç & Analiz Et</div>
     <div class="matchup-card">
-      <div class="teams-selector">
-        <div class="team-btn" onclick="openPicker('home')">
-          <img class="team-btn-crest" id="home-crest" src="https://media.api-sports.io/football/teams/645.png" alt="">
-          <div class="team-btn-name" id="home-name">Galatasaray</div>
-          <div class="team-btn-league" id="home-league">Süper Lig</div>
+      <!-- STEP 1: Team selection -->
+      <div id="step-team-select">
+        <div class="team-btn" onclick="openPicker('main')" style="width:100%;display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;text-align:left;">
+          <img class="team-btn-crest" id="main-crest" src="https://media.api-sports.io/football/teams/645.png" alt="" style="width:44px;height:44px;">
+          <div style="flex:1">
+            <div class="team-btn-name" id="main-name" style="font-size:16px;">Galatasaray</div>
+            <div class="team-btn-league" id="main-league">Süper Lig</div>
+          </div>
+          <div style="color:var(--muted);font-size:18px;">›</div>
         </div>
-        <div><div class="vs-pill">VS</div></div>
-        <div class="team-btn" onclick="openPicker('away')">
-          <img class="team-btn-crest" id="away-crest" src="https://media.api-sports.io/football/teams/611.png" alt="">
-          <div class="team-btn-name" id="away-name">Fenerbahçe</div>
-          <div class="team-btn-league" id="away-league">Süper Lig</div>
-        </div>
+        <button class="analyze-btn" style="margin-top:12px;" onclick="loadUpcomingMatches()">
+          <span>📅</span> Yaklaşan Maçları Getir
+        </button>
       </div>
-      <button class="analyze-btn" id="analyze-btn" onclick="runAnalysis()">
-        <span>🔍</span> Analiz Et
-      </button>
+
+      <!-- STEP 2: Upcoming matches list -->
+      <div id="step-upcoming" style="display:none;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+          <img id="upcoming-team-crest" src="" style="width:24px;height:24px;object-fit:contain;">
+          <div style="font-size:13px;font-weight:700;" id="upcoming-team-name">-</div>
+          <div style="margin-left:auto;font-size:11px;color:var(--accent);cursor:pointer;" onclick="resetTeamSelect()">← Değiştir</div>
+        </div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Yaklaşan Maçlar — Analiz için seç:</div>
+        <div id="upcoming-matches-list"></div>
+      </div>
     </div>
   </div>
 
@@ -2292,20 +2499,21 @@ const TEAMS = {
   ],
 };
 
+let selectedMain = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
 let selectedHome = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
 let selectedAway = {id:611, name:'Fenerbahçe',  league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/611.png'};
-let pickerTarget = 'home';
+let pickerTarget = 'main';
 
 // ═══ PICKER ═══
 function openPicker(side) {
   pickerTarget = side;
-  const content = document.getElementById('picker-content');
-  content.innerHTML = Object.entries(TEAMS).map(([league, teams]) => `
+  const pickerContent = document.getElementById('picker-content');
+  pickerContent.innerHTML = Object.entries(TEAMS).map(([league, teams]) => `
     <div class="league-group">
       <div class="league-label">${league}</div>
       <div class="team-grid">
         ${teams.map(t => `
-          <div class="team-option" onclick="selectTeam(${t.id},'${t.name}','${league}','${t.crest}')">
+          <div class="team-option" onclick="selectTeam(${t.id},'${t.name.replace(/'/g,"\'")}','${league}','${t.crest}')">
             <img src="${t.crest}" alt="${t.name}" onerror="this.style.display='none'">
             <div class="team-option-name">${t.name}</div>
           </div>
@@ -2318,18 +2526,111 @@ function openPicker(side) {
 
 function selectTeam(id, name, league, crest) {
   const team = {id, name, league, crest};
-  if (pickerTarget === 'home') {
+  if (pickerTarget === 'main') {
+    selectedMain = team;
+    document.getElementById('main-crest').src = crest;
+    document.getElementById('main-name').textContent = name;
+    document.getElementById('main-league').textContent = league;
+  } else if (pickerTarget === 'home') {
     selectedHome = team;
-    document.getElementById('home-crest').src = crest;
-    document.getElementById('home-name').textContent = name;
-    document.getElementById('home-league').textContent = league;
   } else {
     selectedAway = team;
-    document.getElementById('away-crest').src = crest;
-    document.getElementById('away-name').textContent = name;
-    document.getElementById('away-league').textContent = league;
   }
   closePicker();
+}
+
+function resetTeamSelect() {
+  document.getElementById('step-upcoming').style.display = 'none';
+  document.getElementById('step-team-select').style.display = 'block';
+  document.getElementById('results-wrap').style.display = 'none';
+}
+
+async function loadUpcomingMatches() {
+  const team = selectedMain;
+  document.getElementById('step-team-select').style.display = 'none';
+  document.getElementById('step-upcoming').style.display = 'block';
+  document.getElementById('upcoming-team-crest').src = team.crest;
+  document.getElementById('upcoming-team-name').textContent = team.name;
+
+  const list = document.getElementById('upcoming-matches-list');
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+
+  try {
+    const res = await fetch('/api/fixtures?action=nextmatches&team=' + team.id);
+    const data = await res.json();
+    const matches = (data.response || []).slice(0, 5);
+
+    if (!matches.length) {
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Yaklaşan maç bulunamadı</div>';
+      return;
+    }
+
+    list.innerHTML = matches.map(m => {
+      const isHome = m.teams.home.id === team.id;
+      const opponent = isHome ? m.teams.away : m.teams.home;
+      const venue = isHome ? '🏠 Ev' : '✈️ Deplasman';
+      const date = new Date(m.fixture.date).toLocaleDateString('tr-TR', {day:'numeric', month:'short', weekday:'short'});
+      const time = new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+
+      return `<div class="upcoming-match-card" onclick="analyzeUpcomingMatch(${m.fixture.id}, ${team.id}, ${opponent.id}, '${team.name.replace(/'/g,"\'")}', '${opponent.name.replace(/'/g,"\'")}', '${team.crest}', '${opponent.crest}', '${team.league}')">
+        <div class="upcoming-match-vs">
+          <div class="upcoming-match-teams">
+            <img class="upcoming-team-logo" src="${team.crest}" onerror="this.style.display='none'">
+            <div style="font-size:12px;font-weight:700;">${team.name}</div>
+            <div class="upcoming-vs-text">vs</div>
+            <img class="upcoming-team-logo" src="${opponent.logo}" onerror="this.style.display='none'">
+            <div style="font-size:12px;font-weight:700;">${opponent.name}</div>
+          </div>
+          <div class="upcoming-match-meta">${venue} • ${m.league.name} • ${m.league.round || ''}</div>
+        </div>
+        <div class="upcoming-match-date">
+          <div>${date}</div>
+          <div style="font-size:10px;color:var(--muted);">${time}</div>
+          <div style="font-size:9px;color:var(--accent);margin-top:2px;">Analiz Et ›</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+  }
+}
+
+async function analyzeUpcomingMatch(fixtureId, homeId, awayId, homeName, awayName, homeCrest, awayCrest, league) {
+  // Set selected teams
+  selectedHome = {id: homeId, name: homeName, league: league, crest: homeCrest};
+  selectedAway = {id: awayId, name: awayName, league: league, crest: awayCrest};
+
+  // Show results section
+  document.getElementById('results-wrap').style.display = 'block';
+  document.getElementById('ai-insight').textContent = 'Veriler hesaplanıyor...';
+
+  try {
+    const [homeRes, awayRes] = await Promise.all([
+      fetch('/api/fixtures?team=' + homeId).then(r => r.json()),
+      fetch('/api/fixtures?team=' + awayId).then(r => r.json()),
+    ]);
+
+    const homeMatches = homeRes.response || [];
+    const awayMatches = awayRes.response || [];
+
+    renderAI(homeMatches, awayMatches);
+    renderH2H(homeMatches, awayMatches);
+    renderKG(homeMatches, awayMatches);
+    renderMatches(homeMatches, homeId, 'home-match-list');
+    renderMatches(awayMatches, awayId, 'away-match-list');
+    renderStats(homeMatches, awayMatches);
+    renderTiming(homeMatches, awayMatches);
+    renderHA(homeMatches, awayMatches);
+    renderReferee(homeMatches, awayMatches);
+    renderPlayers(homeMatches, awayMatches);
+
+    document.getElementById('home-matches-label').textContent = homeName.toUpperCase() + ' — SON MAÇLAR';
+    document.getElementById('away-matches-label').textContent = awayName.toUpperCase() + ' — SON MAÇLAR';
+
+    document.getElementById('results-wrap').scrollIntoView({behavior:'smooth', block:'start'});
+  } catch(e) {
+    document.getElementById('ai-insight').textContent = '⚠️ Veri yüklenemedi.';
+  }
 }
 
 function closePicker() {
@@ -3165,31 +3466,52 @@ function sendGoalNotification(homeTeam, awayTeam, score) {
   }
 }
 
-// ═══ PITCH PLAYERS ═══
+// ═══ PITCH SIMULATION ═══
 const pitchBall = document.getElementById('pitch-ball');
 let hDots = [], aDots = [];
+let simInterval = null;
+let ballInterval = null;
+let currentMatchEvents = [];
+let simEventIndex = 0;
 
 function initPitchPlayers() {
   const p = document.getElementById('pitch');
-  if (!p || hDots.length > 0) return;
-  [[15,30],[15,70],[35,20],[35,80],[42,50]].forEach(([x,y]) => {
+  if (!p) return;
+  // Clear existing dots
+  hDots.forEach(d => d.remove());
+  aDots.forEach(d => d.remove());
+  hDots = []; aDots = [];
+
+  // Home players (left side - attack upward)
+  [[12,50],[22,25],[22,50],[22,75],[35,15],[35,40],[35,60],[35,85],[48,30],[48,55],[48,75]].forEach(([x,y], i) => {
     const d = document.createElement('div');
-    d.className = 'pitch-player home';
+    d.className = 'sim-player home';
     d.style.left = x+'%'; d.style.top = y+'%';
     p.appendChild(d); hDots.push(d);
   });
-  [[85,30],[85,70],[65,20],[65,80],[58,50]].forEach(([x,y]) => {
+
+  // Away players (right side)
+  [[88,50],[78,25],[78,50],[78,75],[65,15],[65,40],[65,60],[65,85],[52,30],[52,55],[52,75]].forEach(([x,y], i) => {
     const d = document.createElement('div');
-    d.className = 'pitch-player away';
+    d.className = 'sim-player away';
     d.style.left = x+'%'; d.style.top = y+'%';
     p.appendChild(d); aDots.push(d);
   });
 }
 
 function movePlayers() {
-  [...hDots,...aDots].forEach(d => {
-    const newL = Math.max(5, Math.min(95, parseFloat(d.style.left) + (Math.random()-0.5)*7));
-    const newT = Math.max(10, Math.min(90, parseFloat(d.style.top) + (Math.random()-0.5)*12));
+  hDots.forEach((d, i) => {
+    const baseX = [12,22,22,22,35,35,35,35,48,48,48][i] || 30;
+    const baseY = [50,25,50,75,15,40,60,85,30,55,75][i] || 50;
+    const newL = Math.max(5, Math.min(65, baseX + (Math.random()-0.5)*12));
+    const newT = Math.max(5, Math.min(95, baseY + (Math.random()-0.5)*15));
+    d.style.left = newL + '%'; d.style.top = newT + '%';
+  });
+  aDots.forEach((d, i) => {
+    const baseX = [88,78,78,78,65,65,65,65,52,52,52][i] || 70;
+    const baseY = [50,25,50,75,15,40,60,85,30,55,75][i] || 50;
+    const newL = Math.max(35, Math.min(95, baseX + (Math.random()-0.5)*12));
+    const newT = Math.max(5, Math.min(95, baseY + (Math.random()-0.5)*15));
     d.style.left = newL + '%'; d.style.top = newT + '%';
   });
 }
@@ -3202,6 +3524,59 @@ function flashEvent(x, y, color) {
   f.style.left = x+'%'; f.style.top = y+'%'; f.style.background = color;
   p.appendChild(f);
   setTimeout(() => f.remove(), 1100);
+}
+
+function startLiveSimulation(events, homeTeamId) {
+  currentMatchEvents = events || [];
+  simEventIndex = 0;
+
+  if (ballInterval) clearInterval(ballInterval);
+  if (simInterval) clearInterval(simInterval);
+
+  initPitchPlayers();
+
+  // Animate ball randomly
+  ballInterval = setInterval(function() {
+    const ball = document.getElementById('pitch-ball');
+    if (ball) {
+      ball.style.left = (15 + Math.random() * 70) + '%';
+      ball.style.top = (10 + Math.random() * 80) + '%';
+    }
+    movePlayers();
+  }, 2500);
+
+  // Replay events on pitch
+  if (currentMatchEvents.length > 0) {
+    simInterval = setInterval(function() {
+      if (simEventIndex >= currentMatchEvents.length) {
+        clearInterval(simInterval);
+        return;
+      }
+      var ev = currentMatchEvents[simEventIndex];
+      simEventIndex++;
+
+      var isHome = ev.team && ev.team.id === homeTeamId;
+      var x, y, color;
+
+      if (ev.type === 'Goal') {
+        x = isHome ? 88 : 12; y = 50;
+        color = isHome ? 'rgba(0,240,168,0.7)' : 'rgba(255,61,107,0.7)';
+        var ball = document.getElementById('pitch-ball');
+        if (ball) { ball.style.left = x+'%'; ball.style.top = y+'%'; }
+        flashEvent(x, y, color);
+        // Goal overlay
+        var overlay = document.getElementById('goal-overlay');
+        if (overlay) {
+          overlay.classList.add('show');
+          setTimeout(function() { overlay.classList.remove('show'); }, 2500);
+        }
+      } else if (ev.type === 'Card') {
+        x = 30 + Math.random() * 40; y = 20 + Math.random() * 60;
+        color = ev.detail === 'Yellow Card' ? 'rgba(255,204,68,0.5)' : 'rgba(255,61,107,0.5)';
+        flashEvent(x, y, color);
+      }
+    }, 3000);
+  }
 }
 
 initPitchPlayers();
@@ -3276,14 +3651,10 @@ async function openMatchDetail(fixtureId) {
       });
     }
 
-    // Animate pitch ball
-    setInterval(() => {
-      if (pitchBall) {
-        pitchBall.style.left = (20+Math.random()*60) + '%';
-        pitchBall.style.top = (15+Math.random()*70) + '%';
-      }
-    }, 3000);
-    setInterval(movePlayers, 4000);
+    // Start pitch simulation with real events
+    if (match.events) {
+      startLiveSimulation(match.events, match.teams.home.id);
+    }
 
   } catch(e) {
     document.getElementById('events-list').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
@@ -3659,28 +4030,42 @@ async function loadDetailLineup(fixtureId) {
 
     const pitchHTML = `
       <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:11px;font-weight:700;">
-        <span style="color:var(--accent)">${home?.team?.name || '-'} (${home?.formation || '-'})</span>
-        <span style="color:var(--accent2)">${away?.team?.name || '-'} (${away?.formation || '-'})</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);"></div>
+          <span style="color:var(--accent)">${home?.team?.name || '-'}</span>
+          <span style="color:var(--muted);font-size:10px;">(${home?.formation || '-'})</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="color:var(--muted);font-size:10px;">(${away?.formation || '-'})</span>
+          <span style="color:var(--accent2)">${away?.team?.name || '-'}</span>
+          <div style="width:10px;height:10px;border-radius:50%;background:var(--accent2);"></div>
+        </div>
       </div>
-      <div class="lineup-pitch">
-        <div class="lineup-pitch-lines"></div>
-        <div class="lineup-circle"></div>
+      <div class="lineup-pitch-v2">
+        <div class="pitch-stripe"></div>
+        <div class="pitch-border"></div>
+        <div class="pitch-center-line-h"></div>
+        <div class="pitch-center-circle-v2"></div>
+        <div class="pitch-penalty-top"></div>
+        <div class="pitch-penalty-bottom"></div>
+        <div class="pitch-goal-top"></div>
+        <div class="pitch-goal-bottom"></div>
         ${homePlayers.slice(0,11).map((p, i) => {
           const pos = homePositions[i] || {x:50, y:50};
-          const surname = p.player?.name?.split(' ').pop() || p.player?.name || '?';
+          const surname = (p.player?.name || '?').split(' ').pop();
           const num = p.player?.number || '';
-          return `<div class="lineup-player" style="left:${pos.x}%;top:${pos.y}%">
-            <div class="lineup-player-dot home">${num}</div>
-            <div class="lineup-player-name">${surname}</div>
+          return `<div class="lineup-player-v2" style="left:${pos.x}%;top:${pos.y}%">
+            <div class="lineup-dot-v2 home">${num}</div>
+            <div class="lineup-name-v2">${surname}</div>
           </div>`;
         }).join('')}
         ${awayPlayers.slice(0,11).map((p, i) => {
           const pos = awayPositions[i] || {x:50, y:50};
-          const surname = p.player?.name?.split(' ').pop() || p.player?.name || '?';
+          const surname = (p.player?.name || '?').split(' ').pop();
           const num = p.player?.number || '';
-          return `<div class="lineup-player" style="left:${pos.x}%;top:${pos.y}%">
-            <div class="lineup-player-dot away">${num}</div>
-            <div class="lineup-player-name">${surname}</div>
+          return `<div class="lineup-player-v2" style="left:${pos.x}%;top:${pos.y}%">
+            <div class="lineup-dot-v2 away">${num}</div>
+            <div class="lineup-name-v2">${surname}</div>
           </div>`;
         }).join('')}
       </div>`;
