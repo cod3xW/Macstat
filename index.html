@@ -1165,7 +1165,7 @@ body {
       <div class="h2h-row">
         <div class="h2h-card">
           <div class="h2h-num g" id="h2h-w">-</div>
-          <div class="h2h-label" id="h2h-w-label">Galibiyet</div>
+          <div class="h2h-label" id="h2h-w-label">Ev Sahibi G</div>
         </div>
         <div class="h2h-card">
           <div class="h2h-num d" id="h2h-d">-</div>
@@ -1173,7 +1173,7 @@ body {
         </div>
         <div class="h2h-card">
           <div class="h2h-num l" id="h2h-l">-</div>
-          <div class="h2h-label" id="h2h-l-label">Mağlubiyet</div>
+          <div class="h2h-label" id="h2h-l-label">Deplasman G</div>
         </div>
       </div>
     </div>
@@ -1615,11 +1615,12 @@ function renderAI(hm, am) {
 // ── H2H ──
 function renderH2H(hm, am) {
   const hs = calcStats(hm, selectedHome.id);
+  const as = calcStats(am, selectedAway.id);
   document.getElementById('h2h-w').textContent = hs.w;
   document.getElementById('h2h-d').textContent = hs.d;
-  document.getElementById('h2h-l').textContent = hs.l;
-  document.getElementById('h2h-w-label').textContent = selectedHome.name + ' Galibiyet';
-  document.getElementById('h2h-l-label').textContent = selectedHome.name + ' Mağlubiyet';
+  document.getElementById('h2h-l').textContent = as.w;
+  document.getElementById('h2h-w-label').textContent = selectedHome.name + ' G';
+  document.getElementById('h2h-l-label').textContent = selectedAway.name + ' G';
 }
 
 // ── KG ──
