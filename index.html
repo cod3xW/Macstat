@@ -2794,13 +2794,12 @@ body {
 <script>
 // ═══ TEAMS DATABASE ═══
 const TEAMS = {
-  'Süper Lig': [
+  '🇹🇷 Süper Lig': [
     {id:645,  name:'Galatasaray',    crest:'https://media.api-sports.io/football/teams/645.png'},
     {id:611,  name:'Fenerbahçe',     crest:'https://media.api-sports.io/football/teams/611.png'},
     {id:549,  name:'Beşiktaş',       crest:'https://media.api-sports.io/football/teams/549.png'},
     {id:998,  name:'Trabzonspor',    crest:'https://media.api-sports.io/football/teams/998.png'},
     {id:564,  name:'Başakşehir',     crest:'https://media.api-sports.io/football/teams/564.png'},
-    {id:1002, name:'Sivasspor',      crest:'https://media.api-sports.io/football/teams/1002.png'},
     {id:994,  name:'Göztepe',        crest:'https://media.api-sports.io/football/teams/994.png'},
     {id:601,  name:'Ankaragücü',     crest:'https://media.api-sports.io/football/teams/601.png'},
     {id:603,  name:'Kayserispor',    crest:'https://media.api-sports.io/football/teams/603.png'},
@@ -2813,44 +2812,154 @@ const TEAMS = {
     {id:997,  name:'Gençlerbirliği', crest:'https://media.api-sports.io/football/teams/997.png'},
     {id:7411, name:'Kocaelispor',    crest:'https://media.api-sports.io/football/teams/7411.png'},
     {id:16794,name:'Eyüpspor',       crest:'https://media.api-sports.io/football/teams/16794.png'},
+    {id:1002, name:'Sivasspor',      crest:'https://media.api-sports.io/football/teams/1002.png'},
   ],
-  'Premier Lig': [
-    {id:40, name:'Liverpool',     crest:'https://media.api-sports.io/football/teams/40.png'},
-    {id:50, name:'Man City',      crest:'https://media.api-sports.io/football/teams/50.png'},
-    {id:42, name:'Arsenal',       crest:'https://media.api-sports.io/football/teams/42.png'},
-    {id:33, name:'Man United',    crest:'https://media.api-sports.io/football/teams/33.png'},
-    {id:49, name:'Chelsea',       crest:'https://media.api-sports.io/football/teams/49.png'},
-    {id:47, name:'Tottenham',     crest:'https://media.api-sports.io/football/teams/47.png'},
-    {id:66, name:'Aston Villa',   crest:'https://media.api-sports.io/football/teams/66.png'},
-    {id:55, name:'Newcastle',     crest:'https://media.api-sports.io/football/teams/55.png'},
-    {id:51, name:'Brighton',      crest:'https://media.api-sports.io/football/teams/51.png'},
-    {id:48, name:'West Ham',      crest:'https://media.api-sports.io/football/teams/48.png'},
+  '🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier Lig': [
+    {id:40,  name:'Liverpool',      crest:'https://media.api-sports.io/football/teams/40.png'},
+    {id:50,  name:'Man City',       crest:'https://media.api-sports.io/football/teams/50.png'},
+    {id:42,  name:'Arsenal',        crest:'https://media.api-sports.io/football/teams/42.png'},
+    {id:33,  name:'Man United',     crest:'https://media.api-sports.io/football/teams/33.png'},
+    {id:49,  name:'Chelsea',        crest:'https://media.api-sports.io/football/teams/49.png'},
+    {id:47,  name:'Tottenham',      crest:'https://media.api-sports.io/football/teams/47.png'},
+    {id:66,  name:'Aston Villa',    crest:'https://media.api-sports.io/football/teams/66.png'},
+    {id:55,  name:'Newcastle',      crest:'https://media.api-sports.io/football/teams/55.png'},
+    {id:51,  name:'Brighton',       crest:'https://media.api-sports.io/football/teams/51.png'},
+    {id:48,  name:'West Ham',       crest:'https://media.api-sports.io/football/teams/48.png'},
+    {id:34,  name:'Newcastle',      crest:'https://media.api-sports.io/football/teams/34.png'},
+    {id:45,  name:'Everton',        crest:'https://media.api-sports.io/football/teams/45.png'},
+    {id:46,  name:'Leicester',      crest:'https://media.api-sports.io/football/teams/46.png'},
+    {id:35,  name:'Bournemouth',    crest:'https://media.api-sports.io/football/teams/35.png'},
+    {id:36,  name:'Fulham',         crest:'https://media.api-sports.io/football/teams/36.png'},
+    {id:39,  name:'Wolves',         crest:'https://media.api-sports.io/football/teams/39.png'},
+    {id:52,  name:'Crystal Palace', crest:'https://media.api-sports.io/football/teams/52.png'},
+    {id:65,  name:'Nottm Forest',   crest:'https://media.api-sports.io/football/teams/65.png'},
+    {id:67,  name:'Newcastle',      crest:'https://media.api-sports.io/football/teams/67.png'},
+    {id:71,  name:'Brentford',      crest:'https://media.api-sports.io/football/teams/71.png'},
   ],
-  'La Liga': [
-    {id:529, name:'Barcelona',   crest:'https://media.api-sports.io/football/teams/529.png'},
-    {id:541, name:'Real Madrid', crest:'https://media.api-sports.io/football/teams/541.png'},
-    {id:530, name:'Atletico',    crest:'https://media.api-sports.io/football/teams/530.png'},
-    {id:536, name:'Sevilla',     crest:'https://media.api-sports.io/football/teams/536.png'},
-    {id:533, name:'Villarreal',  crest:'https://media.api-sports.io/football/teams/533.png'},
-    {id:532, name:'Valencia',    crest:'https://media.api-sports.io/football/teams/532.png'},
+  '🇪🇸 La Liga': [
+    {id:529, name:'Barcelona',    crest:'https://media.api-sports.io/football/teams/529.png'},
+    {id:541, name:'Real Madrid',  crest:'https://media.api-sports.io/football/teams/541.png'},
+    {id:530, name:'Atletico',     crest:'https://media.api-sports.io/football/teams/530.png'},
+    {id:536, name:'Sevilla',      crest:'https://media.api-sports.io/football/teams/536.png'},
+    {id:533, name:'Villarreal',   crest:'https://media.api-sports.io/football/teams/533.png'},
+    {id:532, name:'Valencia',     crest:'https://media.api-sports.io/football/teams/532.png'},
+    {id:543, name:'Real Betis',   crest:'https://media.api-sports.io/football/teams/543.png'},
+    {id:546, name:'Real Sociedad',crest:'https://media.api-sports.io/football/teams/546.png'},
+    {id:538, name:'Celta Vigo',   crest:'https://media.api-sports.io/football/teams/538.png'},
+    {id:540, name:'Espanyol',     crest:'https://media.api-sports.io/football/teams/540.png'},
+    {id:534, name:'Las Palmas',   crest:'https://media.api-sports.io/football/teams/534.png'},
+    {id:547, name:'Girona',       crest:'https://media.api-sports.io/football/teams/547.png'},
+    {id:548, name:'Osasuna',      crest:'https://media.api-sports.io/football/teams/548.png'},
+    {id:723, name:'Getafe',       crest:'https://media.api-sports.io/football/teams/723.png'},
+    {id:531, name:'Athletic Club',crest:'https://media.api-sports.io/football/teams/531.png'},
   ],
-  'Bundesliga': [
+  '🇩🇪 Bundesliga': [
     {id:157, name:'Bayern',           crest:'https://media.api-sports.io/football/teams/157.png'},
     {id:165, name:'Dortmund',         crest:'https://media.api-sports.io/football/teams/165.png'},
     {id:168, name:'Bayer Leverkusen', crest:'https://media.api-sports.io/football/teams/168.png'},
     {id:173, name:'RB Leipzig',       crest:'https://media.api-sports.io/football/teams/173.png'},
+    {id:169, name:'Eintracht',        crest:'https://media.api-sports.io/football/teams/169.png'},
+    {id:163, name:'Borussia MG',      crest:'https://media.api-sports.io/football/teams/163.png'},
+    {id:167, name:'Hoffenheim',       crest:'https://media.api-sports.io/football/teams/167.png'},
+    {id:161, name:'Freiburg',         crest:'https://media.api-sports.io/football/teams/161.png'},
+    {id:164, name:'Wolfsburg',        crest:'https://media.api-sports.io/football/teams/164.png'},
+    {id:172, name:'Union Berlin',     crest:'https://media.api-sports.io/football/teams/172.png'},
+    {id:170, name:'Mainz',            crest:'https://media.api-sports.io/football/teams/170.png'},
+    {id:159, name:'Hertha',           crest:'https://media.api-sports.io/football/teams/159.png'},
+    {id:162, name:'Werder Bremen',    crest:'https://media.api-sports.io/football/teams/162.png'},
+    {id:174, name:'Stuttgart',        crest:'https://media.api-sports.io/football/teams/174.png'},
+    {id:176, name:'Augsburg',         crest:'https://media.api-sports.io/football/teams/176.png'},
   ],
-  'Serie A': [
-    {id:489, name:'AC Milan',  crest:'https://media.api-sports.io/football/teams/489.png'},
-    {id:505, name:'Inter',     crest:'https://media.api-sports.io/football/teams/505.png'},
-    {id:496, name:'Juventus',  crest:'https://media.api-sports.io/football/teams/496.png'},
-    {id:492, name:'Napoli',    crest:'https://media.api-sports.io/football/teams/492.png'},
-    {id:497, name:'Roma',      crest:'https://media.api-sports.io/football/teams/497.png'},
+  '🇮🇹 Serie A': [
+    {id:489, name:'AC Milan',    crest:'https://media.api-sports.io/football/teams/489.png'},
+    {id:505, name:'Inter',       crest:'https://media.api-sports.io/football/teams/505.png'},
+    {id:496, name:'Juventus',    crest:'https://media.api-sports.io/football/teams/496.png'},
+    {id:492, name:'Napoli',      crest:'https://media.api-sports.io/football/teams/492.png'},
+    {id:497, name:'Roma',        crest:'https://media.api-sports.io/football/teams/497.png'},
+    {id:487, name:'Lazio',       crest:'https://media.api-sports.io/football/teams/487.png'},
+    {id:488, name:'Fiorentina',  crest:'https://media.api-sports.io/football/teams/488.png'},
+    {id:500, name:'Bologna',     crest:'https://media.api-sports.io/football/teams/500.png'},
+    {id:494, name:'Udinese',     crest:'https://media.api-sports.io/football/teams/494.png'},
+    {id:499, name:'Atalanta',    crest:'https://media.api-sports.io/football/teams/499.png'},
+    {id:490, name:'Parma',       crest:'https://media.api-sports.io/football/teams/490.png'},
+    {id:495, name:'Genoa',       crest:'https://media.api-sports.io/football/teams/495.png'},
+    {id:502, name:'Torino',      crest:'https://media.api-sports.io/football/teams/502.png'},
+    {id:503, name:'Sassuolo',    crest:'https://media.api-sports.io/football/teams/503.png'},
+    {id:504, name:'Verona',      crest:'https://media.api-sports.io/football/teams/504.png'},
   ],
-  'Ligue 1': [
-    {id:85, name:'PSG',     crest:'https://media.api-sports.io/football/teams/85.png'},
-    {id:91, name:'Monaco',  crest:'https://media.api-sports.io/football/teams/91.png'},
-    {id:80, name:'Lyon',    crest:'https://media.api-sports.io/football/teams/80.png'},
+  '🇫🇷 Ligue 1': [
+    {id:85,  name:'PSG',          crest:'https://media.api-sports.io/football/teams/85.png'},
+    {id:91,  name:'Monaco',       crest:'https://media.api-sports.io/football/teams/91.png'},
+    {id:80,  name:'Lyon',         crest:'https://media.api-sports.io/football/teams/80.png'},
+    {id:81,  name:'Marseille',    crest:'https://media.api-sports.io/football/teams/81.png'},
+    {id:82,  name:'Nice',         crest:'https://media.api-sports.io/football/teams/82.png'},
+    {id:84,  name:'Lille',        crest:'https://media.api-sports.io/football/teams/84.png'},
+    {id:93,  name:'Rennes',       crest:'https://media.api-sports.io/football/teams/93.png'},
+    {id:95,  name:'Strasbourg',   crest:'https://media.api-sports.io/football/teams/95.png'},
+    {id:97,  name:'Lens',         crest:'https://media.api-sports.io/football/teams/97.png'},
+    {id:106, name:'Nantes',       crest:'https://media.api-sports.io/football/teams/106.png'},
+  ],
+  '🇳🇱 Eredivisie': [
+    {id:194, name:'Ajax',         crest:'https://media.api-sports.io/football/teams/194.png'},
+    {id:197, name:'PSV',          crest:'https://media.api-sports.io/football/teams/197.png'},
+    {id:196, name:'Feyenoord',    crest:'https://media.api-sports.io/football/teams/196.png'},
+    {id:209, name:'AZ Alkmaar',   crest:'https://media.api-sports.io/football/teams/209.png'},
+    {id:210, name:'Utrecht',      crest:'https://media.api-sports.io/football/teams/210.png'},
+    {id:213, name:'Groningen',    crest:'https://media.api-sports.io/football/teams/213.png'},
+    {id:211, name:'Twente',       crest:'https://media.api-sports.io/football/teams/211.png'},
+  ],
+  '🇵🇹 Primeira Liga': [
+    {id:212, name:'Porto',        crest:'https://media.api-sports.io/football/teams/212.png'},
+    {id:211, name:'Benfica',      crest:'https://media.api-sports.io/football/teams/211.png'},
+    {id:228, name:'Sporting CP',  crest:'https://media.api-sports.io/football/teams/228.png'},
+    {id:229, name:'Braga',        crest:'https://media.api-sports.io/football/teams/229.png'},
+    {id:232, name:'Vitoria SC',   crest:'https://media.api-sports.io/football/teams/232.png'},
+  ],
+  '🇧🇪 Jupiler League': [
+    {id:260, name:'Club Brugge',  crest:'https://media.api-sports.io/football/teams/260.png'},
+    {id:261, name:'Anderlecht',   crest:'https://media.api-sports.io/football/teams/261.png'},
+    {id:262, name:'Gent',         crest:'https://media.api-sports.io/football/teams/262.png'},
+    {id:265, name:'Standard',     crest:'https://media.api-sports.io/football/teams/265.png'},
+  ],
+  '🏴󠁧󠁢󠁳󠁣󠁴󠁿 İskoçya': [
+    {id:235, name:'Celtic',       crest:'https://media.api-sports.io/football/teams/235.png'},
+    {id:237, name:'Rangers',      crest:'https://media.api-sports.io/football/teams/237.png'},
+    {id:241, name:'Hearts',       crest:'https://media.api-sports.io/football/teams/241.png'},
+    {id:243, name:'Hibernian',    crest:'https://media.api-sports.io/football/teams/243.png'},
+  ],
+  '🇷🇺 Rusya': [
+    {id:133, name:'CSKA Moskova', crest:'https://media.api-sports.io/football/teams/133.png'},
+    {id:134, name:'Zenit',        crest:'https://media.api-sports.io/football/teams/134.png'},
+    {id:135, name:'Spartak',      crest:'https://media.api-sports.io/football/teams/135.png'},
+    {id:136, name:'Lokomotiv',    crest:'https://media.api-sports.io/football/teams/136.png'},
+  ],
+  '🇬🇷 Yunanistan': [
+    {id:185, name:'Olympiakos',   crest:'https://media.api-sports.io/football/teams/185.png'},
+    {id:186, name:'Panathinaikos',crest:'https://media.api-sports.io/football/teams/186.png'},
+    {id:187, name:'AEK Atina',    crest:'https://media.api-sports.io/football/teams/187.png'},
+    {id:189, name:'PAOK',         crest:'https://media.api-sports.io/football/teams/189.png'},
+  ],
+  '🌍 Milli Takımlar': [
+    {id:759, name:'Türkiye',      crest:'https://media.api-sports.io/football/teams/759.png'},
+    {id:768, name:'Almanya',      crest:'https://media.api-sports.io/football/teams/768.png'},
+    {id:771, name:'İspanya',      crest:'https://media.api-sports.io/football/teams/771.png'},
+    {id:773, name:'Fransa',       crest:'https://media.api-sports.io/football/teams/773.png'},
+    {id:769, name:'İngiltere',    crest:'https://media.api-sports.io/football/teams/769.png'},
+    {id:770, name:'İtalya',       crest:'https://media.api-sports.io/football/teams/770.png'},
+    {id:775, name:'Portekiz',     crest:'https://media.api-sports.io/football/teams/775.png'},
+    {id:776, name:'Hollanda',     crest:'https://media.api-sports.io/football/teams/776.png'},
+    {id:760, name:'Arjantin',     crest:'https://media.api-sports.io/football/teams/760.png'},
+    {id:762, name:'Brezilya',     crest:'https://media.api-sports.io/football/teams/762.png'},
+    {id:764, name:'Uruguay',      crest:'https://media.api-sports.io/football/teams/764.png'},
+    {id:882, name:'Belçika',      crest:'https://media.api-sports.io/football/teams/882.png'},
+    {id:778, name:'Hırvatistan',  crest:'https://media.api-sports.io/football/teams/778.png'},
+    {id:779, name:'Danimarka',    crest:'https://media.api-sports.io/football/teams/779.png'},
+    {id:781, name:'İsveç',        crest:'https://media.api-sports.io/football/teams/781.png'},
+    {id:767, name:'Avusturya',    crest:'https://media.api-sports.io/football/teams/767.png'},
+    {id:777, name:'Polonya',      crest:'https://media.api-sports.io/football/teams/777.png'},
+    {id:788, name:'İsviçre',      crest:'https://media.api-sports.io/football/teams/788.png'},
+    {id:858, name:'Sırbistan',    crest:'https://media.api-sports.io/football/teams/858.png'},
+    {id:766, name:'Ukrayna',      crest:'https://media.api-sports.io/football/teams/766.png'},
   ],
 };
 
@@ -3891,15 +4000,15 @@ function startLiveSimulation(events, homeTeamId) {
 
   initPitchPlayers();
 
-  // Animate ball randomly
+  // Always animate ball and players
   ballInterval = setInterval(function() {
     const ball = document.getElementById('pitch-ball');
     if (ball) {
-      ball.style.left = (15 + Math.random() * 70) + '%';
-      ball.style.top = (10 + Math.random() * 80) + '%';
+      ball.style.left = (12 + Math.random() * 76) + '%';
+      ball.style.top = (8 + Math.random() * 84) + '%';
     }
     movePlayers();
-  }, 2500);
+  }, 2000);
 
   // Replay events on pitch
   if (currentMatchEvents.length > 0) {
@@ -4007,10 +4116,8 @@ async function openMatchDetail(fixtureId) {
       });
     }
 
-    // Start pitch simulation with real events
-    if (match.events) {
-      startLiveSimulation(match.events, match.teams.home.id);
-    }
+    // Start pitch simulation always
+    startLiveSimulation(match.events || [], match.teams.home.id);
 
   } catch(e) {
     document.getElementById('events-list').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
