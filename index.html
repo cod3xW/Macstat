@@ -3,475 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MacStat Pro</title>
+<title>MacStat</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080810;
-  --surface: #10101a;
-  --surface2: #18182a;
-  --surface3: #20203a;
-  --border: #252535;
-  --accent: #00e5a0;
-  --red: #ff4f4f;
-  --gold: #ffd166;
-  --blue: #4f8eff;
-  --text: #eeeef5;
-  --muted: #5a5a7a;
+  --bg: #080810; --surface: #10101a; --surface2: #18182a; --surface3: #20203a;
+  --border: #252535; --accent: #00e5a0; --red: #ff4f4f; --gold: #ffd166;
+  --blue: #4f8eff; --text: #eeeef5; --muted: #5a5a7a;
+  --pitch: #1a6b2f; --pitch-line: rgba(255,255,255,0.55);
 }
-
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { background:var(--bg); color:var(--text); font-family:'Outfit',sans-serif; min-height:100vh; overflow-x:hidden; max-width:430px; margin:0 auto; }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Outfit', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-  max-width: 430px;
-  margin: 0 auto;
-}
+/* HEADER */
+header { padding:14px 18px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; background:rgba(8,8,16,0.96); backdrop-filter:blur(16px); z-index:200; border-bottom:1px solid var(--border); }
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:3px; }
+.logo span { color:var(--accent); }
 
-header {
-  padding: 14px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  background: rgba(8,8,16,0.96);
-  backdrop-filter: blur(16px);
-  z-index: 200;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
-.logo .green { color: var(--accent); }
-
-.premium-pill {
-  background: linear-gradient(135deg, #ffd166, #ff9900);
-  color: #000;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  border: none;
-}
-
-.page { display: none; padding-bottom: 90px; }
-.page.active { display: block; }
+/* PAGES */
+.page { display:none; padding-bottom:90px; }
+.page.active { display:block; }
 
 /* HERO */
-.hero { padding: 20px 18px 0; }
+.hero { padding:20px 18px 0; }
+.hero-label { font-size:11px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:12px; }
+.matchup-card { background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:18px; }
+.teams-row { display:grid; grid-template-columns:1fr 50px 1fr; gap:8px; align-items:center; margin-bottom:14px; }
+.team-select { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:10px 8px; text-align:center; cursor:pointer; transition:border-color 0.2s; }
+.team-select:hover { border-color:var(--accent); }
+.team-crest-img { width:36px; height:36px; object-fit:contain; margin-bottom:4px; }
+.team-name-small { font-size:11px; font-weight:600; line-height:1.2; }
+.team-league-small { font-size:9px; color:var(--muted); margin-top:2px; }
+.vs-circle { width:40px; height:40px; border-radius:50%; background:var(--surface3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:14px; color:var(--muted); margin:0 auto; }
+.analyze-btn { width:100%; padding:14px; background:var(--accent); border:none; border-radius:12px; color:#000; font-family:'Outfit',sans-serif; font-weight:700; font-size:15px; cursor:pointer; transition:transform 0.15s; }
+.analyze-btn:active { transform:scale(0.98); }
 
-.hero-label {
-  font-size: 11px;
-  letter-spacing: 3px;
-  color: var(--muted);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.matchup-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 18px;
-}
-
-.teams-row {
-  display: grid;
-  grid-template-columns: 1fr 50px 1fr;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.team-select {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s;
-  position: relative;
-}
-.team-select:hover { border-color: var(--accent); }
-
-.team-crest-img {
-  width: 36px; height: 36px;
-  object-fit: contain;
-  margin-bottom: 4px;
-}
-
-.team-name-small { font-size: 11px; font-weight: 600; line-height: 1.2; }
-.team-league-small { font-size: 9px; color: var(--muted); margin-top: 2px; }
-
-.vs-circle {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: var(--surface3);
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  color: var(--muted);
-  margin: 0 auto;
-}
-
-.analyze-btn {
-  width: 100%;
-  padding: 14px;
-  background: var(--accent);
-  border: none;
-  border-radius: 12px;
-  color: #000;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  transition: transform 0.15s, opacity 0.15s;
-}
-.analyze-btn:active { transform: scale(0.98); }
-
-/* TEAM PICKER MODAL */
-.picker-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: rgba(0,0,0,0.8);
-  backdrop-filter: blur(8px);
-  align-items: flex-end;
-  justify-content: center;
-}
-.picker-modal.open { display: flex; }
-
-.picker-sheet {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px 20px 0 0;
-  padding: 20px 16px 40px;
-  width: 100%;
-  max-width: 430px;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.picker-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-
-.team-option {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-.team-option:hover { border-color: var(--accent); }
-.team-option img { width: 32px; height: 32px; object-fit: contain; margin-bottom: 4px; }
-.team-option-name { font-size: 10px; font-weight: 600; }
-.team-option-league { font-size: 9px; color: var(--muted); }
+/* PICKER */
+.picker-modal { display:none; position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); align-items:flex-end; justify-content:center; }
+.picker-modal.open { display:flex; }
+.picker-sheet { background:var(--surface); border:1px solid var(--border); border-radius:20px 20px 0 0; padding:20px 16px 40px; width:100%; max-width:430px; max-height:70vh; overflow-y:auto; }
+.picker-title { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:2px; color:var(--muted); margin-bottom:14px; }
+.team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.team-option { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:12px 8px; text-align:center; cursor:pointer; transition:border-color 0.2s; }
+.team-option:hover { border-color:var(--accent); }
+.team-option img { width:32px; height:32px; object-fit:contain; margin-bottom:4px; }
+.team-option-name { font-size:10px; font-weight:600; }
+.team-option-league { font-size:9px; color:var(--muted); }
 
 /* LOADING */
-.loading {
-  text-align: center;
-  padding: 30px;
-  color: var(--muted);
-  font-size: 13px;
-}
-.spinner {
-  width: 28px; height: 28px;
-  border: 2px solid var(--border);
-  border-top-color: var(--accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin: 0 auto 10px;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+.loading { text-align:center; padding:30px; color:var(--muted); font-size:13px; }
+.spinner { width:28px; height:28px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 10px; }
+@keyframes spin { to { transform:rotate(360deg); } }
 
 /* SECTION */
-.section-hd {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 18px 8px;
-}
-.section-hd-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: 3px;
-  color: var(--muted);
-}
-.section-tag {
-  font-size: 10px;
-  background: var(--surface2);
-  border: 1px solid rgba(255,209,102,0.4);
-  border-radius: 6px;
-  padding: 3px 8px;
-  color: var(--gold);
-}
+.section-hd { display:flex; align-items:center; justify-content:space-between; padding:16px 18px 8px; }
+.section-hd-title { font-family:'Bebas Neue',sans-serif; font-size:13px; letter-spacing:3px; color:var(--muted); }
 
 /* MATCH LIST */
-.match-list { padding: 0 18px; display: flex; flex-direction: column; gap: 7px; }
-
-.match-item {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 11px 13px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  overflow: hidden;
-}
-.match-item::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-}
-.match-item.win::before { background: var(--accent); }
-.match-item.loss::before { background: var(--red); }
-.match-item.draw::before { background: var(--muted); }
-
-.result-badge {
-  width: 26px; height: 26px;
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 700;
-  flex-shrink: 0;
-}
-.result-badge.win { background: rgba(0,229,160,0.12); color: var(--accent); }
-.result-badge.loss { background: rgba(255,79,79,0.12); color: var(--red); }
-.result-badge.draw { background: rgba(90,90,122,0.2); color: var(--muted); }
-
-.match-mid { flex: 1; min-width: 0; }
-.match-teams { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.match-sub { font-size: 10px; color: var(--muted); margin-top: 2px; display: flex; gap: 8px; }
-
-.match-score {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 1px;
-  flex-shrink: 0;
-}
-.match-score.win { color: var(--accent); }
-.match-score.loss { color: var(--red); }
-.match-score.draw { color: var(--muted); }
+.match-list { padding:0 18px; display:flex; flex-direction:column; gap:7px; }
+.match-item { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:11px 13px; display:flex; align-items:center; gap:10px; position:relative; overflow:hidden; }
+.match-item::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; }
+.match-item.win::before { background:var(--accent); }
+.match-item.loss::before { background:var(--red); }
+.match-item.draw::before { background:var(--muted); }
+.result-badge { width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; flex-shrink:0; }
+.result-badge.win { background:rgba(0,229,160,0.12); color:var(--accent); }
+.result-badge.loss { background:rgba(255,79,79,0.12); color:var(--red); }
+.result-badge.draw { background:rgba(90,90,122,0.2); color:var(--muted); }
+.match-mid { flex:1; min-width:0; }
+.match-teams { font-size:12px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.match-sub { font-size:10px; color:var(--muted); margin-top:2px; display:flex; gap:8px; }
+.match-score { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; flex-shrink:0; }
+.match-score.win { color:var(--accent); }
+.match-score.loss { color:var(--red); }
+.match-score.draw { color:var(--muted); }
 
 /* STAT BARS */
-.stats-section { padding: 0 18px; display: flex; flex-direction: column; gap: 8px; }
-
-.stat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  padding: 11px 13px;
-}
-.stat-name {
-  font-size: 10px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-bottom: 8px;
-}
-.stat-bar-row {
-  display: grid;
-  grid-template-columns: 40px 1fr 40px;
-  gap: 8px;
-  align-items: center;
-}
-.s-val { font-family: 'Bebas Neue', sans-serif; font-size: 18px; text-align: center; }
-.s-val.h { color: var(--accent); }
-.s-val.a { color: var(--red); }
-.bar-track { height: 5px; border-radius: 3px; background: var(--bg); display: flex; overflow: hidden; }
-.bar-h { background: var(--accent); transition: width 1.2s cubic-bezier(.4,0,.2,1); }
-.bar-a { background: var(--red); flex: 1; }
-
-/* PREMIUM MODAL */
-.premium-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 999;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(8px);
-  align-items: flex-end;
-  justify-content: center;
-}
-.premium-modal.open { display: flex; }
-
-.premium-sheet {
-  background: var(--surface);
-  border: 1px solid rgba(255,209,102,0.3);
-  border-radius: 24px 24px 0 0;
-  padding: 28px 22px 40px;
-  width: 100%;
-  max-width: 430px;
-}
-
-.prem-emoji { font-size: 44px; text-align: center; margin-bottom: 10px; }
-.prem-modal-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  color: var(--gold);
-  letter-spacing: 3px;
-  text-align: center;
-  margin-bottom: 6px;
-}
-.prem-modal-sub { font-size: 12px; color: var(--muted); text-align: center; margin-bottom: 18px; line-height: 1.5; }
-
-.feat-rows { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
-.feat-row {
-  display: flex; align-items: center; gap: 10px;
-  background: rgba(0,229,160,0.06);
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-size: 12px;
-}
-
-.price-box {
-  background: linear-gradient(135deg, rgba(255,209,102,0.1), rgba(255,153,0,0.1));
-  border: 1px solid rgba(255,209,102,0.3);
-  border-radius: 14px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-.price-big {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 40px;
-  color: var(--gold);
-  line-height: 1;
-}
-.price-sub { font-size: 11px; color: var(--muted); margin: 4px 0 14px; }
-
-.prem-go-btn {
-  width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #ffd166, #ff9900);
-  border: none;
-  border-radius: 10px;
-  color: #000;
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.prem-cancel-btn {
-  width: 100%;
-  padding: 12px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--muted);
-  font-size: 13px;
-  cursor: pointer;
-  font-family: 'Outfit', sans-serif;
-  margin-top: 8px;
-}
-
-/* PREMIUM PAGE */
-.premium-page { padding: 28px 18px 100px; text-align: center; }
-.prem-star { font-size: 52px; margin-bottom: 16px; }
-.prem-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--gold); letter-spacing: 4px; margin-bottom: 6px; }
-.prem-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-
-.feature-list {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
-  text-align: left;
-  margin-bottom: 14px;
-}
-.feat-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 16px; }
-.feat-item:last-child { margin-bottom: 0; }
-.feat-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.feat-icon.green { background: rgba(0,229,160,0.1); }
-.feat-icon.gold { background: rgba(255,209,102,0.1); }
-.feat-icon.blue { background: rgba(79,142,255,0.1); }
-.feat-icon.red { background: rgba(255,79,79,0.1); }
-.feat-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-.feat-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
-
-.price-card {
-  background: linear-gradient(135deg, rgba(255,209,102,0.08), rgba(255,153,0,0.08));
-  border: 1px solid rgba(255,209,102,0.3);
-  border-radius: 16px;
-  padding: 22px;
-  margin-bottom: 12px;
-}
-.price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 52px; color: var(--gold); line-height: 1; }
-.price-period { font-size: 18px; color: var(--muted); }
-.price-alt { font-size: 12px; color: var(--muted); margin: 6px 0 18px; }
-.buy-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #ffd166, #ff9900); border: none; border-radius: 12px; color: #000; font-weight: 700; font-size: 16px; cursor: pointer; }
-.prem-note { font-size: 11px; color: var(--muted); margin-top: 10px; }
+.stats-section { padding:0 18px; display:flex; flex-direction:column; gap:8px; }
+.stat-card { background:var(--surface); border:1px solid var(--border); border-radius:11px; padding:11px 13px; }
+.stat-name { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; text-align:center; margin-bottom:8px; }
+.stat-bar-row { display:grid; grid-template-columns:40px 1fr 40px; gap:8px; align-items:center; }
+.s-val { font-family:'Bebas Neue',sans-serif; font-size:18px; text-align:center; }
+.s-val.h { color:var(--accent); }
+.s-val.a { color:var(--red); }
+.bar-track { height:5px; border-radius:3px; background:var(--bg); display:flex; overflow:hidden; }
+.bar-h { background:var(--accent); transition:width 1.2s cubic-bezier(.4,0,.2,1); }
+.bar-a { background:var(--red); flex:1; }
 
 /* TABS */
-.tabs-wrap {
-  padding: 0 18px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none;
-  margin-top: 16px;
-}
-.tabs-wrap::-webkit-scrollbar { display: none; }
-.tab { padding: 10px 14px; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tabs-wrap { padding:0 18px; border-bottom:1px solid var(--border); display:flex; overflow-x:auto; scrollbar-width:none; margin-top:16px; }
+.tabs-wrap::-webkit-scrollbar { display:none; }
+.tab { padding:10px 14px; font-size:13px; font-weight:500; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.2s; flex-shrink:0; }
+.tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+/* ── LIVE MATCH ── */
+.live-header { padding:12px 18px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
+.live-badge { display:flex; align-items:center; gap:5px; background:rgba(255,79,79,0.15); border:1px solid rgba(255,79,79,0.4); border-radius:20px; padding:4px 10px; font-size:11px; font-weight:700; color:var(--red); letter-spacing:1px; }
+.live-dot { width:6px; height:6px; background:var(--red); border-radius:50%; animation:pulse 1s infinite; }
+
+.scoreboard { background:var(--surface); border-bottom:1px solid var(--border); padding:10px 16px; }
+.score-row { display:grid; grid-template-columns:1fr 80px 1fr; align-items:center; gap:8px; }
+.team-block { display:flex; align-items:center; gap:8px; }
+.team-block.away { flex-direction:row-reverse; text-align:right; }
+.team-sname { font-size:13px; font-weight:700; }
+.score-center { text-align:center; }
+.score-nums { font-family:'Bebas Neue',sans-serif; font-size:38px; line-height:1; letter-spacing:4px; }
+.score-min { font-size:11px; color:var(--red); font-weight:700; letter-spacing:1px; }
+
+.pitch-wrap { padding:10px 16px; }
+.pitch { width:100%; height:160px; background:var(--pitch); border-radius:10px; position:relative; overflow:hidden; border:2px solid rgba(255,255,255,0.1); }
+.pitch-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60px; height:60px; border:1.5px solid var(--pitch-line); border-radius:50%; }
+.pitch-center-dot { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:5px; height:5px; background:var(--pitch-line); border-radius:50%; }
+.goal-box { position:absolute; top:50%; transform:translateY(-50%); width:14%; height:50%; border:1.5px solid var(--pitch-line); }
+.goal-box.left { left:0; border-left:none; }
+.goal-box.right { right:0; border-right:none; }
+.pitch-vline { position:absolute; top:0; bottom:0; left:50%; width:1.5px; background:var(--pitch-line); }
+.possession-overlay { position:absolute; top:0; bottom:0; left:0; background:rgba(0,229,160,0.12); transition:width 1s ease; border-right:1px dashed rgba(0,229,160,0.3); }
+.ball { position:absolute; width:14px; height:14px; background:#fff; border-radius:50%; border:1.5px solid #ccc; box-shadow:0 0 8px rgba(255,255,255,0.8); transition:left 1.5s cubic-bezier(.4,0,.2,1),top 1.5s cubic-bezier(.4,0,.2,1); z-index:10; transform:translate(-50%,-50%); }
+.player-dot { position:absolute; width:8px; height:8px; border-radius:50%; transform:translate(-50%,-50%); transition:left 2s ease,top 2s ease; z-index:5; }
+.player-dot.home { background:var(--accent); box-shadow:0 0 4px var(--accent); }
+.player-dot.away { background:var(--red); box-shadow:0 0 4px var(--red); }
+.poss-home,.poss-away { position:absolute; top:6px; font-family:'Bebas Neue',sans-serif; font-size:13px; opacity:0.8; }
+.poss-home { left:8px; color:var(--accent); }
+.poss-away { right:8px; color:var(--red); }
+.event-flash { position:absolute; border-radius:50%; pointer-events:none; z-index:20; transform:translate(-50%,-50%); animation:flashOut 1.2s ease forwards; }
+@keyframes flashOut { 0%{width:0;height:0;opacity:1;} 50%{opacity:0.8;} 100%{width:60px;height:60px;opacity:0;} }
+
+.live-main { display:flex; overflow:hidden; height:calc(100vh - 380px); min-height:200px; }
+.events-panel { flex:1; overflow-y:auto; padding:8px 0; scrollbar-width:none; }
+.events-panel::-webkit-scrollbar { display:none; }
+.event-item { display:flex; align-items:flex-start; gap:10px; padding:7px 14px; animation:slideIn 0.4s ease; }
+@keyframes slideIn { from{opacity:0;transform:translateX(-10px);} to{opacity:1;transform:translateX(0);} }
+.event-min { font-family:'Bebas Neue',sans-serif; font-size:16px; color:var(--muted); width:28px; flex-shrink:0; padding-top:1px; }
+.event-icon { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+.event-icon.goal { background:rgba(0,229,160,0.15); }
+.event-icon.yellow { background:rgba(255,209,102,0.15); }
+.event-icon.red-card { background:rgba(255,79,79,0.15); }
+.event-icon.sub { background:rgba(79,142,255,0.15); }
+.event-icon.corner { background:rgba(90,90,122,0.2); }
+.event-icon.danger { background:rgba(255,120,0,0.15); }
+.event-text { flex:1; }
+.event-title { font-size:13px; font-weight:600; }
+.event-title.goal-text { color:var(--accent); }
+.event-sub { font-size:11px; color:var(--muted); margin-top:1px; }
+
+.chat-panel { width:160px; border-left:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; }
+.chat-messages { flex:1; overflow-y:auto; padding:8px 8px 4px; display:flex; flex-direction:column; gap:6px; scrollbar-width:none; }
+.chat-messages::-webkit-scrollbar { display:none; }
+.chat-msg { animation:fadeUp 0.3s ease; }
+.chat-name { font-size:9px; color:var(--accent); font-weight:700; margin-bottom:2px; }
+.chat-bubble { background:var(--surface2); border-radius:8px 8px 8px 2px; padding:6px 8px; font-size:11px; line-height:1.4; word-break:break-word; }
+.chat-bubble.own { background:rgba(0,229,160,0.12); border-radius:8px 8px 2px 8px; }
+.chat-input-wrap { padding:6px; border-top:1px solid var(--border); display:flex; gap:4px; }
+.chat-input { flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:6px 8px; font-size:11px; color:var(--text); font-family:'Outfit',sans-serif; outline:none; }
+.chat-input:focus { border-color:var(--accent); }
+.chat-send { width:28px; height:28px; background:var(--accent); border:none; border-radius:8px; cursor:pointer; font-size:12px; flex-shrink:0; align-self:center; }
+
+.blocked-toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:rgba(255,79,79,0.9); color:#fff; padding:8px 16px; border-radius:20px; font-size:12px; font-weight:600; z-index:999; opacity:0; transition:opacity 0.3s; white-space:nowrap; }
+.blocked-toast.show { opacity:1; }
+
+.goal-overlay { position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center; pointer-events:none; opacity:0; }
+.goal-overlay.show { animation:goalCeleb 2.5s ease forwards; }
+@keyframes goalCeleb { 0%{opacity:0;} 10%{opacity:1;} 70%{opacity:1;} 100%{opacity:0;} }
+.goal-text-big { font-family:'Bebas Neue',sans-serif; font-size:72px; color:var(--accent); text-shadow:0 0 40px rgba(0,229,160,0.8); letter-spacing:8px; }
+.confetti-piece { position:fixed; width:8px; height:8px; border-radius:2px; animation:confettiFall linear forwards; z-index:499; }
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;} 100%{transform:translateY(100vh) rotate(720deg);opacity:0;} }
 
 /* BOTTOM NAV */
-.bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  max-width: 430px;
-  margin: 0 auto;
-  background: rgba(8,8,16,0.97);
-  border-top: 1px solid var(--border);
-  display: flex;
-  padding: 10px 0 22px;
-  backdrop-filter: blur(16px);
-  z-index: 200;
-}
-.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 4px 0; }
-.nav-emoji { font-size: 20px; }
-.nav-label { font-size: 10px; color: var(--muted); font-weight: 500; }
-.nav-item.active .nav-label { color: var(--accent); }
+.bottom-nav { position:fixed; bottom:0; left:0; right:0; max-width:430px; margin:0 auto; background:rgba(8,8,16,0.97); border-top:1px solid var(--border); display:flex; padding:10px 0 22px; backdrop-filter:blur(16px); z-index:200; }
+.nav-item { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:4px 0; }
+.nav-emoji { font-size:20px; }
+.nav-label { font-size:10px; color:var(--muted); font-weight:500; }
+.nav-item.active .nav-label { color:var(--accent); }
 
-@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-.fade-up { animation: fadeUp 0.4s ease forwards; }
-
-.live-dot { display: inline-block; width: 7px; height: 7px; background: var(--red); border-radius: 50%; margin-right: 4px; animation: pulse 1.2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.6;} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+.fade-up { animation:fadeUp 0.4s ease forwards; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.live-dot-nav { display:inline-block; width:7px; height:7px; background:var(--red); border-radius:50%; margin-right:2px; animation:pulse 1.2s infinite; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Mac<span class="green">Stat</span> <span style="font-size:13px;color:var(--muted);letter-spacing:1px">PRO</span></div>
-  
+  <div class="logo">Mac<span>Stat</span></div>
+  <div style="font-size:11px;color:var(--muted)">⚽ Maç İstatistikleri</div>
 </header>
 
-<!-- HOME PAGE -->
+<!-- ═══ ANALİZ SAYFASI ═══ -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-label">📊 Maç Analizi</div>
@@ -494,9 +212,7 @@ header {
   </div>
 
   <div id="analysis-wrap" style="display:none">
-
-    <!-- H2H QUICK -->
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:14px 18px 0;" class="fade-up">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px 0;" class="fade-up">
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center;">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent)" id="stat-hw">-</div>
         <div style="font-size:10px;color:var(--muted);margin-top:3px" id="stat-hw-label">Galibiyet</div>
@@ -511,11 +227,7 @@ header {
       </div>
     </div>
 
-    <!-- STATS -->
-    <div class="section-hd">
-      <div class="section-hd-title">📈 FORM İSTATİSTİKLERİ</div>
-      
-    </div>
+    <div class="section-hd"><div class="section-hd-title">📈 FORM İSTATİSTİKLERİ</div></div>
     <div class="stats-section">
       <div class="stat-card">
         <div class="stat-name">Gol Ortalaması (Son 10)</div>
@@ -543,76 +255,99 @@ header {
       </div>
     </div>
 
-    <!-- TABS -->
     <div class="tabs-wrap">
-      <div class="tab active" onclick="switchTab(this,'t-home')">🦅 Ev Sahibi</div>
-      <div class="tab" onclick="switchTab(this,'t-away')">⭐ Deplasman</div>
+      <div class="tab active" onclick="switchTab(this,'t-home')">🏠 Ev Sahibi Maçları</div>
+      <div class="tab" onclick="switchTab(this,'t-away')">✈️ Deplasman Maçları</div>
     </div>
 
-    <!-- HOME MATCHES -->
     <div id="t-home">
-      <div class="section-hd">
-        <div class="section-hd-title" id="home-matches-title">EV SAHİBİ — SON MAÇLAR</div>
-        
-      </div>
-      <div class="match-list" id="home-matches-list">
-        <div class="loading"><div class="spinner"></div>Yükleniyor...</div>
-      </div>
+      <div class="section-hd"><div class="section-hd-title" id="home-matches-title">EV SAHİBİ — SON MAÇLAR</div></div>
+      <div class="match-list" id="home-matches-list"><div class="loading"><div class="spinner"></div>Yükleniyor...</div></div>
     </div>
 
-    <!-- AWAY MATCHES -->
     <div id="t-away" style="display:none">
-      <div class="section-hd">
-        <div class="section-hd-title" id="away-matches-title">DEPLASMAN — SON MAÇLAR</div>
-        
-      </div>
-      <div class="match-list" id="away-matches-list">
-        <div class="loading"><div class="spinner"></div>Yükleniyor...</div>
-      </div>
+      <div class="section-hd"><div class="section-hd-title" id="away-matches-title">DEPLASMAN — SON MAÇLAR</div></div>
+      <div class="match-list" id="away-matches-list"><div class="loading"><div class="spinner"></div>Yükleniyor...</div></div>
     </div>
-
   </div>
 </div>
 
-<!-- PREMIUM PAGE -->
-<div class="page" id="page-premium">
-  <div class="premium-page">
-    <div class="prem-star">⭐</div>
-    <div class="prem-title">PREMIUM</div>
-    <div class="prem-sub">İddiacılar için tam güç.<br>Daha fazla veri, daha erken karar.</div>
-    <div class="feature-list">
-      <div class="feat-item"><div class="feat-icon green">🤖</div><div><div class="feat-name">Yapay Zeka Tahmin Skoru</div><div class="feat-desc">Gerçek veriye dayalı kazanma ihtimali analizi</div></div></div>
-      <div class="feat-item"><div class="feat-icon gold">📊</div><div><div class="feat-name">Son 10 Maç Verisi</div><div class="feat-desc">Gerçek zamanlı maç geçmişi ve istatistikler</div></div></div>
-      <div class="feat-item"><div class="feat-icon green">⚡</div><div><div class="feat-name">KG Var/Yok & Alt/Üst</div><div class="feat-desc">Gol ihtimali ve 2.5 üstü/altı verileri</div></div></div>
-      <div class="feat-item"><div class="feat-icon blue">⏱️</div><div><div class="feat-name">Dakika Analizleri</div><div class="feat-desc">İlk 15 ve son 15 dakika gol istatistikleri</div></div></div>
-      <div class="feat-item"><div class="feat-icon gold">🏠</div><div><div class="feat-name">Ev/Deplasman Ayrımı</div><div class="feat-desc">Ev ve deplasman performansları ayrı ayrı</div></div></div>
-      <div class="feat-item"><div class="feat-icon red">🟨</div><div><div class="feat-name">Kart & Hakem Analizi</div><div class="feat-desc">Hakem bazlı kart ortalamaları</div></div></div>
-      <div class="feat-item"><div class="feat-icon green">👟</div><div><div class="feat-name">Oyuncu Karşılaştırması</div><div class="feat-desc">Her pozisyonda rakip oyuncu karşılaştırması</div></div></div>
-      <div class="feat-item"><div class="feat-icon blue">🔔</div><div><div class="feat-name">Maç Alarmı</div><div class="feat-desc">Maç başlamadan önce bildirim al</div></div></div>
-    </div>
-    <div class="price-card">
-      <div class="price-amount">₺99<span style="font-size:28px">.99</span><span class="price-period">/ay</span></div>
-      <div class="price-alt">veya ₺799/yıl · %33 tasarruf et</div>
-      <button class="buy-btn">Premium'a Başla</button>
-    </div>
-    <div class="prem-note">İstediğin zaman iptal et · Güvenli ödeme · Reklamsız</div>
+<!-- ═══ CANLI MAÇ SAYFASI ═══ -->
+<div class="page" id="page-live">
+  <div class="live-header">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px">CANLI MAÇLAR</div>
+    <div class="live-badge"><div class="live-dot"></div>CANLI</div>
   </div>
+
+  <div class="scoreboard">
+    <div class="score-row">
+      <div class="team-block">
+        <div style="font-size:24px">🦅</div>
+        <div><div class="team-sname">GS</div><div style="font-size:10px;color:var(--muted)">Galatasaray</div></div>
+      </div>
+      <div class="score-center">
+        <div class="score-nums" id="score-display">2 – 1</div>
+        <div class="score-min" id="match-min">⏱ 67'</div>
+      </div>
+      <div class="team-block away">
+        <div style="font-size:24px">⭐</div>
+        <div><div class="team-sname">FB</div><div style="font-size:10px;color:var(--muted)">Fenerbahçe</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pitch-wrap">
+    <div class="pitch" id="pitch">
+      <div class="pitch-vline"></div>
+      <div class="pitch-center-circle"></div>
+      <div class="pitch-center-dot"></div>
+      <div class="goal-box left"></div>
+      <div class="goal-box right"></div>
+      <div class="possession-overlay" id="poss-overlay" style="width:58%"></div>
+      <div class="poss-home" id="poss-home-txt">58%</div>
+      <div class="poss-away" id="poss-away-txt">42%</div>
+      <div class="ball" id="ball" style="left:58%;top:45%"></div>
+    </div>
+  </div>
+
+  <div style="display:flex;border-bottom:1px solid var(--border);background:var(--surface);">
+    <div class="tab active" style="flex:1;text-align:center;" onclick="switchLiveTab(this,'lp-events')">⚡ Olaylar</div>
+    <div class="tab" style="flex:1;text-align:center;" onclick="switchLiveTab(this,'lp-chat')">💬 Sohbet</div>
+    <div class="tab" style="flex:1;text-align:center;" onclick="switchLiveTab(this,'lp-both')">⊞ İkisi</div>
+  </div>
+
+  <div class="live-main">
+    <div class="events-panel" id="lp-events" style="display:none">
+      <div id="events-list"></div>
+    </div>
+    <div class="events-panel" id="lp-both-events">
+      <div id="events-list2"></div>
+    </div>
+    <div class="chat-panel" id="lp-chat-side">
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-wrap">
+        <input class="chat-input" id="chat-input" placeholder="Yaz..." maxlength="120" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="chat-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+    <div class="chat-panel" id="lp-chat" style="display:none;width:100%;border-left:none;">
+      <div class="chat-messages" id="chat-messages2"></div>
+      <div class="chat-input-wrap">
+        <input class="chat-input" id="chat-input2" placeholder="Yaz..." maxlength="120" onkeydown="if(event.key==='Enter')sendChat2()">
+        <button class="chat-send" onclick="sendChat2()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="goal-overlay" id="goal-overlay"><div class="goal-text-big">GOL!</div></div>
+  <div class="blocked-toast" id="blocked-toast">🚫 Bu mesaj engellendi</div>
 </div>
 
-<!-- TEAM PICKER MODAL -->
+<!-- TEAM PICKER -->
 <div class="picker-modal" id="picker-modal">
   <div class="picker-sheet">
     <div class="picker-title">TAKIM SEÇ</div>
     <div class="team-grid" id="team-grid"></div>
-  </div>
-</div>
-
-    <div class="price-box">
-      <div class="price-big">₺99<span style="font-size:22px">.99</span><span style="font-size:18px;color:var(--muted)">/ay</span></div>
-      <div class="price-sub">veya ₺799/yıl · %33 tasarruf</div>
-      <button class="prem-go-btn" onclick="goPage('premium')">Premium'a Geç</button>
-    </div>
-    <button class="prem-cancel-btn" onclick="closePremiumModal()">Şimdi Değil</button>
   </div>
 </div>
 
@@ -626,41 +361,41 @@ header {
     <div class="nav-emoji">🏆</div>
     <div class="nav-label">Ligler</div>
   </div>
-  <div class="nav-item" onclick="goPage('home',this)">
-    <div class="nav-emoji"><span class="live-dot"></span>🔴</div>
+  <div class="nav-item" onclick="goPage('live',this)">
+    <div class="nav-emoji"><span class="live-dot-nav"></span>🔴</div>
     <div class="nav-label">Canlı</div>
   </div>
-
+  <div class="nav-item" onclick="goPage('home',this)">
+    <div class="nav-emoji">⚙️</div>
+    <div class="nav-label">Ayarlar</div>
+  </div>
 </div>
 
 <script>
-// TEAMS DATABASE
+// ── TEAMS ──
 const teams = [
-  { id: 81,  name: 'Barcelona',    league: 'La Liga',       crest: 'https://crests.football-data.org/81.png' },
-  { id: 86,  name: 'Real Madrid',  league: 'La Liga',       crest: 'https://crests.football-data.org/86.png' },
-  { id: 78,  name: 'Atletico',     league: 'La Liga',       crest: 'https://crests.football-data.org/78.png' },
-  { id: 64,  name: 'Liverpool',    league: 'Premier Lig',   crest: 'https://crests.football-data.org/64.png' },
-  { id: 65,  name: 'Man City',     league: 'Premier Lig',   crest: 'https://crests.football-data.org/65.png' },
-  { id: 57,  name: 'Arsenal',      league: 'Premier Lig',   crest: 'https://crests.football-data.org/57.png' },
-  { id: 66,  name: 'Man United',   league: 'Premier Lig',   crest: 'https://crests.football-data.org/66.png' },
-  { id: 61,  name: 'Chelsea',      league: 'Premier Lig',   crest: 'https://crests.football-data.org/61.png' },
-  { id: 73,  name: 'Tottenham',    league: 'Premier Lig',   crest: 'https://crests.football-data.org/73.png' },
-  { id: 5,   name: 'Bayern',       league: 'Bundesliga',    crest: 'https://crests.football-data.org/5.png' },
-  { id: 4,   name: 'Dortmund',     league: 'Bundesliga',    crest: 'https://crests.football-data.org/4.png' },
-  { id: 98,  name: 'AC Milan',     league: 'Serie A',       crest: 'https://crests.football-data.org/98.png' },
-  { id: 108, name: 'Inter',        league: 'Serie A',       crest: 'https://crests.football-data.org/108.png' },
-  { id: 109, name: 'Juventus',     league: 'Serie A',       crest: 'https://crests.football-data.org/109.png' },
-  { id: 524, name:'PSG',          league: 'Ligue 1',       crest: 'https://crests.football-data.org/524.png' },
+  {id:81,  name:'Barcelona',   league:'La Liga',     crest:'https://crests.football-data.org/81.png'},
+  {id:86,  name:'Real Madrid', league:'La Liga',     crest:'https://crests.football-data.org/86.png'},
+  {id:78,  name:'Atletico',    league:'La Liga',     crest:'https://crests.football-data.org/78.png'},
+  {id:559, name:'Sevilla',     league:'La Liga',     crest:'https://crests.football-data.org/559.png'},
+  {id:64,  name:'Liverpool',   league:'Premier Lig', crest:'https://crests.football-data.org/64.png'},
+  {id:65,  name:'Man City',    league:'Premier Lig', crest:'https://crests.football-data.org/65.png'},
+  {id:57,  name:'Arsenal',     league:'Premier Lig', crest:'https://crests.football-data.org/57.png'},
+  {id:66,  name:'Man United',  league:'Premier Lig', crest:'https://crests.football-data.org/66.png'},
+  {id:61,  name:'Chelsea',     league:'Premier Lig', crest:'https://crests.football-data.org/61.png'},
+  {id:73,  name:'Tottenham',   league:'Premier Lig', crest:'https://crests.football-data.org/73.png'},
+  {id:5,   name:'Bayern',      league:'Bundesliga',  crest:'https://crests.football-data.org/5.png'},
+  {id:4,   name:'Dortmund',    league:'Bundesliga',  crest:'https://crests.football-data.org/4.png'},
+  {id:98,  name:'AC Milan',    league:'Serie A',     crest:'https://crests.football-data.org/98.png'},
+  {id:108, name:'Inter',       league:'Serie A',     crest:'https://crests.football-data.org/108.png'},
+  {id:109, name:'Juventus',    league:'Serie A',     crest:'https://crests.football-data.org/109.png'},
+  {id:524, name:'PSG',         league:'Ligue 1',     crest:'https://crests.football-data.org/524.png'},
 ];
 
-let selectedHome = teams[0];
-let selectedAway = teams[1];
-let pickerTarget = 'home';
+let selectedHome = teams[0], selectedAway = teams[1], pickerTarget = 'home';
 
-// Render team picker
 function renderPicker() {
-  const grid = document.getElementById('team-grid');
-  grid.innerHTML = teams.map(t => `
+  document.getElementById('team-grid').innerHTML = teams.map(t => `
     <div class="team-option" onclick="selectTeam(${t.id})">
       <img src="${t.crest}" alt="${t.name}" onerror="this.style.display='none'">
       <div class="team-option-name">${t.name}</div>
@@ -691,140 +426,283 @@ function selectTeam(id) {
   document.getElementById('picker-modal').classList.remove('open');
 }
 
-// Close picker when clicking outside
 document.getElementById('picker-modal').addEventListener('click', function(e) {
   if (e.target === this) this.classList.remove('open');
 });
 
-// ANALYZE
+// ── ANALYZE ──
 async function analyze() {
   const btn = document.getElementById('analyze-btn');
-  btn.textContent = '⏳ Analiz ediliyor...';
+  btn.textContent = '⏳ Yükleniyor...';
   btn.disabled = true;
-
   document.getElementById('analysis-wrap').style.display = 'block';
   document.getElementById('home-matches-list').innerHTML = '<div class="loading"><div class="spinner"></div>Yükleniyor...</div>';
   document.getElementById('away-matches-list').innerHTML = '<div class="loading"><div class="spinner"></div>Yükleniyor...</div>';
 
   try {
-    const [homeData, awayData] = await Promise.all([
+    const [hd, ad] = await Promise.all([
       fetch(`/api/fixtures?team=${selectedHome.id}`).then(r => r.json()),
       fetch(`/api/fixtures?team=${selectedAway.id}`).then(r => r.json())
     ]);
-
-    const homeMatches = homeData.matches || [];
-    const awayMatches = awayData.matches || [];
-
-    renderMatches(homeMatches, selectedHome.id, 'home-matches-list');
-    renderMatches(awayMatches, selectedAway.id, 'away-matches-list');
-    renderStats(homeMatches, awayMatches, selectedHome.id, selectedAway.id);
-
+    const hm = hd.matches || [], am = ad.matches || [];
+    renderMatches(hm, selectedHome.id, 'home-matches-list');
+    renderMatches(am, selectedAway.id, 'away-matches-list');
+    renderStats(hm, am, selectedHome.id, selectedAway.id);
     document.getElementById('home-matches-title').textContent = selectedHome.name.toUpperCase() + ' — SON MAÇLAR';
     document.getElementById('away-matches-title').textContent = selectedAway.name.toUpperCase() + ' — SON MAÇLAR';
-
-    document.getElementById('analysis-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+    document.getElementById('analysis-wrap').scrollIntoView({behavior:'smooth',block:'start'});
   } catch(e) {
     document.getElementById('home-matches-list').innerHTML = '<div class="loading">⚠️ Veri yüklenemedi</div>';
-    document.getElementById('away-matches-list').innerHTML = '<div class="loading">⚠️ Veri yüklenemedi</div>';
   }
-
   btn.textContent = '🔍 Analiz Et';
   btn.disabled = false;
 }
 
 function renderMatches(matches, teamId, containerId) {
-  const container = document.getElementById(containerId);
-  if (!matches.length) {
-    container.innerHTML = '<div class="loading">Maç bulunamadı</div>';
-    return;
-  }
-
-  container.innerHTML = matches.slice(0,10).map(m => {
+  const c = document.getElementById(containerId);
+  if (!matches.length) { c.innerHTML = '<div class="loading">Maç bulunamadı</div>'; return; }
+  c.innerHTML = matches.slice(0,10).map(m => {
     const isHome = m.homeTeam.id === teamId;
     const myScore = isHome ? m.score.fullTime.home : m.score.fullTime.away;
     const oppScore = isHome ? m.score.fullTime.away : m.score.fullTime.home;
     const opponent = isHome ? m.awayTeam.shortName : m.homeTeam.shortName;
     const venue = isHome ? 'Ev' : 'Dep';
-
     let result, cls;
-    if (m.score.winner === 'DRAW') { result = 'B'; cls = 'draw'; }
-    else if ((m.score.winner === 'HOME_TEAM' && isHome) || (m.score.winner === 'AWAY_TEAM' && !isHome)) { result = 'G'; cls = 'win'; }
-    else { result = 'M'; cls = 'loss'; }
-
-    const date = new Date(m.utcDate).toLocaleDateString('tr-TR', { day:'numeric', month:'short' });
-
-    return `
-      <div class="match-item ${cls}">
-        <div class="result-badge ${cls}">${result}</div>
-        <div class="match-mid">
-          <div class="match-teams">${isHome ? 'vs' : '@'} ${opponent}</div>
-          <div class="match-sub"><span>${m.competition.name}</span><span>${date}</span><span>${venue}</span></div>
-        </div>
-        <div class="match-score ${cls}">${myScore}–${oppScore}</div>
+    if (m.score.winner==='DRAW') { result='B'; cls='draw'; }
+    else if ((m.score.winner==='HOME_TEAM'&&isHome)||(m.score.winner==='AWAY_TEAM'&&!isHome)) { result='G'; cls='win'; }
+    else { result='M'; cls='loss'; }
+    const date = new Date(m.utcDate).toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+    return `<div class="match-item ${cls}">
+      <div class="result-badge ${cls}">${result}</div>
+      <div class="match-mid">
+        <div class="match-teams">${isHome?'vs':'@'} ${opponent}</div>
+        <div class="match-sub"><span>${m.competition.name}</span><span>${date}</span><span>${venue}</span></div>
       </div>
-    `;
+      <div class="match-score ${cls}">${myScore}–${oppScore}</div>
+    </div>`;
   }).join('');
 }
 
-function renderStats(homeMatches, awayMatches, homeId, awayId) {
-  const calcStats = (matches, teamId) => {
-    let gf=0, ga=0, w=0, d=0, l=0;
+function renderStats(hm, am, hid, aid) {
+  const calc = (matches, tid) => {
+    let gf=0,ga=0,w=0,d=0,l=0;
     matches.forEach(m => {
-      const isHome = m.homeTeam.id === teamId;
-      const myG = isHome ? m.score.fullTime.home : m.score.fullTime.away;
-      const oppG = isHome ? m.score.fullTime.away : m.score.fullTime.home;
-      gf += myG; ga += oppG;
-      if (m.score.winner === 'DRAW') d++;
-      else if ((m.score.winner === 'HOME_TEAM' && isHome) || (m.score.winner === 'AWAY_TEAM' && !isHome)) w++;
+      const isHome = m.homeTeam.id===tid;
+      const myG = isHome?m.score.fullTime.home:m.score.fullTime.away;
+      const oppG = isHome?m.score.fullTime.away:m.score.fullTime.home;
+      gf+=myG; ga+=oppG;
+      if(m.score.winner==='DRAW') d++;
+      else if((m.score.winner==='HOME_TEAM'&&isHome)||(m.score.winner==='AWAY_TEAM'&&!isHome)) w++;
       else l++;
     });
-    const n = matches.length || 1;
-    return { avgGf: (gf/n).toFixed(1), avgGa: (ga/n).toFixed(1), winPct: Math.round(w/n*100), w, d, l };
+    const n=matches.length||1;
+    return {avgGf:(gf/n).toFixed(1),avgGa:(ga/n).toFixed(1),winPct:Math.round(w/n*100),w,d,l};
   };
-
-  const hs = calcStats(homeMatches, homeId);
-  const as = calcStats(awayMatches, awayId);
-
-  document.getElementById('stat-hw').textContent = hs.w;
-  document.getElementById('stat-d').textContent = hs.d;
-  document.getElementById('stat-hl').textContent = hs.l;
-  document.getElementById('stat-hw-label').textContent = selectedHome.name + ' Galibiyet';
-  document.getElementById('stat-hl-label').textContent = selectedHome.name + ' Mağlubiyet';
-
-  document.getElementById('avg-gf-home').textContent = hs.avgGf;
-  document.getElementById('avg-gf-away').textContent = as.avgGf;
-  const gfMax = Math.max(parseFloat(hs.avgGf), parseFloat(as.avgGf));
-  document.getElementById('bar-gf').style.width = (parseFloat(hs.avgGf)/gfMax*100) + '%';
-
-  document.getElementById('avg-ga-home').textContent = hs.avgGa;
-  document.getElementById('avg-ga-away').textContent = as.avgGa;
-  const gaMax = Math.max(parseFloat(hs.avgGa), parseFloat(as.avgGa));
-  document.getElementById('bar-ga').style.width = (parseFloat(hs.avgGa)/gaMax*100) + '%';
-
-  document.getElementById('win-pct-home').textContent = hs.winPct + '%';
-  document.getElementById('win-pct-away').textContent = as.winPct + '%';
-  document.getElementById('bar-win').style.width = hs.winPct + '%';
+  const hs=calc(hm,hid), as=calc(am,aid);
+  document.getElementById('stat-hw').textContent=hs.w;
+  document.getElementById('stat-d').textContent=hs.d;
+  document.getElementById('stat-hl').textContent=hs.l;
+  document.getElementById('stat-hw-label').textContent=selectedHome.name+' Galibiyet';
+  document.getElementById('stat-hl-label').textContent=selectedHome.name+' Mağlubiyet';
+  document.getElementById('avg-gf-home').textContent=hs.avgGf;
+  document.getElementById('avg-gf-away').textContent=as.avgGf;
+  const gfMax=Math.max(parseFloat(hs.avgGf),parseFloat(as.avgGf))||1;
+  document.getElementById('bar-gf').style.width=(parseFloat(hs.avgGf)/gfMax*100)+'%';
+  document.getElementById('avg-ga-home').textContent=hs.avgGa;
+  document.getElementById('avg-ga-away').textContent=as.avgGa;
+  const gaMax=Math.max(parseFloat(hs.avgGa),parseFloat(as.avgGa))||1;
+  document.getElementById('bar-ga').style.width=(parseFloat(hs.avgGa)/gaMax*100)+'%';
+  document.getElementById('win-pct-home').textContent=hs.winPct+'%';
+  document.getElementById('win-pct-away').textContent=as.winPct+'%';
+  document.getElementById('bar-win').style.width=hs.winPct+'%';
 }
 
 function switchTab(el, id) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('#page-home .tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('t-home').style.display = id === 't-home' ? 'block' : 'none';
-  document.getElementById('t-away').style.display = id === 't-away' ? 'block' : 'none';
+  document.getElementById('t-home').style.display=id==='t-home'?'block':'none';
+  document.getElementById('t-away').style.display=id==='t-away'?'block':'none';
 }
 
+// ── PAGE NAV ──
 function goPage(name, navEl) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  if (navEl) navEl.classList.add('active');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  if(navEl) navEl.classList.add('active');
   window.scrollTo(0,0);
 }
 
-function closePremiumModal() {
-  document.getElementById('premium-modal').classList.remove('open');
+// ── LIVE TAB SWITCH ──
+function switchLiveTab(el, mode) {
+  document.querySelectorAll('#page-live .tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('lp-events').style.display='none';
+  document.getElementById('lp-chat').style.display='none';
+  document.getElementById('lp-both-events').style.display='none';
+  document.getElementById('lp-chat-side').style.display='none';
+  if(mode==='lp-events') {
+    document.getElementById('lp-events').style.display='block';
+  } else if(mode==='lp-chat') {
+    document.getElementById('lp-chat').style.display='flex';
+  } else {
+    document.getElementById('lp-both-events').style.display='block';
+    document.getElementById('lp-chat-side').style.display='flex';
+  }
 }
+
+// ── LIVE MATCH SIMULATION ──
+const pitch = document.getElementById('pitch');
+const ball = document.getElementById('ball');
+
+function makeDot(cls, x, y) {
+  const d = document.createElement('div');
+  d.className='player-dot '+cls;
+  d.style.left=x+'%'; d.style.top=y+'%';
+  pitch.appendChild(d); return d;
+}
+
+const homeDots=[makeDot('home',15,30),makeDot('home',15,70),makeDot('home',35,20),makeDot('home',35,80),makeDot('home',40,50)];
+const awayDots=[makeDot('away',85,30),makeDot('away',85,70),makeDot('away',65,20),makeDot('away',65,80),makeDot('away',60,50)];
+
+function moveDots() {
+  [...homeDots,...awayDots].forEach(d=>{
+    d.style.left=(parseFloat(d.style.left)+(Math.random()-0.5)*6)+'%';
+    d.style.top=Math.max(10,Math.min(90,parseFloat(d.style.top)+(Math.random()-0.5)*10))+'%';
+  });
+}
+
+function flashAt(x,y,color) {
+  const f=document.createElement('div');
+  f.className='event-flash'; f.style.left=x+'%'; f.style.top=y+'%'; f.style.background=color;
+  pitch.appendChild(f); setTimeout(()=>f.remove(),1300);
+}
+
+let minute=67, homeScore=2, awayScore=1;
+
+function addEvent(ev, prepend=false) {
+  const div=document.createElement('div');
+  div.className='event-item';
+  div.innerHTML=`<div class="event-min">${ev.min}'</div><div class="event-icon ${ev.type}">${ev.icon}</div><div class="event-text"><div class="event-title ${ev.type==='goal'?'goal-text':''}">${ev.title}</div><div class="event-sub">${ev.sub}</div></div>`;
+  ['events-list','events-list2'].forEach(id=>{
+    const clone=div.cloneNode(true);
+    prepend?document.getElementById(id).prepend(clone):document.getElementById(id).appendChild(clone);
+  });
+}
+
+const initEvents=[
+  {min:12,type:'goal',icon:'⚽',title:'GOL! Icardi',sub:'Galatasaray • Asist: Coman'},
+  {min:28,type:'yellow',icon:'🟨',title:'Sarı Kart',sub:'Szymanski — Fenerbahçe'},
+  {min:35,type:'corner',icon:'🚩',title:'Korner',sub:'Galatasaray kullanıyor'},
+  {min:41,type:'danger',icon:'🔥',title:'Tehlikeli Atak!',sub:'Fenerbahçe — Direkten döndü'},
+  {min:45,type:'goal',icon:'⚽',title:'GOL! Batshuayi',sub:'Fenerbahçe • Asist: Fred'},
+  {min:52,type:'sub',icon:'🔄',title:'Değişiklik',sub:'GS: Mertens → Aktürkoğlu'},
+  {min:63,type:'goal',icon:'⚽',title:'GOL! Coman',sub:'Galatasaray • Asist: Icardi'},
+];
+initEvents.forEach(e=>addEvent(e));
+
+const liveEvents=[
+  {delay:8000,min:68,type:'corner',icon:'🚩',title:'Korner',sub:'Galatasaray',x:5,y:50,flash:'rgba(255,255,255,0.3)',poss:60},
+  {delay:20000,min:71,type:'yellow',icon:'🟨',title:'Sarı Kart',sub:'Fred — Fenerbahçe',x:55,y:40,flash:'rgba(255,209,102,0.5)',poss:57},
+  {delay:35000,min:75,type:'danger',icon:'🔥',title:'Tehlikeli Atak!',sub:'Fenerbahçe şutu üstten',x:88,y:45,flash:'rgba(255,120,0,0.4)',poss:54},
+  {delay:50000,min:79,type:'goal',icon:'⚽',title:'GOL! Icardi (2)',sub:'Galatasaray • Asist: Aktürkoğlu',x:90,y:50,flash:'rgba(0,229,160,0.6)',poss:61,goal:true},
+  {delay:65000,min:83,type:'sub',icon:'🔄',title:'Değişiklik',sub:'FB: Batshuayi → Dzeko',x:50,y:50,flash:'rgba(79,142,255,0.3)',poss:55},
+  {delay:80000,min:87,type:'red-card',icon:'🟥',title:'Kırmızı Kart!',sub:'Fenerbahçe — Szymanski',x:60,y:35,flash:'rgba(255,79,79,0.6)',poss:65},
+];
+
+liveEvents.forEach(ev=>{
+  setTimeout(()=>{
+    ball.style.left=(ev.x||50)+'%'; ball.style.top=(ev.y||50)+'%';
+    if(ev.flash) flashAt(ev.x,ev.y,ev.flash);
+    moveDots();
+    minute=ev.min;
+    document.getElementById('match-min').textContent='⏱ '+minute+"'";
+    if(ev.poss) {
+      document.getElementById('poss-overlay').style.width=ev.poss+'%';
+      document.getElementById('poss-home-txt').textContent=ev.poss+'%';
+      document.getElementById('poss-away-txt').textContent=(100-ev.poss)+'%';
+    }
+    if(ev.goal) {
+      homeScore++;
+      document.getElementById('score-display').textContent=homeScore+' – '+awayScore;
+      const o=document.getElementById('goal-overlay');
+      o.classList.add('show'); setTimeout(()=>o.classList.remove('show'),2600);
+      const colors=['#00e5a0','#ffd166','#fff','#ff4f4f'];
+      for(let i=0;i<40;i++){
+        const c=document.createElement('div');
+        c.className='confetti-piece';
+        c.style.left=Math.random()*100+'vw';
+        c.style.background=colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration=(1.5+Math.random()*2)+'s';
+        c.style.animationDelay=Math.random()*0.5+'s';
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3500);
+      }
+      setTimeout(()=>addChatMsg('GOL GOL GOL ⚽🔥',randomName()),800);
+    }
+    addEvent(ev,true);
+  },ev.delay);
+});
+
+setInterval(()=>{ball.style.left=(20+Math.random()*60)+'%';ball.style.top=(15+Math.random()*70)+'%';},3000);
+setInterval(moveDots,4000);
+
+// ── CHAT ──
+const names=['Kral_GS','AliVeli','Derbi_Delisi','UltrAslan','FBli_Kemal','MacSever','Gol_Makinesi','TaktikAdam'];
+const autoMsgs=['Icardi formda bugün 🔥','harika maç','GS ezdi geçti','bu hakem ne yapıyor ya','Szymanski nerede','gol geliyor hissediyorum','savunma berbat FB nin','Coman çok iyi bu sezon','kaleci kurtardı yine','çok gergin maç'];
+function randomName(){return names[Math.floor(Math.random()*names.length)];}
+
+const bannedPatterns=[
+  /zenci|arap\s*piç|ermeni\s*dölü|kürt\s*piç|rum\s*dölü/i,
+  /allah[a-zçğışöü]*\s*(sik|oç|göt|bok)|peygamber[a-z]*\s*(sik|oç)|dinsiz\s*piç|gavur\s*dölü/i,
+  /bayrağ[a-zı]*\s*(sik|bok)|vatan\s*hain[i]?\s*dölü/i,
+  /atatürk[a-zçğışöü]*\s*(sik|oç|bok|piç)/i,
+];
+function isBanned(text){return bannedPatterns.some(p=>p.test(text));}
+
+function addChatMsg(text,name,own=false) {
+  const div=document.createElement('div');
+  div.className='chat-msg';
+  div.innerHTML=`<div class="chat-name">${name}</div><div class="chat-bubble${own?' own':''}">${text}</div>`;
+  ['chat-messages','chat-messages2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.appendChild(div.cloneNode(true));el.scrollTop=el.scrollHeight;}
+  });
+}
+
+[{n:'UltrAslan',t:'maç çok güzel gidiyor 🔥'},{n:'FBli_Kemal',t:'hakem bize çalmıyor yine'},{n:'Kral_GS',t:'Icardi formda bugün'},{n:'TaktikAdam',t:'GS baskısı çok iyi'}]
+  .forEach((m,i)=>setTimeout(()=>addChatMsg(m.t,m.n),i*500));
+
+setInterval(()=>{if(Math.random()>0.4)addChatMsg(autoMsgs[Math.floor(Math.random()*autoMsgs.length)],randomName());},4000);
+
+function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const text=inp.value.trim();
+  if(!text)return;
+  if(isBanned(text)){
+    const t=document.getElementById('blocked-toast');
+    t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+    inp.value='';return;
+  }
+  addChatMsg(text,'Sen',true);inp.value='';
+}
+
+function sendChat2(){
+  const inp=document.getElementById('chat-input2');
+  const text=inp.value.trim();
+  if(!text)return;
+  if(isBanned(text)){
+    const t=document.getElementById('blocked-toast');
+    t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+    inp.value='';return;
+  }
+  addChatMsg(text,'Sen',true);inp.value='';
+}
+
+// Start live tab in "both" mode
+switchLiveTab(document.querySelectorAll('#page-live .tab')[2],'lp-both');
+document.querySelectorAll('#page-live .tab')[2].classList.add('active');
+document.querySelectorAll('#page-live .tab')[0].classList.remove('active');
 </script>
 </body>
 </html>
