@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   } else if (action === 'today') {
     const today = new Date().toISOString().split('T')[0];
     url = `https://v3.football.api-sports.io/fixtures?date=${today}`;
-  }} else if (action === 'standings') {
+  } else if (action === 'standings') {
     url = `https://v3.football.api-sports.io/standings?league=${league}&season=2025`;
   } else if (action === 'upcoming') {
     url = `https://v3.football.api-sports.io/fixtures?league=${league}&next=10`;
