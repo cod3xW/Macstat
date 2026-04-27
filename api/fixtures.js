@@ -1,11 +1,11 @@
 export default async function handler(req, res) {
-  const { team, season } = req.query;
+  const { team } = req.query;
   
   const response = await fetch(
-    `https://v3.football.api-sports.io/fixtures?team=${team}&season=${season || 2024}`,
+    `https://api.football-data.org/v4/teams/${team}/matches?limit=10&status=FINISHED`,
     {
       headers: {
-        'x-apisports-key': process.env.API_KEY
+        'X-Auth-Token': process.env.API_KEY
       }
     }
   );
