@@ -3407,7 +3407,7 @@ function selectTeamFromSearch(id, name, crest, league) {
 let currentDetailFixtureId = null;
 let detailDataCache = {};
 
-async async function openMatchDetail(fixtureId, matchData) {
+async function openMatchDetail(fixtureId, matchData) {
   currentDetailFixtureId = fixtureId;
   detailDataCache = {};
   document.getElementById('match-detail-overlay').classList.add('open');
