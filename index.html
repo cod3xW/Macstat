@@ -196,15 +196,15 @@ header { padding:14px 18px; display:flex; align-items:center; justify-content:sp
     <div class="matchup-card">
       <div class="teams-row">
         <div class="team-select" onclick="openPicker('home')">
-          <img class="team-crest-img" id="home-crest" src="https://crests.football-data.org/81.png" alt="">
-          <div class="team-name-small" id="home-name">Barcelona</div>
-          <div class="team-league-small" id="home-league">La Liga</div>
+          <img class="team-crest-img" id="home-crest" src="https://media.api-sports.io/football/teams/645.png" alt="">
+          <div class="team-name-small" id="home-name">Galatasaray</div>
+          <div class="team-league-small" id="home-league">Süper Lig</div>
         </div>
         <div><div class="vs-circle">VS</div></div>
         <div class="team-select" onclick="openPicker('away')">
-          <img class="team-crest-img" id="away-crest" src="https://crests.football-data.org/86.png" alt="">
-          <div class="team-name-small" id="away-name">Real Madrid</div>
-          <div class="team-league-small" id="away-league">La Liga</div>
+          <img class="team-crest-img" id="away-crest" src="https://media.api-sports.io/football/teams/611.png" alt="">
+          <div class="team-name-small" id="away-name">Fenerbahçe</div>
+          <div class="team-league-small" id="away-league">Süper Lig</div>
         </div>
       </div>
       <button class="analyze-btn" id="analyze-btn" onclick="analyze()">🔍 Analiz Et</button>
@@ -374,22 +374,33 @@ header { padding:14px 18px; display:flex; align-items:center; justify-content:sp
 <script>
 // ── TEAMS ──
 const teams = [
-  {id:81,  name:'Barcelona',   league:'La Liga',     crest:'https://crests.football-data.org/81.png'},
-  {id:86,  name:'Real Madrid', league:'La Liga',     crest:'https://crests.football-data.org/86.png'},
-  {id:78,  name:'Atletico',    league:'La Liga',     crest:'https://crests.football-data.org/78.png'},
-  {id:559, name:'Sevilla',     league:'La Liga',     crest:'https://crests.football-data.org/559.png'},
-  {id:64,  name:'Liverpool',   league:'Premier Lig', crest:'https://crests.football-data.org/64.png'},
-  {id:65,  name:'Man City',    league:'Premier Lig', crest:'https://crests.football-data.org/65.png'},
-  {id:57,  name:'Arsenal',     league:'Premier Lig', crest:'https://crests.football-data.org/57.png'},
-  {id:66,  name:'Man United',  league:'Premier Lig', crest:'https://crests.football-data.org/66.png'},
-  {id:61,  name:'Chelsea',     league:'Premier Lig', crest:'https://crests.football-data.org/61.png'},
-  {id:73,  name:'Tottenham',   league:'Premier Lig', crest:'https://crests.football-data.org/73.png'},
-  {id:5,   name:'Bayern',      league:'Bundesliga',  crest:'https://crests.football-data.org/5.png'},
-  {id:4,   name:'Dortmund',    league:'Bundesliga',  crest:'https://crests.football-data.org/4.png'},
-  {id:98,  name:'AC Milan',    league:'Serie A',     crest:'https://crests.football-data.org/98.png'},
-  {id:108, name:'Inter',       league:'Serie A',     crest:'https://crests.football-data.org/108.png'},
-  {id:109, name:'Juventus',    league:'Serie A',     crest:'https://crests.football-data.org/109.png'},
-  {id:524, name:'PSG',         league:'Ligue 1',     crest:'https://crests.football-data.org/524.png'},
+  // Süper Lig
+  {id:645,  name:'Galatasaray',  league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/645.png'},
+  {id:611,  name:'Fenerbahçe',   league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/611.png'},
+  {id:549,  name:'Beşiktaş',     league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/549.png'},
+  {id:998,  name:'Trabzonspor',  league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/998.png'},
+  {id:564,  name:'Başakşehir',   league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/564.png'},
+  {id:1002, name:'Sivasspor',    league:'Süper Lig',   crest:'https://media.api-sports.io/football/teams/1002.png'},
+  // Premier Lig
+  {id:40,   name:'Liverpool',    league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/40.png'},
+  {id:50,   name:'Man City',     league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/50.png'},
+  {id:42,   name:'Arsenal',      league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/42.png'},
+  {id:33,   name:'Man United',   league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/33.png'},
+  {id:49,   name:'Chelsea',      league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/49.png'},
+  {id:47,   name:'Tottenham',    league:'Premier Lig', crest:'https://media.api-sports.io/football/teams/47.png'},
+  // La Liga
+  {id:529,  name:'Barcelona',    league:'La Liga',     crest:'https://media.api-sports.io/football/teams/529.png'},
+  {id:541,  name:'Real Madrid',  league:'La Liga',     crest:'https://media.api-sports.io/football/teams/541.png'},
+  {id:530,  name:'Atletico',     league:'La Liga',     crest:'https://media.api-sports.io/football/teams/530.png'},
+  // Bundesliga
+  {id:157,  name:'Bayern',       league:'Bundesliga',  crest:'https://media.api-sports.io/football/teams/157.png'},
+  {id:165,  name:'Dortmund',     league:'Bundesliga',  crest:'https://media.api-sports.io/football/teams/165.png'},
+  // Serie A
+  {id:489,  name:'AC Milan',     league:'Serie A',     crest:'https://media.api-sports.io/football/teams/489.png'},
+  {id:505,  name:'Inter',        league:'Serie A',     crest:'https://media.api-sports.io/football/teams/505.png'},
+  {id:496,  name:'Juventus',     league:'Serie A',     crest:'https://media.api-sports.io/football/teams/496.png'},
+  // Ligue 1
+  {id:85,   name:'PSG',          league:'Ligue 1',     crest:'https://media.api-sports.io/football/teams/85.png'},
 ];
 
 let selectedHome = teams[0], selectedAway = teams[1], pickerTarget = 'home';
