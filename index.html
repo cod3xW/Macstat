@@ -4913,6 +4913,165 @@ async function loadDetailPlayers(fixtureId) {
 }
 
 
+
+
+// ═══ GEÇMİŞ MAÇLAR ═══
+let selectedHistoryTeam = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
+
+function getHistoryResult(m, teamId) {
+  const isHome = m.teams.home.id === teamId;
+  const hw = m.teams.home.winner, aw = m.teams.away.winner;
+  if (!hw && !aw) return 'D';
+  if ((hw && isHome) || (aw && !isHome)) return 'W';
+  return 'L';
+}
+
+function calcHistoryStats(matches, teamId) {
+  let w=0,d=0,l=0,gf=0,ga=0,both=0,over25=0;
+  matches.forEach(function(m) {
+    const isHome = m.teams.home.id === teamId;
+    const scored = isHome ? (m.goals.home||0) : (m.goals.away||0);
+    const conceded = isHome ? (m.goals.away||0) : (m.goals.home||0);
+    gf += scored; ga += conceded;
+    const res = getHistoryResult(m, teamId);
+    if(res==='W') w++; else if(res==='D') d++; else l++;
+    if(scored>0 && conceded>0) both++;
+    if(scored+conceded > 2.5) over25++;
+  });
+  const n = matches.length || 1;
+  return {w,d,l,gf,ga,avgGf:(gf/n).toFixed(1),bothPct:Math.round(both/n*100),over25Pct:Math.round(over25/n*100)};
+}
+
+function buildRefereeSection(matches) {
+  const refs = {};
+  matches.forEach(function(m) {
+    if (!m.fixture.referee) return;
+    const name = m.fixture.referee.split(',')[0].trim();
+    if (!refs[name]) refs[name] = {name:name, count:0, goals:0};
+    refs[name].count++;
+    refs[name].goals += (m.goals.home||0) + (m.goals.away||0);
+  });
+  const sorted = Object.values(refs).sort(function(a,b){return b.count-a.count;}).slice(0,5);
+  if (!sorted.length) return '<div style="color:var(--muted);font-size:12px;">Hakem verisi yok</div>';
+  return sorted.map(function(r) {
+    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);">' +
+      '<div style="font-size:18px;">🟨</div>' +
+      '<div style="flex:1"><div style="font-size:12px;font-weight:600;">' + r.name + '</div>' +
+      '<div style="font-size:10px;color:var(--muted);">' + r.count + ' maç • Maç başı ' + (r.goals/r.count).toFixed(1) + ' gol</div></div>' +
+      '<div style="font-family:Bebas Neue,sans-serif;font-size:18px;color:var(--gold);">' + r.count + '</div></div>';
+  }).join('');
+}
+
+function buildHomeAwaySection(matches, teamId) {
+  const home = matches.filter(function(m){return m.teams.home.id===teamId;});
+  const away = matches.filter(function(m){return m.teams.away.id===teamId;});
+  function calcHA(ms, isHome) {
+    let w=0,d=0,l=0,gf=0,ga=0;
+    ms.forEach(function(m) {
+      const scored = isHome ? (m.goals.home||0) : (m.goals.away||0);
+      const conceded = isHome ? (m.goals.away||0) : (m.goals.home||0);
+      gf+=scored; ga+=conceded;
+      const res = getHistoryResult(m, teamId);
+      if(res==='W') w++; else if(res==='D') d++; else l++;
+    });
+    return {w,d,l,gf,ga,n:ms.length||1};
+  }
+  const hs = calcHA(home, true);
+  const as = calcHA(away, false);
+  return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
+    '<div style="background:var(--s2);border-radius:10px;padding:12px;text-align:center;">' +
+    '<div style="font-size:20px;margin-bottom:6px;">🏠</div>' +
+    '<div style="font-size:11px;font-weight:700;margin-bottom:8px;">Evde (' + hs.n + ' maç)</div>' +
+    '<div style="display:flex;justify-content:space-around;">' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--accent);">' + hs.w + '</div><div style="font-size:9px;color:var(--muted);">G</div></div>' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--gold);">' + hs.d + '</div><div style="font-size:9px;color:var(--muted);">B</div></div>' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--accent2);">' + hs.l + '</div><div style="font-size:9px;color:var(--muted);">M</div></div>' +
+    '</div><div style="margin-top:8px;font-size:10px;color:var(--muted);">Ort. ' + (hs.gf/hs.n).toFixed(1) + ' gol/maç</div></div>' +
+    '<div style="background:var(--s2);border-radius:10px;padding:12px;text-align:center;">' +
+    '<div style="font-size:20px;margin-bottom:6px;">✈️</div>' +
+    '<div style="font-size:11px;font-weight:700;margin-bottom:8px;">Deplasman (' + as.n + ' maç)</div>' +
+    '<div style="display:flex;justify-content:space-around;">' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--accent);">' + as.w + '</div><div style="font-size:9px;color:var(--muted);">G</div></div>' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--gold);">' + as.d + '</div><div style="font-size:9px;color:var(--muted);">B</div></div>' +
+    '<div><div style="font-family:Bebas Neue,sans-serif;font-size:22px;color:var(--accent2);">' + as.l + '</div><div style="font-size:9px;color:var(--muted);">M</div></div>' +
+    '</div><div style="margin-top:8px;font-size:10px;color:var(--muted);">Ort. ' + (as.gf/as.n).toFixed(1) + ' gol/maç</div></div></div>';
+}
+
+async function loadHistoryPage() {
+  const el = document.getElementById('history-content');
+  const team = selectedHistoryTeam;
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+
+  try {
+    const res = await fetch('/api/fixtures?team=' + team.id);
+    const data = await res.json();
+    const matches = data.response || [];
+
+    if (!matches.length) {
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">Maç bulunamadı</div>';
+      return;
+    }
+
+    const stats = calcHistoryStats(matches, team.id);
+
+    const formBand = matches.map(function(m) {
+      const res = getHistoryResult(m, team.id);
+      const color = res==='W'?'var(--accent)':res==='D'?'var(--gold)':'var(--accent2)';
+      const bg = res==='W'?'rgba(0,240,168,0.15)':res==='D'?'rgba(255,204,68,0.15)':'rgba(255,61,107,0.15)';
+      return '<div style="width:22px;height:22px;border-radius:5px;background:'+bg+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:'+color+';">'+res+'</div>';
+    }).join('');
+
+    const matchCards = matches.map(function(m) {
+      const isHome = m.teams.home.id === team.id;
+      const scored = isHome ? m.goals.home : m.goals.away;
+      const conceded = isHome ? m.goals.away : m.goals.home;
+      const opponent = isHome ? m.teams.away : m.teams.home;
+      const res = getHistoryResult(m, team.id);
+      const cls = res==='W'?'win':res==='D'?'draw':'loss';
+      const resLabel = res==='W'?'G':res==='D'?'B':'M';
+      const date = new Date(m.fixture.date).toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'});
+      const referee = m.fixture.referee ? m.fixture.referee.split(',')[0] : '';
+      return '<div class="match-card match-card-clickable '+cls+'" onclick="openMatchDetail('+m.fixture.id+')">' +
+        '<div class="res-badge '+cls+'">'+resLabel+'</div>' +
+        '<div class="match-info">' +
+        '<div class="match-opponent">'+(isHome?'🏠':'✈️')+' '+opponent.name+'</div>' +
+        '<div class="match-meta"><span>'+m.league.name+'</span><span>'+date+'</span>'+(referee?'<span>🟨 '+referee+'</span>':'')+'</div></div>' +
+        '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px;">' +
+        '<div class="match-score-big '+cls+'">'+scored+'–'+conceded+'</div>' +
+        '<div style="font-size:9px;color:var(--accent);">Detay ›</div></div></div>';
+    }).join('');
+
+    el.innerHTML =
+      '<div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;">' +
+      '<div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">📊 Son '+matches.length+' Maç Özeti</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;">' +
+      '<div style="text-align:center;background:rgba(0,240,168,0.08);border-radius:10px;padding:10px 4px;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--accent);">'+stats.w+'</div><div style="font-size:9px;color:var(--muted);">GALİBİYET</div></div>' +
+      '<div style="text-align:center;background:rgba(255,204,68,0.08);border-radius:10px;padding:10px 4px;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--gold);">'+stats.d+'</div><div style="font-size:9px;color:var(--muted);">BERABERLİK</div></div>' +
+      '<div style="text-align:center;background:rgba(255,61,107,0.08);border-radius:10px;padding:10px 4px;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--accent2);">'+stats.l+'</div><div style="font-size:9px;color:var(--muted);">MAĞLUBIYET</div></div>' +
+      '<div style="text-align:center;background:var(--s2);border-radius:10px;padding:10px 4px;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--text);">'+stats.gf+'</div><div style="font-size:9px;color:var(--muted);">ATILAN GOL</div></div>' +
+      '<div style="text-align:center;background:var(--s2);border-radius:10px;padding:10px 4px;"><div style="font-family:Bebas Neue,sans-serif;font-size:26px;color:var(--text);">'+stats.ga+'</div><div style="font-size:9px;color:var(--muted);">YENİLEN GOL</div></div>' +
+      '</div>' +
+      '<div style="margin-bottom:10px;"><div style="font-size:9px;color:var(--muted);margin-bottom:6px;">FORM</div><div style="display:flex;gap:4px;flex-wrap:wrap;">'+formBand+'</div></div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">' +
+      '<div style="background:var(--s2);border-radius:8px;padding:8px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:20px;color:var(--accent);">'+stats.avgGf+'</div><div style="font-size:9px;color:var(--muted);">GOL ORT.</div></div>' +
+      '<div style="background:var(--s2);border-radius:8px;padding:8px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:20px;color:var(--gold);">'+stats.bothPct+'%</div><div style="font-size:9px;color:var(--muted);">KG VAR %</div></div>' +
+      '<div style="background:var(--s2);border-radius:8px;padding:8px;text-align:center;"><div style="font-family:Bebas Neue,sans-serif;font-size:20px;color:var(--blue);">'+stats.over25Pct+'%</div><div style="font-size:9px;color:var(--muted);">2.5 ÜST %</div></div>' +
+      '</div></div>' +
+      '<div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;">' +
+      '<div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🟨 Hakem Analizi</div>' +
+      buildRefereeSection(matches) + '</div>' +
+      '<div style="background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;">' +
+      '<div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">🏠 Ev & Deplasman</div>' +
+      buildHomeAwaySection(matches, team.id) + '</div>' +
+      '<div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;">📋 Maç Detayları (Tıkla)</div>' +
+      '<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">' + matchCards + '</div>';
+
+  } catch(e) {
+    console.error(e);
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+  }
+}
+
 </script>
 
 <!-- Firebase Auth -->
