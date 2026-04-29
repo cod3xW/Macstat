@@ -3011,7 +3011,7 @@ function openPicker(side) {
       <div class="team-grid">
         ${teams.map(t => `
           <div class="team-option" onclick="selectTeam(${t.id},'${t.name.replace(/'/g,"\'")}','${league}','${t.crest}')">
-            <img src="${t.crest}" alt="${t.name}" onerror="this.style.display='none'">
+            <img src="${t.crest}" alt="${t.name}" style="width:30px;height:30px;object-fit:contain;" onerror="this.style.opacity='0';this.style.height='0'">
             <div class="team-option-name">${t.name}</div>
           </div>
         `).join('')}
