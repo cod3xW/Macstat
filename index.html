@@ -5236,8 +5236,19 @@ async function doRegister() {
 async function doGoogleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   clearAuthMessages();
+  
+  // iOS Capacitor kontrolü
+  const isCapacitor = window.Capacitor !== undefined;
+  
   try {
-    await auth.signInWithRedirect(provider);
+    if (isCapacitor) {
+      await auth.signInWithRedirect(provider);
+    } else {
+      const result = await auth.signInWithPopup(provider);
+      if (result.user) {
+        console.log('Google login başarılı:', result.user.email);
+      }
+    }
   } catch(e) {
     showAuthError(translateError(e.code));
   }
