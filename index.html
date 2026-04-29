@@ -2973,7 +2973,7 @@ const TEAMS = {
     {id:189, name:'PAOK',         crest:'https://media.api-sports.io/football/teams/189.png'},
   ],
   '🌍 Milli Takımlar': [
-    {id:759,  name:'🇹🇷 Türkiye',     crest:'https://media.api-sports.io/football/teams/759.png'},
+    {id:777,  name:'🇹🇷 Türkiye',     crest:'https://media.api-sports.io/football/teams/777.png'},
     {id:25,   name:'🇩🇪 Almanya',     crest:'https://media.api-sports.io/football/teams/25.png'},
     {id:9,    name:'🇪🇸 İspanya',     crest:'https://media.api-sports.io/football/teams/9.png'},
     {id:2,    name:'🇫🇷 Fransa',      crest:'https://media.api-sports.io/football/teams/2.png'},
@@ -2987,11 +2987,11 @@ const TEAMS = {
     {id:1,    name:'🇧🇪 Belçika',     crest:'https://media.api-sports.io/football/teams/1.png'},
     {id:3,    name:'🇭🇷 Hırvatistan', crest:'https://media.api-sports.io/football/teams/3.png'},
     {id:21,   name:'🇩🇰 Danimarka',   crest:'https://media.api-sports.io/football/teams/21.png'},
-    {id:19,   name:'🇸🇪 İsveç',       crest:'https://media.api-sports.io/football/teams/19.png'},
+    {id:5,    name:'🇸🇪 İsveç',       crest:'https://media.api-sports.io/football/teams/5.png'},
     {id:775,  name:'🇦🇹 Avusturya',   crest:'https://media.api-sports.io/football/teams/775.png'},
     {id:24,   name:'🇵🇱 Polonya',     crest:'https://media.api-sports.io/football/teams/24.png'},
     {id:15,   name:'🇨🇭 İsviçre',     crest:'https://media.api-sports.io/football/teams/15.png'},
-    {id:38,   name:'🇷🇸 Sırbistan',   crest:'https://media.api-sports.io/football/teams/38.png'},
+    {id:14,   name:'🇷🇸 Sırbistan',   crest:'https://media.api-sports.io/football/teams/14.png'},
     {id:772,  name:'🇺🇦 Ukrayna',     crest:'https://media.api-sports.io/football/teams/772.png'},
   ],
 };
@@ -3011,7 +3011,7 @@ function openPicker(side) {
       <div class="team-grid">
         ${teams.map(t => `
           <div class="team-option" onclick="selectTeam(${t.id},'${t.name.replace(/'/g,"\'")}','${league}','${t.crest}')">
-            <img src="${t.crest}" alt="${t.name}" style="width:30px;height:30px;object-fit:contain;" onerror="this.style.opacity='0';this.style.height='0'">
+            <img src="${t.crest}" alt="${t.name}" onerror="this.style.display='none'">
             <div class="team-option-name">${t.name}</div>
           </div>
         `).join('')}
