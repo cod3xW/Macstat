@@ -99,7 +99,7 @@ body {
   background: rgba(6,6,14,0.97);
   border-top: 1px solid var(--border);
   display: flex;
-  padding: 8px 0 20px;
+  padding: 8px 0 calc(20px + env(safe-area-inset-bottom));
   backdrop-filter: blur(20px);
   z-index: 300;
 }
