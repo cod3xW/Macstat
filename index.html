@@ -5228,7 +5228,7 @@ async function doGoogleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   clearAuthMessages();
   try {
-    await auth.signInWithPopup(provider);
+    await auth.signInWithRedirect(provider);
   } catch(e) {
     showAuthError(translateError(e.code));
   }
