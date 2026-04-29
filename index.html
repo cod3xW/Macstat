@@ -4230,6 +4230,16 @@ function switchLiveTab(el, mode) {
 switchLiveTab(document.querySelector('.live-tab'), 'lv-both');
 // Load dashboard on start
 setTimeout(loadDashboard, 500);
+  // Google redirect sonucunu yakala (iOS için)
+auth.getRedirectResult().then(function(result) {
+  if (result && result.user) {
+    console.log('Google login başarılı');
+  }
+}).catch(function(e) {
+  if (e && e.code && e.code !== 'auth/no-auth-event') {
+    showAuthError(translateError(e.code));
+  }
+});
 
 
 
