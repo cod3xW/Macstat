@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MacStat Pro — Maç Analiz</title>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -37,13 +37,11 @@ body {
   margin: 0 auto;
   overflow-x: hidden;
   position: relative;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ── HEADER ── */
 .header {
-  padding: max(14px, env(safe-area-inset-top)) 18px 14px;
+  padding: 14px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -98,7 +96,7 @@ body {
   background: rgba(6,6,14,0.97);
   border-top: 1px solid var(--border);
   display: flex;
-  padding: 8px 0 calc(20px + env(safe-area-inset-bottom));
+  padding: 8px 0 20px;
   backdrop-filter: blur(20px);
   z-index: 300;
 }
@@ -2827,6 +2825,28 @@ body {
 </div>
 
 <script>
+// ═══════════════════════════════════════
+// GLOBAL DEĞİŞKENLER — EN ÜSTTE OLMALI
+// ═══════════════════════════════════════
+var dashboardLoaded = false;
+var liveRefreshTimer = null;
+var currentDetailFixtureId = null;
+var detailDataCache = {};
+var selectedHistoryTeam = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
+var currentUser = null;
+var notifEnabled = true;
+var cardNotifEnabled = false;
+var currentTheme = 'dark';
+var currentLeagueId = '203';
+var currentLeagueTab = 'standings';
+var pickerTarget = 'main';
+var searchTimeout = null;
+var hDots = [], aDots = [];
+var simInterval = null;
+var ballInterval = null;
+var currentMatchEvents = [];
+var simEventIndex = 0;
+
 // ═══ TEAMS DATABASE ═══
 const TEAMS = {
   '🇹🇷 Süper Lig': [
@@ -2975,33 +2995,33 @@ const TEAMS = {
     {id:189, name:'PAOK',         crest:'https://media.api-sports.io/football/teams/189.png'},
   ],
   '🌍 Milli Takımlar': [
-    {id:777,  name:'🇹🇷 Türkiye',     crest:'https://media.api-sports.io/football/teams/777.png'},
-    {id:25,   name:'🇩🇪 Almanya',     crest:'https://media.api-sports.io/football/teams/25.png'},
-    {id:9,    name:'🇪🇸 İspanya',     crest:'https://media.api-sports.io/football/teams/9.png'},
-    {id:2,    name:'🇫🇷 Fransa',      crest:'https://media.api-sports.io/football/teams/2.png'},
-    {id:10,   name:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 İngiltere',  crest:'https://media.api-sports.io/football/teams/10.png'},
-    {id:768,  name:'🇮🇹 İtalya',      crest:'https://media.api-sports.io/football/teams/768.png'},
-    {id:27,   name:'🇵🇹 Portekiz',    crest:'https://media.api-sports.io/football/teams/27.png'},
-    {id:1118, name:'🇳🇱 Hollanda',    crest:'https://media.api-sports.io/football/teams/1118.png'},
-    {id:26,   name:'🇦🇷 Arjantin',    crest:'https://media.api-sports.io/football/teams/26.png'},
-    {id:6,    name:'🇧🇷 Brezilya',    crest:'https://media.api-sports.io/football/teams/6.png'},
-    {id:31,   name:'🇺🇾 Uruguay',     crest:'https://media.api-sports.io/football/teams/31.png'},
-    {id:1,    name:'🇧🇪 Belçika',     crest:'https://media.api-sports.io/football/teams/1.png'},
-    {id:3,    name:'🇭🇷 Hırvatistan', crest:'https://media.api-sports.io/football/teams/3.png'},
-    {id:21,   name:'🇩🇰 Danimarka',   crest:'https://media.api-sports.io/football/teams/21.png'},
-    {id:5,    name:'🇸🇪 İsveç',       crest:'https://media.api-sports.io/football/teams/5.png'},
-    {id:775,  name:'🇦🇹 Avusturya',   crest:'https://media.api-sports.io/football/teams/775.png'},
-    {id:24,   name:'🇵🇱 Polonya',     crest:'https://media.api-sports.io/football/teams/24.png'},
-    {id:15,   name:'🇨🇭 İsviçre',     crest:'https://media.api-sports.io/football/teams/15.png'},
-    {id:14,   name:'🇷🇸 Sırbistan',   crest:'https://media.api-sports.io/football/teams/14.png'},
-    {id:772,  name:'🇺🇦 Ukrayna',     crest:'https://media.api-sports.io/football/teams/772.png'},
+    {id:759, name:'Türkiye',      crest:'https://media.api-sports.io/football/teams/759.png'},
+    {id:768, name:'Almanya',      crest:'https://media.api-sports.io/football/teams/768.png'},
+    {id:771, name:'İspanya',      crest:'https://media.api-sports.io/football/teams/771.png'},
+    {id:773, name:'Fransa',       crest:'https://media.api-sports.io/football/teams/773.png'},
+    {id:769, name:'İngiltere',    crest:'https://media.api-sports.io/football/teams/769.png'},
+    {id:770, name:'İtalya',       crest:'https://media.api-sports.io/football/teams/770.png'},
+    {id:775, name:'Portekiz',     crest:'https://media.api-sports.io/football/teams/775.png'},
+    {id:776, name:'Hollanda',     crest:'https://media.api-sports.io/football/teams/776.png'},
+    {id:760, name:'Arjantin',     crest:'https://media.api-sports.io/football/teams/760.png'},
+    {id:762, name:'Brezilya',     crest:'https://media.api-sports.io/football/teams/762.png'},
+    {id:764, name:'Uruguay',      crest:'https://media.api-sports.io/football/teams/764.png'},
+    {id:882, name:'Belçika',      crest:'https://media.api-sports.io/football/teams/882.png'},
+    {id:778, name:'Hırvatistan',  crest:'https://media.api-sports.io/football/teams/778.png'},
+    {id:779, name:'Danimarka',    crest:'https://media.api-sports.io/football/teams/779.png'},
+    {id:781, name:'İsveç',        crest:'https://media.api-sports.io/football/teams/781.png'},
+    {id:767, name:'Avusturya',    crest:'https://media.api-sports.io/football/teams/767.png'},
+    {id:777, name:'Polonya',      crest:'https://media.api-sports.io/football/teams/777.png'},
+    {id:788, name:'İsviçre',      crest:'https://media.api-sports.io/football/teams/788.png'},
+    {id:858, name:'Sırbistan',    crest:'https://media.api-sports.io/football/teams/858.png'},
+    {id:766, name:'Ukrayna',      crest:'https://media.api-sports.io/football/teams/766.png'},
   ],
 };
 
 let selectedMain = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
 let selectedHome = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
 let selectedAway = {id:611, name:'Fenerbahçe',  league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/611.png'};
-let pickerTarget = 'main';
+
 
 // ═══ PICKER ═══
 function openPicker(side) {
@@ -3768,8 +3788,8 @@ function startDetailSimulation() {
 }
 
 // ═══ LEAGUES ═══
-let currentLeagueId = '203';
-let currentLeagueTab = 'standings';
+
+
 
 async function loadLeague(leagueId, leagueName) {
   currentLeagueId = leagueId;
@@ -3893,9 +3913,9 @@ async function loadFixtures(leagueId) {
 }
 
 // ═══ SETTINGS ═══
-let notifEnabled = true;
-let cardNotifEnabled = false;
-let currentTheme = 'dark';
+
+
+
 
 function setTheme(theme) {
   currentTheme = theme;
@@ -3977,11 +3997,11 @@ function sendGoalNotification(homeTeam, awayTeam, score) {
 
 // ═══ PITCH SIMULATION ═══
 const pitchBall = document.getElementById('pitch-ball');
-let hDots = [], aDots = [];
-let simInterval = null;
-let ballInterval = null;
-let currentMatchEvents = [];
-let simEventIndex = 0;
+
+
+
+
+
 
 function initPitchPlayers() {
   const p = document.getElementById('pitch');
@@ -4193,21 +4213,6 @@ function addChatMsg(text, name, own = false) {
   if (msgs) { msgs.appendChild(div); msgs.scrollTop = msgs.scrollHeight; }
 }
 
-function sendChat() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-  if (isBanned(text)) {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-    input.value = '';
-    return;
-  }
-  addChatMsg(text, 'Sen', true);
-  input.value = '';
-}
-
 // ═══ LIVE TABS ═══
 function switchLiveTab(el, mode) {
   document.querySelectorAll('.live-tab').forEach(t => t.classList.remove('active'));
@@ -4230,16 +4235,6 @@ function switchLiveTab(el, mode) {
 switchLiveTab(document.querySelector('.live-tab'), 'lv-both');
 // Load dashboard on start
 setTimeout(loadDashboard, 500);
-  // Google redirect sonucunu yakala (iOS için)
-auth.getRedirectResult().then(function(result) {
-  if (result && result.user) {
-    console.log('Google login başarılı');
-  }
-}).catch(function(e) {
-  if (e && e.code && e.code !== 'auth/no-auth-event') {
-    showAuthError(translateError(e.code));
-  }
-});
 
 
 
@@ -4255,8 +4250,8 @@ function goToMatchDetail(fixtureId) {
 }
 
 // ═══ DASHBOARD ═══
-let dashboardLoaded = false;
-let liveRefreshTimer = null;
+
+
 
 function loadDashboard() {
   if (dashboardLoaded) return;
@@ -4486,7 +4481,7 @@ async function loadMatchOfWeek() {
 }
 
 // ═══ TEAM SEARCH ═══
-let searchTimeout = null;
+
 
 async function handleTeamSearch(query) {
   const resultsEl = document.getElementById('search-results');
@@ -4537,8 +4532,8 @@ function selectTeamFromSearch(id, name, crest, league) {
 }
 
 // ═══ MATCH DETAIL ═══
-let currentDetailFixtureId = null;
-let detailDataCache = {};
+
+
 
 async function openMatchDetail(fixtureId, matchData) {
   currentDetailFixtureId = fixtureId;
@@ -4928,7 +4923,7 @@ async function loadDetailPlayers(fixtureId) {
 
 
 // ═══ GEÇMİŞ MAÇLAR ═══
-let selectedHistoryTeam = {id:645, name:'Galatasaray', league:'Süper Lig', crest:'https://media.api-sports.io/football/teams/645.png'};
+
 
 function getHistoryResult(m, teamId) {
   const isHome = m.teams.home.id === teamId;
@@ -5103,7 +5098,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-let currentUser = null;
+
 
 // Auth state listener
 auth.onAuthStateChanged(user => {
@@ -5236,19 +5231,8 @@ async function doRegister() {
 async function doGoogleLogin() {
   const provider = new firebase.auth.GoogleAuthProvider();
   clearAuthMessages();
-  
-  // iOS Capacitor kontrolü
-  const isCapacitor = window.Capacitor !== undefined;
-  
   try {
-    if (isCapacitor) {
-      await auth.signInWithRedirect(provider);
-    } else {
-      const result = await auth.signInWithPopup(provider);
-      if (result.user) {
-        console.log('Google login başarılı:', result.user.email);
-      }
-    }
+    await auth.signInWithPopup(provider);
   } catch(e) {
     showAuthError(translateError(e.code));
   }
