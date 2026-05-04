@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -29,6 +29,15 @@ export default async function handler(req, res) {
   } else if (action === 'lineups') {
     url = `https://v3.football.api-sports.io/fixtures/lineups?fixture=${id}`;
   } else if (action === 'players') {
-    url = `https://v3.football.api-sports.io/fixtures/fixtures/players?fixture=${id}`;
+    url = `https://v3.football.api-sports.io/fixtures/players?fixture=${id}`;
   } else if (action === 'events') {
-    url = `https://v3.football.api-s
+    url = `https://v3.football.api-sports.io/fixtures/events?fixture=${id}`;
+  } else {
+    url = `https://v3.football.api-sports.io/fixtures?team=${team}&last=10`;
+  }
+  const response = await fetch(url, {
+    headers: { 'x-apisports-key': process.env.API_KEY }
+  });
+  const data = await response.json();
+  res.status(200).json(data);
+}
