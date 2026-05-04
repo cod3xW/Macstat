@@ -1,7 +1,14 @@
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   const { team, search, action, league, id } = req.query;
   let url;
-
   if (action === 'search') {
     url = `https://v3.football.api-sports.io/teams?search=${search}`;
   } else if (action === 'live') {
@@ -22,17 +29,6 @@ export default async function handler(req, res) {
   } else if (action === 'lineups') {
     url = `https://v3.football.api-sports.io/fixtures/lineups?fixture=${id}`;
   } else if (action === 'players') {
-    url = `https://v3.football.api-sports.io/fixtures/players?fixture=${id}`;
+    url = `https://v3.football.api-sports.io/fixtures/fixtures/players?fixture=${id}`;
   } else if (action === 'events') {
-    url = `https://v3.football.api-sports.io/fixtures/events?fixture=${id}`;
-  } else {
-    url = `https://v3.football.api-sports.io/fixtures?team=${team}&last=10`;
-  }
-
-  const response = await fetch(url, {
-    headers: { 'x-apisports-key': process.env.API_KEY }
-  });
-
-  const data = await response.json();
-  res.status(200).json(data);
-}
+    url = `https://v3.football.api-s
