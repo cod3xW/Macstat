@@ -5917,20 +5917,22 @@ function renderGoals(bets) {
   if (overUnder && overUnder.values && overUnder.values.length) {
     var html = '<div class="bet-goals-grid">';
     // Belirli seviyeleri filtrele
-    var targets = ['Under 1.5','Over 1.5','Under 2.5','Over 2.5','Under 3.5','Over 3.5','Under 0.5','Over 0.5','Under 4.5','Over 4.5'];
+    var targets = ['Under 0.5','Over 0.5','Under 1.5','Over 1.5','Under 2.5','Over 2.5','Under 3.5','Over 3.5','Under 4.5','Over 4.5'];
+    // targets sırasına göre göster (API sırasına değil)
+    var valMap = {};
+    overUnder.values.forEach(function(v) { valMap[v.value] = v.odd; });
     var found = 0;
-    overUnder.values.forEach(function(v) {
-      if (targets.indexOf(v.value) !== -1) {
-        var isOver = v.value.indexOf('Over') !== -1;
-        var color = isOver ? 'var(--accent)' : 'var(--accent2)';
-        var prob = impliedProb(v.odd);
-        html += '<div class="bet-goal-item">' +
-          '<div class="bet-goal-label">' + esc(v.value) + '</div>' +
-          '<div class="bet-goal-val" style="color:' + color + ';">' + v.odd + '</div>' +
-          '<div class="bet-goal-prob" style="color:' + color + ';">%' + prob + ' olasılık</div>' +
-          '</div>';
-        found++;
-      }
+    targets.forEach(function(key) {
+      if (!valMap[key]) return;
+      var isOver = key.indexOf('Over') !== -1;
+      var color = isOver ? 'var(--accent)' : 'var(--accent2)';
+      var prob = impliedProb(valMap[key]);
+      html += '<div class="bet-goal-item">' +
+        '<div class="bet-goal-label">' + esc(key) + '</div>' +
+        '<div class="bet-goal-val" style="color:' + color + ';">' + valMap[key] + '</div>' +
+        '<div class="bet-goal-prob" style="color:' + color + ';">%' + prob + ' olasılık</div>' +
+        '</div>';
+      found++;
     });
     html += '</div>';
     goalsEl.innerHTML = found ? html : noDataHtml();
@@ -6174,7 +6176,7 @@ function renderHtFt(bets, home, away) {
   sorted.forEach(function(v) {
     var label = labelMap[v.value] || esc(v.value);
     var color = colorMap[v.value] || 'var(--text)';
-    var desc = v.value.replace('Home', esc(home).substring(0,8)).replace('Away', esc(away).substring(0,8)).replace('Draw','Bera');
+    var desc = v.value.replace(/Home/g, esc(home).substring(0,8)).replace(/Away/g, esc(away).substring(0,8)).replace(/Draw/g,'Bera');
     html += '<div style="background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;">' +
       '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:16px;color:' + color + ';">' + label + '</div>' +
       '<div style="font-size:9px;color:var(--muted);margin:2px 0;">' + desc + '</div>' +
