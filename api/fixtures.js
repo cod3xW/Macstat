@@ -1,6 +1,7 @@
 const ALLOWED_ACTIONS = new Set([
   'today','live','standings','upcoming','nextmatches',
-  'match','statistics','lineups','players','events','search'
+  'match','statistics','lineups','players','events','search',
+  'odds','predictions','bettingfixtures'
 ]);
 
 const ALLOWED_ORIGINS = [
@@ -121,6 +122,15 @@ module.exports = async function handler(req, res) {
   } else if (action === 'events') {
     if (!id) return res.status(400).json({ error: 'id required' });
     url = `${BASE}/fixtures/events?fixture=${id}`;
+  } else if (action === 'odds') {
+    if (!id) return res.status(400).json({ error: 'id required' });
+    url = `${BASE}/odds?fixture=${id}`;
+  } else if (action === 'predictions') {
+    if (!id) return res.status(400).json({ error: 'id required' });
+    url = `${BASE}/predictions?fixture=${id}`;
+  } else if (action === 'bettingfixtures') {
+    if (!league) return res.status(400).json({ error: 'league required' });
+    url = `${BASE}/fixtures?league=${league}&next=10&status=NS`;
   } else if (team && isNumeric(team)) {
     url = `${BASE}/fixtures?team=${team}&last=10`;
   } else {
