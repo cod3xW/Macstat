@@ -3,9 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src * data: blob:; connect-src https: wss:;">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="X-Frame-Options" content="DENY">
 <title>MacStat Pro — Maç Analiz</title>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -3232,7 +3229,7 @@ async function runAnalysis() {
     document.getElementById('results-wrap').scrollIntoView({behavior:'smooth', block:'start'});
 
   } catch(e) {
-    void e;
+    console.error(e);
     document.getElementById('ai-insight').textContent = '⚠️ Veri yüklenemedi. Lütfen tekrar deneyin.';
   }
 
@@ -5103,7 +5100,7 @@ async function loadHistoryPage() {
       '<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">' + matchCards + '</div>';
 
   } catch(e) {
-    void e;
+    console.error(e);
     el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
   }
 }
