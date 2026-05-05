@@ -3049,7 +3049,7 @@ function openPicker(side) {
       <div class="league-label">${league}</div>
       <div class="team-grid">
         ${teams.map(t => `
-          <div class="team-option" onclick="selectTeam(${t.id},'${t.name.replace(/'/g,"\'")}','${league}','${t.crest}')">
+          <div class="team-option" onclick="selectTeam(${t.id},'${encodeURIComponent(t.name)}','${league}','${t.crest}')">
             <img src="${t.crest}" alt="${t.name}" onerror="this.style.display='none'">
             <div class="team-option-name">${t.name}</div>
           </div>
@@ -3061,6 +3061,7 @@ function openPicker(side) {
 }
 
 function selectTeam(id, name, league, crest) {
+  name = decodeURIComponent(name);
   const team = {id, name, league, crest};
   if (pickerTarget === 'main') {
     selectedMain = team;
@@ -3100,7 +3101,7 @@ async function loadUpcomingMatches() {
   list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=nextmatches&team=' + team.id);
+    const res = await apiFetch('?action=nextmatches&team=' + team.id);
     const data = await res.json();
     const matches = (data.response || []).slice(0, 5);
 
@@ -3116,7 +3117,7 @@ async function loadUpcomingMatches() {
       const date = new Date(m.fixture.date).toLocaleDateString('tr-TR', {day:'numeric', month:'short', weekday:'short'});
       const time = new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
 
-      return `<div class="upcoming-match-card" onclick="analyzeUpcomingMatch(${m.fixture.id}, ${team.id}, ${opponent.id}, '${team.name.replace(/'/g,"\'")}', '${opponent.name.replace(/'/g,"\'")}', '${team.crest}', '${opponent.crest}', '${team.league}')">
+      return `<div class="upcoming-match-card" onclick="analyzeUpcomingMatch(${m.fixture.id}, ${team.id}, ${opponent.id}, '${team.name.replace(/'/g,"\'")}', '${opponenencodeURIComponent(t.name)}', '${team.crest}', '${opponent.crest}', '${team.league}')">
         <div class="upcoming-match-vs">
           <div class="upcoming-match-teams">
             <img class="upcoming-team-logo" src="${team.crest}" onerror="this.style.display='none'">
@@ -3150,8 +3151,8 @@ async function analyzeUpcomingMatch(fixtureId, homeId, awayId, homeName, awayNam
 
   try {
     const [homeRes, awayRes] = await Promise.all([
-      fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?team=' + homeId).then(r => r.json()),
-      fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?team=' + awayId).then(r => r.json()),
+      apiFetch('?team=' + homeId).then(r => r.json()),
+      apiFetch('?team=' + awayId).then(r => r.json()),
     ]);
 
     const homeMatches = homeRes.response || [];
@@ -3196,8 +3197,8 @@ async function runAnalysis() {
 
   try {
     const [homeRes, awayRes] = await Promise.all([
-      fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?team=${selectedHome.id}`).then(r => r.json()),
-      fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?team=${selectedAway.id}`).then(r => r.json()),
+      apiFetch(`?team=${selectedHome.id}`).then(r => r.json()),
+      apiFetch(`?team=${selectedAway.id}`).then(r => r.json()),
     ]);
 
     const homeMatches = homeRes.response || [];
@@ -3683,7 +3684,7 @@ async function loadLiveMatches() {
   container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Canlı maçlar yükleniyor...</div></div>';
 
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=live');
+    const res = await apiFetch('?action=live');
     const data = await res.json();
     const matches = data.response || [];
 
@@ -3744,7 +3745,7 @@ async function loadLiveMatches() {
 
 async function loadTodayMatches() {
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=today');
+    const res = await apiFetch('?action=today');
     const data = await res.json();
     const matches = (data.response || []).slice(0, 15);
     const list = document.getElementById('today-matches-list');
@@ -3839,7 +3840,7 @@ async function loadStandings(leagueId) {
   container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=standings&league=${leagueId}`);
+    const res = await apiFetch(`?action=standings&league=${leagueId}`);
     const data = await res.json();
     const standings = data.response?.[0]?.league?.standings?.[0] || data.response || [];
 
@@ -3894,7 +3895,7 @@ async function loadFixtures(leagueId) {
   container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fikstür yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=upcoming&league=${leagueId}`);
+    const res = await apiFetch(`?action=upcoming&league=${leagueId}`);
     const data = await res.json();
     const matches = (data.response || []).slice(0, 10);
 
@@ -4149,7 +4150,7 @@ async function openMatchDetail(fixtureId) {
   document.getElementById('chat-msgs').innerHTML = '<div style="padding:12px 8px;text-align:center;font-size:10px;color:var(--muted);">💬 İlk yorumu sen yap!</div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=match&id=${fixtureId}`);
+    const res = await apiFetch(`?action=match&id=${fixtureId}`);
     const data = await res.json();
     const match = data.response?.[0];
     if (!match) throw new Error('No match');
@@ -4286,7 +4287,7 @@ function loadDashboard() {
 async function loadDashboardLive() {
   const el = document.getElementById('live-scores-widget');
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=live');
+    const res = await apiFetch('?action=live');
     const data = await res.json();
     const matches = data.response || [];
 
@@ -4323,7 +4324,7 @@ async function loadDashboardLive() {
 async function loadDashboardToday() {
   const el = document.getElementById('today-widget');
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=today');
+    const res = await apiFetch('?action=today');
     const data = await res.json();
     const matches = (data.response || [])
       .filter(m => ['NS','1H','HT','2H','ET','P'].includes(m.fixture.status.short))
@@ -4368,7 +4369,7 @@ async function loadDashboardToday() {
 async function loadDashboardForm() {
   const el = document.getElementById('form-widget');
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=standings&league=203');
+    const res = await apiFetch('?action=standings&league=203');
     const data = await res.json();
     const standings = data.response?.[0]?.league?.standings?.[0] || [];
 
@@ -4404,7 +4405,7 @@ async function loadDashboardForm() {
 async function loadDashboardStats() {
   const el = document.getElementById('stats-widget');
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=standings&league=203');
+    const res = await apiFetch('?action=standings&league=203');
     const data = await res.json();
     const standings = data.response?.[0]?.league?.standings?.[0] || [];
 
@@ -4453,7 +4454,7 @@ async function loadDashboardStats() {
 async function loadMatchOfWeek() {
   const el = document.getElementById('match-of-week-widget');
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=upcoming&league=203');
+    const res = await apiFetch('?action=upcoming&league=203');
     const data = await res.json();
     const matches = data.response || [];
 
@@ -4517,7 +4518,7 @@ async function handleTeamSearch(query) {
   clearTimeout(searchTimeout);
   searchTimeout = setTimeout(async () => {
     try {
-      const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=search&search=${encodeURIComponent(query)}`);
+      const res = await apiFetch(`?action=search&search=${encodeURIComponent(query)}`);
       const data = await res.json();
       const teams = data.response || [];
 
@@ -4527,7 +4528,7 @@ async function handleTeamSearch(query) {
       }
 
       resultsEl.innerHTML = teams.slice(0, 10).map(t => `
-        <div class="search-result-item" onclick="selectTeamFromSearch(${t.team.id}, '${t.team.name.replace(/'/g,"\'")}', '${t.team.logo}', '${t.league?.name || ""}')">
+        <div class="search-result-item" onclick="selectTeamFromSearch(${t.team.id}, '${encodeURIComponent(t.team.name)}', '${t.team.logo}', '${t.league?.name || ""}')">
           <img src="${t.team.logo}" onerror="this.style.display='none'">
           <div>
             <div class="search-result-name">${t.team.name}</div>
@@ -4542,6 +4543,7 @@ async function handleTeamSearch(query) {
 }
 
 function selectTeamFromSearch(id, name, crest, league) {
+  name = decodeURIComponent(name);
   selectTeam(id, name, league || 'Diğer', crest);
   document.getElementById('team-search-input').value = '';
   document.getElementById('search-results').style.display = 'none';
@@ -4567,7 +4569,7 @@ async function openMatchDetail(fixtureId, matchData) {
   } else {
     // Fetch match data if not provided
     try {
-      const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=match&id=${fixtureId}`);
+      const res = await apiFetch(`?action=match&id=${fixtureId}`);
       const data = await res.json();
       const match = data.response?.[0];
       if (match) setDetailScoreboard(match);
@@ -4630,7 +4632,7 @@ async function loadDetailEvents(fixtureId) {
   el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=events&id=${fixtureId}`);
+    const res = await apiFetch(`?action=events&id=${fixtureId}`);
     const data = await res.json();
     const events = data.response || [];
 
@@ -4685,7 +4687,7 @@ async function loadDetailStats(fixtureId) {
   el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=statistics&id=${fixtureId}`);
+    const res = await apiFetch(`?action=statistics&id=${fixtureId}`);
     const data = await res.json();
     const stats = data.response || [];
 
@@ -4762,7 +4764,7 @@ async function loadDetailLineup(fixtureId) {
   el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=lineups&id=${fixtureId}`);
+    const res = await apiFetch(`?action=lineups&id=${fixtureId}`);
     const data = await res.json();
     const lineups = data.response || [];
 
@@ -4882,7 +4884,7 @@ async function loadDetailPlayers(fixtureId) {
   el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch(`https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?action=players&id=${fixtureId}`);
+    const res = await apiFetch(`?action=players&id=${fixtureId}`);
     const data = await res.json();
     const teams = data.response || [];
 
@@ -5027,7 +5029,7 @@ async function loadHistoryPage() {
   el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
 
   try {
-    const res = await fetch('https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures?team=' + team.id);
+    const res = await apiFetch('?team=' + team.id);
     const data = await res.json();
     const matches = data.response || [];
 
@@ -5100,8 +5102,14 @@ async function loadHistoryPage() {
 
 <!-- Firebase Auth -->
 <script>
+// ═══ APP CONFIG ═══
+const APP_TOKEN = '3bd88fe538a5f17b440fa254177f7f6d06d5a0abcac99e808716cdb637ce75e3';
+const API_BASE = 'https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app/api/fixtures';
+function apiFetch(params) {
+  return fetch(API_BASE + params, { headers: { 'X-App-Token': APP_TOKEN } });
+}
+
 // ═══ FIREBASE AUTH ═══
-// TODO: Replace with your Firebase config from console.firebase.google.com
 const firebaseConfig = {
   apiKey: "AIzaSyB53tHixmoPq-hXtfJcDGkEoGISPBD6LTg",
   authDomain: "macstat-a67b9.firebaseapp.com",
