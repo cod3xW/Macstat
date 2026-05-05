@@ -1,0 +1,17 @@
+{
+  "appId": "com.macstat.app",
+  "appName": "MacStat",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": true,
+    "backgroundColor": "#06060e"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "121255329329-2bv5p3nk902sslhe9125shou7f8643fe.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
+}
