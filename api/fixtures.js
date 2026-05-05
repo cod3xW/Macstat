@@ -10,11 +10,36 @@ const ALLOWED_ORIGINS = [
   'http://localhost:3000',
 ];
 
+// In-memory rate limit (per instance, resets on cold start)
+// Provides basic DoS protection within a single serverless instance
+const rateMap = new Map();
+const RATE_LIMIT = 30;
+const RATE_WINDOW = 60 * 1000;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const entry = rateMap.get(ip) || { count: 0, start: now };
+  if (now - entry.start > RATE_WINDOW) {
+    entry.count = 1;
+    entry.start = now;
+  } else {
+    entry.count++;
+  }
+  rateMap.set(ip, entry);
+  // Cleanup old entries periodically
+  if (rateMap.size > 500) {
+    for (const [key, val] of rateMap) {
+      if (now - val.start > RATE_WINDOW) rateMap.delete(key);
+    }
+  }
+  return entry.count <= RATE_LIMIT;
+}
+
 function isNumeric(v) { return /^\d{1,10}$/.test(v); }
 
 function sanitizeSearch(v) {
   if (!v || typeof v !== 'string') return '';
-  return v.replace(/[^a-zA-Z0-9\s\-]/g, '').slice(0, 50).trim();
+  return v.replace(/[^\w\s\-]/g, '').slice(0, 50).trim();
 }
 
 module.exports = async function handler(req, res) {
@@ -26,19 +51,27 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-App-Token');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'no-referrer');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Secret token kontrolü
+  // Token kontrolü — zorunlu, koşulsuz
   const appToken = req.headers['x-app-token'];
-  if (process.env.APP_SECRET && appToken !== process.env.APP_SECRET) {
+  if (!appToken || appToken !== process.env.APP_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  // Rate limiting
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+  if (!checkRateLimit(ip)) {
+    res.setHeader('Retry-After', '60');
+    return res.status(429).json({ error: 'Too many requests' });
   }
 
   const { team, search, action, league, id } = req.query;
 
-  // Input validasyon
+  // Input validasyon — whitelist + type check
   if (action !== undefined && !ALLOWED_ACTIONS.has(action)) {
     return res.status(400).json({ error: 'Invalid action' });
   }
@@ -52,42 +85,44 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid league' });
   }
 
+  const BASE = 'https://v3.football.api-sports.io';
   let url;
+
   if (action === 'search') {
     const q = sanitizeSearch(search);
     if (!q) return res.status(400).json({ error: 'Invalid search query' });
-    url = `https://v3.football.api-sports.io/teams?search=${encodeURIComponent(q)}`;
+    url = `${BASE}/teams?search=${encodeURIComponent(q)}`;
   } else if (action === 'live') {
-    url = 'https://v3.football.api-sports.io/fixtures?live=all';
+    url = `${BASE}/fixtures?live=all`;
   } else if (action === 'today') {
     const today = new Date().toISOString().split('T')[0];
-    url = `https://v3.football.api-sports.io/fixtures?date=${today}`;
+    url = `${BASE}/fixtures?date=${today}`;
   } else if (action === 'standings') {
     if (!league) return res.status(400).json({ error: 'league required' });
-    url = `https://v3.football.api-sports.io/standings?league=${league}&season=2025`;
+    url = `${BASE}/standings?league=${league}&season=2025`;
   } else if (action === 'upcoming') {
     if (!league) return res.status(400).json({ error: 'league required' });
-    url = `https://v3.football.api-sports.io/fixtures?league=${league}&next=10`;
+    url = `${BASE}/fixtures?league=${league}&next=10`;
   } else if (action === 'nextmatches') {
     if (!team) return res.status(400).json({ error: 'team required' });
-    url = `https://v3.football.api-sports.io/fixtures?team=${team}&next=5`;
+    url = `${BASE}/fixtures?team=${team}&next=5`;
   } else if (action === 'match') {
     if (!id) return res.status(400).json({ error: 'id required' });
-    url = `https://v3.football.api-sports.io/fixtures?id=${id}`;
+    url = `${BASE}/fixtures?id=${id}`;
   } else if (action === 'statistics') {
     if (!id) return res.status(400).json({ error: 'id required' });
-    url = `https://v3.football.api-sports.io/fixtures/statistics?fixture=${id}`;
+    url = `${BASE}/fixtures/statistics?fixture=${id}`;
   } else if (action === 'lineups') {
     if (!id) return res.status(400).json({ error: 'id required' });
-    url = `https://v3.football.api-sports.io/fixtures/lineups?fixture=${id}`;
+    url = `${BASE}/fixtures/lineups?fixture=${id}`;
   } else if (action === 'players') {
     if (!id) return res.status(400).json({ error: 'id required' });
-    url = `https://v3.football.api-sports.io/fixtures/players?fixture=${id}`;
+    url = `${BASE}/fixtures/players?fixture=${id}`;
   } else if (action === 'events') {
     if (!id) return res.status(400).json({ error: 'id required' });
-    url = `https://v3.football.api-sports.io/fixtures/events?fixture=${id}`;
+    url = `${BASE}/fixtures/events?fixture=${id}`;
   } else if (team && isNumeric(team)) {
-    url = `https://v3.football.api-sports.io/fixtures?team=${team}&last=10`;
+    url = `${BASE}/fixtures?team=${team}&last=10`;
   } else {
     return res.status(400).json({ error: 'Invalid request' });
   }
@@ -96,7 +131,7 @@ module.exports = async function handler(req, res) {
     const response = await fetch(url, {
       headers: { 'x-apisports-key': process.env.API_KEY }
     });
-    if (!response.ok) return res.status(502).json({ error: 'Upstream API error' });
+    if (!response.ok) return res.status(502).json({ error: 'Upstream error' });
     const data = await response.json();
     res.status(200).json(data);
   } catch {
