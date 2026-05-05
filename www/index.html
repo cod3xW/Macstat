@@ -2175,6 +2175,251 @@ body {
 /* ── ANIMATIONS ── */
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 .fade-up { animation: fadeUp 0.4s ease forwards; }
+
+/* ══════════════════════════════════════
+   BAHİS ANALİZİ — YENİ SEKMELER
+   ══════════════════════════════════════ */
+
+/* Lig seçici scroll bar */
+.bet-league-bar {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  gap: 6px;
+  padding: 12px 16px 0;
+}
+.bet-league-bar::-webkit-scrollbar { display: none; }
+
+.bet-league-btn {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.bet-league-btn.active {
+  background: rgba(0,240,168,0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Maç listesi */
+.bet-match-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.bet-match-card:hover, .bet-match-card:active { border-color: var(--accent); }
+.bet-match-card.selected { border-color: var(--accent); background: rgba(0,240,168,0.04); }
+
+.bet-match-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+}
+.bet-team-left { display: flex; align-items: center; gap: 7px; }
+.bet-team-right { display: flex; align-items: center; gap: 7px; justify-content: flex-end; }
+.bet-team-name { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+.bet-match-time {
+  text-align: center;
+  background: var(--s2);
+  border-radius: 8px;
+  padding: 4px 10px;
+  min-width: 56px;
+}
+.bet-match-time-val { font-size: 11px; font-weight: 700; color: var(--accent); }
+.bet-match-date-val { font-size: 9px; color: var(--muted); }
+
+/* Genel kart */
+.bet-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+/* Bölüm başlığı */
+.bet-section-title {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bet-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* 1/X/2 oranları butonları */
+.bet-odds-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.bet-odd-btn {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 6px;
+  text-align: center;
+  cursor: default;
+  transition: all 0.2s;
+}
+.bet-odd-btn:hover { border-color: var(--accent); }
+.bet-odd-label { font-size: 9px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.bet-odd-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--text);
+}
+.bet-odd-prob { font-size: 9px; color: var(--muted); margin-top: 3px; }
+
+/* Progress bar */
+.bet-prob-bar-wrap { margin-bottom: 8px; }
+.bet-prob-bar-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.bet-prob-bar-label { font-size: 11px; font-weight: 600; }
+.bet-prob-bar-pct { font-family: 'Bebas Neue', sans-serif; font-size: 16px; }
+.bet-prob-bar-track {
+  height: 6px;
+  background: var(--s3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bet-prob-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+.bet-prob-bar-fill.home { background: var(--accent); }
+.bet-prob-bar-fill.draw { background: var(--gold); }
+.bet-prob-bar-fill.away { background: var(--accent2); }
+
+/* Tavsiye kutusu */
+.bet-advice-box {
+  background: rgba(255,204,68,0.06);
+  border: 1px solid rgba(255,204,68,0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.bet-advice-box strong { color: var(--gold); }
+
+/* Gol oranları */
+.bet-goals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.bet-goal-item {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.bet-goal-label { font-size: 9px; color: var(--muted); margin-bottom: 4px; letter-spacing: 0.5px; }
+.bet-goal-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; line-height: 1; color: var(--text); }
+.bet-goal-prob { font-size: 9px; margin-top: 3px; }
+
+/* Handikap listesi */
+.bet-handicap-list { display: flex; flex-direction: column; gap: 6px; }
+.bet-handicap-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 8px 12px;
+}
+.bet-handicap-name { font-size: 12px; font-weight: 600; }
+.bet-handicap-odd { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--accent); }
+
+/* Doğru skor grid */
+.bet-score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+.bet-score-item {
+  background: var(--s2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+}
+.bet-score-result { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--text); }
+.bet-score-odd { font-size: 10px; color: var(--muted); margin-top: 2px; }
+.bet-score-rank { font-size: 8px; color: var(--accent); margin-top: 1px; letter-spacing: 1px; }
+
+/* Güç karşılaştırması bar */
+.bet-power-item { margin-bottom: 10px; }
+.bet-power-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; margin-bottom: 5px; }
+.bet-power-label { font-size: 9px; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+.bet-power-track {
+  height: 5px;
+  background: var(--s3);
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  margin: 3px 0;
+}
+.bet-power-home { height: 100%; background: var(--accent); transition: width 0.8s ease; }
+.bet-power-away { height: 100%; background: var(--accent2); transition: width 0.8s ease; }
+
+/* Risk badge */
+.bet-risk-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.bet-risk-badge.low { background: rgba(0,240,168,0.15); color: var(--accent); border: 1px solid rgba(0,240,168,0.3); }
+.bet-risk-badge.mid { background: rgba(255,204,68,0.15); color: var(--gold); border: 1px solid rgba(255,204,68,0.3); }
+.bet-risk-badge.high { background: rgba(255,61,107,0.15); color: var(--accent2); border: 1px solid rgba(255,61,107,0.3); }
+
+/* No data mesajı */
+.bet-no-data {
+  text-align: center;
+  padding: 14px;
+  color: var(--muted);
+  font-size: 11px;
+  background: var(--s2);
+  border-radius: 10px;
+  border: 1px dashed var(--border);
+}
+
+/* Skor başlık (detay görünümü) */
+.bet-detail-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 10px;
+  background: var(--s1);
+  border-bottom: 1px solid var(--border);
+}
+.bet-detail-team { text-align: center; }
+.bet-detail-team-name { font-size: 13px; font-weight: 700; margin-top: 6px; }
+.bet-detail-vs { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--muted); text-align: center; }
 </style>
 </head>
 <body>
@@ -2555,6 +2800,138 @@ body {
   </div>
 </div>
 
+<!-- ═══ BAHİS ANALİZİ SAYFASI ═══ -->
+<div class="page" id="page-betting">
+
+  <div style="padding:14px 16px 0;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">BAHİS ANALİZİ</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:1px;">Oran ve tahmin analizi</div>
+  </div>
+
+  <!-- LİG SEÇİCİ -->
+  <div class="bet-league-bar" id="bet-league-bar">
+    <div class="bet-league-btn active" onclick="selectBettingLeague(this,'203')">🇹🇷 Süper Lig</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'39')">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'140')">🇪🇸 La Liga</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'78')">🇩🇪 Bundesliga</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'135')">🇮🇹 Serie A</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'61')">🇫🇷 Ligue 1</div>
+    <div class="bet-league-btn" onclick="selectBettingLeague(this,'2')">🏆 Şamp. Ligi</div>
+  </div>
+
+  <!-- MAÇ LİSTESİ -->
+  <div id="betting-matches-list" style="padding:10px 16px 0;">
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Maçlar yükleniyor...</div></div>
+  </div>
+
+  <!-- DETAY GÖRÜNÜMLERİ (başta gizli) -->
+  <div id="betting-detail" style="display:none;">
+
+    <!-- Geri butonu + skor başlığı -->
+    <div style="padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);">
+      <button onclick="closeBettingDetail()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">← Geri</button>
+      <div style="font-size:12px;font-weight:600;color:var(--muted);" id="bet-league-name">Lig</div>
+    </div>
+
+    <div class="bet-detail-header" id="bet-score-header">
+      <div class="bet-detail-team">
+        <img id="bet-home-logo" src="" style="width:40px;height:40px;object-fit:contain;margin:0 auto;display:block;" onerror="this.style.display='none'">
+        <div class="bet-detail-team-name" id="bet-home-name">Ev</div>
+      </div>
+      <div class="bet-detail-vs">VS</div>
+      <div class="bet-detail-team">
+        <img id="bet-away-logo" src="" style="width:40px;height:40px;object-fit:contain;margin:0 auto;display:block;" onerror="this.style.display='none'">
+        <div class="bet-detail-team-name" id="bet-away-name">Dep</div>
+      </div>
+    </div>
+
+    <div style="padding:10px 16px 20px;">
+
+      <!-- Yükleniyor göstergesi -->
+      <div id="bet-loading" class="loading-wrap" style="padding:30px;">
+        <div class="spinner"></div>
+        <div class="loading-text">Oranlar ve tahminler yükleniyor...</div>
+      </div>
+
+      <!-- AI TAHMİN BÖLÜMÜ -->
+      <div id="bet-ai-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">🤖 AI Tahmin</div>
+          <div id="bet-ai-bars"></div>
+          <div class="bet-advice-box" id="bet-advice-box"></div>
+        </div>
+      </div>
+
+      <!-- 1/X/2 ORANLARI -->
+      <div id="bet-odds-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">📊 1/X/2 Oranları</div>
+          <div class="bet-odds-row" id="bet-main-odds"></div>
+          <div id="bet-implied-probs"></div>
+        </div>
+      </div>
+
+      <!-- HANDİKAP ORANLARI -->
+      <div id="bet-handicap-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">⚖️ Handikap Oranları</div>
+          <div id="bet-handicap-content"></div>
+        </div>
+      </div>
+
+      <!-- GOL ORANLARI -->
+      <div id="bet-goals-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">⚽ Gol Oranları (Alt/Üst)</div>
+          <div id="bet-goals-content"></div>
+        </div>
+        <div class="bet-card">
+          <div class="bet-section-title">🔀 KG Var / Yok</div>
+          <div id="bet-kg-content"></div>
+        </div>
+        <div class="bet-card">
+          <div class="bet-section-title">1️⃣ İlk Yarı Alt/Üst</div>
+          <div id="bet-ht-goals-content"></div>
+        </div>
+      </div>
+
+      <!-- DEVRE ANALİZLERİ -->
+      <div id="bet-halftime-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">⏱️ Devre Analizleri</div>
+          <div id="bet-halftime-content"></div>
+        </div>
+      </div>
+
+      <!-- DOĞRU SKOR -->
+      <div id="bet-score-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">🎰 En Muhtemel Skorlar</div>
+          <div class="bet-score-grid" id="bet-scores-grid"></div>
+        </div>
+      </div>
+
+      <!-- GÜÇ KARŞILAŞTIRMASI -->
+      <div id="bet-comparison-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">💪 Güç Karşılaştırması</div>
+          <div id="bet-comparison-content"></div>
+        </div>
+      </div>
+
+      <!-- RİSK GÖSTERGESİ -->
+      <div id="bet-risk-section" style="display:none;">
+        <div class="bet-card">
+          <div class="bet-section-title">🚦 Risk Göstergesi</div>
+          <div id="bet-risk-content"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
 <!-- ═══ AYARLAR SAYFASI ═══ -->
 <div class="page" id="page-settings">
   <div style="padding:14px 16px 10px;">
@@ -2834,6 +3211,10 @@ body {
   <div class="nav-item" onclick="goPage('leagues',this)">
     <div class="nav-icon">🏆</div>
     <div class="nav-label">LİGLER</div>
+  </div>
+  <div class="nav-item" onclick="goPage('betting',this)">
+    <div class="nav-icon">🎯</div>
+    <div class="nav-label">BAHİS</div>
   </div>
   <div class="nav-item" onclick="goPage('settings',this)">
     <div class="nav-icon">⚙️</div>
@@ -3672,6 +4053,7 @@ function goPage(name, el) {
   if (name === 'leagues') loadLeague('203', 'Süper Lig');
   if (name === 'analysis') loadDashboard();
   if (name === 'history') loadHistoryPage();
+  if (name === 'betting') initBettingPage();
 }
 
 // ═══ LIVE MATCHES ═══
@@ -5103,6 +5485,574 @@ async function loadHistoryPage() {
     console.error(e);
     el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
   }
+}
+
+// ═══════════════════════════════════════
+// BAHİS ANALİZİ MODÜLÜ
+// ═══════════════════════════════════════
+
+var bettingLeagueLoaded = {};
+var currentBettingLeague = '203';
+
+// Sayfa ilk açıldığında
+function initBettingPage() {
+  if (!bettingLeagueLoaded[currentBettingLeague]) {
+    loadBettingFixtures(currentBettingLeague);
+  }
+}
+
+// Lig seçici
+function selectBettingLeague(el, leagueId) {
+  document.querySelectorAll('.bet-league-btn').forEach(function(b) { b.classList.remove('active'); });
+  el.classList.add('active');
+  currentBettingLeague = leagueId;
+  // Detay açıksa kapat
+  document.getElementById('betting-matches-list').style.display = 'block';
+  document.getElementById('betting-detail').style.display = 'none';
+  if (!bettingLeagueLoaded[leagueId]) {
+    loadBettingFixtures(leagueId);
+  }
+}
+
+// Maçları yükle
+async function loadBettingFixtures(leagueId) {
+  var list = document.getElementById('betting-matches-list');
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Maçlar yükleniyor...</div></div>';
+
+  try {
+    var res = await apiFetch('?action=bettingfixtures&league=' + leagueId);
+    var data = await res.json();
+    var matches = (data.response || []).slice(0, 20);
+
+    if (!matches.length) {
+      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;">Bu lig için yaklaşan maç bulunamadı</div>';
+      return;
+    }
+
+    bettingLeagueLoaded[leagueId] = true;
+
+    list.innerHTML = matches.map(function(m) {
+      var date = new Date(m.fixture.date).toLocaleDateString('tr-TR', {day:'numeric', month:'short', weekday:'short'});
+      var time = new Date(m.fixture.date).toLocaleTimeString('tr-TR', {hour:'2-digit', minute:'2-digit'});
+      var homeLogoUrl = m.teams.home.logo || '';
+      var awayLogoUrl = m.teams.away.logo || '';
+      var homeName = esc(m.teams.home.name);
+      var awayName = esc(m.teams.away.name);
+      return '<div class="bet-match-card" onclick="openBettingDetail(' + m.fixture.id + ',\'' + homeName + '\',\'' + awayName + '\',\'' + homeLogoUrl + '\',\'' + awayLogoUrl + '\',\'' + esc(m.league.name) + '\')">' +
+        '<div class="bet-match-row">' +
+        '<div class="bet-team-left"><img src="' + homeLogoUrl + '" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display=\'none\'"><div class="bet-team-name">' + homeName + '</div></div>' +
+        '<div class="bet-match-time"><div class="bet-match-time-val">' + time + '</div><div class="bet-match-date-val">' + date + '</div></div>' +
+        '<div class="bet-team-right"><div class="bet-team-name" style="text-align:right;">' + awayName + '</div><img src="' + awayLogoUrl + '" style="width:20px;height:20px;object-fit:contain;" onerror="this.style.display=\'none\'"></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:var(--muted);margin-top:6px;text-align:center;">' + esc(m.league.name) + ' • ' + esc(m.league.round || '') + '</div>' +
+        '</div>';
+    }).join('');
+
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+  }
+}
+
+// Maç detayını aç
+async function openBettingDetail(fixtureId, home, away, homeLogo, awayLogo, leagueName) {
+  // Göster/gizle
+  document.getElementById('betting-matches-list').style.display = 'none';
+  document.getElementById('betting-detail').style.display = 'block';
+
+  // Başlık bilgilerini ayarla
+  document.getElementById('bet-home-name').textContent = home;
+  document.getElementById('bet-away-name').textContent = away;
+  document.getElementById('bet-home-logo').src = homeLogo;
+  document.getElementById('bet-away-logo').src = awayLogo;
+  document.getElementById('bet-league-name').textContent = leagueName;
+
+  // Tüm bölümleri sıfırla
+  ['bet-ai-section','bet-odds-section','bet-handicap-section','bet-goals-section',
+   'bet-halftime-section','bet-score-section','bet-comparison-section','bet-risk-section'].forEach(function(id) {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.getElementById('bet-loading').style.display = 'flex';
+
+  // Scroll yukarı
+  document.getElementById('main-content').scrollTop = 0;
+
+  try {
+    var results = await Promise.allSettled([
+      apiFetch('?action=odds&id=' + fixtureId).then(function(r) { return r.json(); }),
+      apiFetch('?action=predictions&id=' + fixtureId).then(function(r) { return r.json(); })
+    ]);
+
+    var oddsData = results[0].status === 'fulfilled' ? results[0].value : null;
+    var predictionsData = results[1].status === 'fulfilled' ? results[1].value : null;
+
+    document.getElementById('bet-loading').style.display = 'none';
+
+    renderBettingDetail(oddsData, predictionsData, home, away);
+
+  } catch(e) {
+    document.getElementById('bet-loading').style.display = 'none';
+    document.getElementById('bet-ai-section').style.display = 'block';
+    document.getElementById('bet-ai-bars').innerHTML = '<div class="bet-no-data">⚠️ Veri yüklenemedi. API planınız bu veriyi desteklemiyor olabilir.</div>';
+    document.getElementById('bet-advice-box').style.display = 'none';
+  }
+}
+
+// Geri dön
+function closeBettingDetail() {
+  document.getElementById('betting-detail').style.display = 'none';
+  document.getElementById('betting-matches-list').style.display = 'block';
+  document.getElementById('main-content').scrollTop = 0;
+}
+
+// ── YARDIMCI FONKSİYONLAR ──
+
+function getBetByName(bets, name) {
+  if (!bets || !bets.length) return null;
+  var lower = name.toLowerCase();
+  return bets.find(function(b) { return b.name && b.name.toLowerCase().indexOf(lower) !== -1; }) || null;
+}
+
+function getBetById(bets, id) {
+  if (!bets || !bets.length) return null;
+  return bets.find(function(b) { return b.id === id; }) || null;
+}
+
+function impliedProb(odd) {
+  var o = parseFloat(odd);
+  if (!o || o <= 0) return 0;
+  return Math.round(1 / o * 100);
+}
+
+function getOddValue(bet, valueName) {
+  if (!bet || !bet.values) return null;
+  var v = bet.values.find(function(x) { return x.value && x.value.toLowerCase() === valueName.toLowerCase(); });
+  return v ? v.odd : null;
+}
+
+function getOddValues(bet) {
+  if (!bet || !bet.values) return [];
+  return bet.values;
+}
+
+function noDataHtml(msg) {
+  return '<div class="bet-no-data">' + (msg || 'Bu veri mevcut değil') + '</div>';
+}
+
+// ── ANA RENDER FONKSİYONU ──
+function renderBettingDetail(oddsData, predictionsData, home, away) {
+
+  // Oranları parse et
+  var bets = [];
+  try {
+    var bookmakers = (oddsData && oddsData.response && oddsData.response[0]) ? oddsData.response[0].bookmakers : [];
+    if (bookmakers && bookmakers.length) {
+      bets = bookmakers[0].bets || [];
+    }
+  } catch(e) {}
+
+  // Predictions parse
+  var pred = null;
+  try {
+    pred = predictionsData && predictionsData.response && predictionsData.response[0] ? predictionsData.response[0].predictions : null;
+  } catch(e) {}
+
+  // ── 1. AI TAHMİN ──
+  document.getElementById('bet-ai-section').style.display = 'block';
+  renderAIPrediction(pred, home, away, bets);
+
+  // ── 2. 1/X/2 ORANLARI ──
+  document.getElementById('bet-odds-section').style.display = 'block';
+  renderMainOdds(bets, home, away);
+
+  // ── 3. HANDİKAP ──
+  document.getElementById('bet-handicap-section').style.display = 'block';
+  renderHandicap(bets, home, away);
+
+  // ── 4. GOL ORANLARI ──
+  document.getElementById('bet-goals-section').style.display = 'block';
+  renderGoals(bets);
+
+  // ── 5. DEVRE ANALİZLERİ ──
+  document.getElementById('bet-halftime-section').style.display = 'block';
+  renderHalftime(bets, home, away);
+
+  // ── 6. DOĞRU SKOR ──
+  document.getElementById('bet-score-section').style.display = 'block';
+  renderCorrectScore(bets);
+
+  // ── 7. GÜÇ KARŞILAŞTIRMASI ──
+  document.getElementById('bet-comparison-section').style.display = 'block';
+  renderComparison(pred, home, away);
+
+  // ── 8. RİSK GÖSTERGESİ ──
+  document.getElementById('bet-risk-section').style.display = 'block';
+  renderRiskIndicator(bets);
+}
+
+// ── AI TAHMİN RENDER ──
+function renderAIPrediction(pred, home, away, bets) {
+  var barsEl = document.getElementById('bet-ai-bars');
+  var adviceEl = document.getElementById('bet-advice-box');
+
+  if (!pred) {
+    // predictions yoksa odds'tan hesapla
+    var matchOdds = getBetById(bets, 1) || getBetByName(bets, 'Match Winner');
+    if (matchOdds) {
+      var homeOdd = parseFloat(getOddValue(matchOdds, 'Home') || getOddValue(matchOdds, '1') || 0);
+      var drawOdd = parseFloat(getOddValue(matchOdds, 'Draw') || getOddValue(matchOdds, 'X') || 0);
+      var awayOdd = parseFloat(getOddValue(matchOdds, 'Away') || getOddValue(matchOdds, '2') || 0);
+      var hp = homeOdd ? impliedProb(homeOdd) : 0;
+      var dp = drawOdd ? impliedProb(drawOdd) : 0;
+      var ap = awayOdd ? impliedProb(awayOdd) : 0;
+      var total = hp + dp + ap || 1;
+      hp = Math.round(hp/total*100); dp = Math.round(dp/total*100); ap = 100-hp-dp;
+      barsEl.innerHTML = buildProbBars(home, away, hp, dp, ap);
+      adviceEl.innerHTML = '<strong>Tahmin:</strong> ' + (hp > ap ? home + ' favori.' : ap > hp ? away + ' favori.' : 'Dengeli maç.') + ' Oranlardan hesaplandı.';
+    } else {
+      barsEl.innerHTML = noDataHtml('Tahmin verisi yok');
+      adviceEl.style.display = 'none';
+    }
+    return;
+  }
+
+  var pct = pred.percent || {};
+  var hp = parseInt(pct.home || 0);
+  var dp = parseInt(pct.draw || 0);
+  var ap = parseInt(pct.away || 0);
+  barsEl.innerHTML = buildProbBars(home, away, hp, dp, ap);
+
+  var advice = pred.advice || '';
+  adviceEl.innerHTML = advice ? '<strong>Tavsiye:</strong> ' + esc(advice) : '';
+  if (!advice) adviceEl.style.display = 'none';
+}
+
+function buildProbBars(home, away, hp, dp, ap) {
+  return '<div class="bet-prob-bar-wrap">' +
+    '<div class="bet-prob-bar-header"><div class="bet-prob-bar-label">' + esc(home) + '</div><div class="bet-prob-bar-pct" style="color:var(--accent);">' + hp + '%</div></div>' +
+    '<div class="bet-prob-bar-track"><div class="bet-prob-bar-fill home" style="width:' + hp + '%"></div></div>' +
+    '</div>' +
+    '<div class="bet-prob-bar-wrap">' +
+    '<div class="bet-prob-bar-header"><div class="bet-prob-bar-label">Beraberlik</div><div class="bet-prob-bar-pct" style="color:var(--gold);">' + dp + '%</div></div>' +
+    '<div class="bet-prob-bar-track"><div class="bet-prob-bar-fill draw" style="width:' + dp + '%"></div></div>' +
+    '</div>' +
+    '<div class="bet-prob-bar-wrap">' +
+    '<div class="bet-prob-bar-header"><div class="bet-prob-bar-label">' + esc(away) + '</div><div class="bet-prob-bar-pct" style="color:var(--accent2);">' + ap + '%</div></div>' +
+    '<div class="bet-prob-bar-track"><div class="bet-prob-bar-fill away" style="width:' + ap + '%"></div></div>' +
+    '</div>';
+}
+
+// ── 1/X/2 ORANLARI ──
+function renderMainOdds(bets, home, away) {
+  var mainOddsEl = document.getElementById('bet-main-odds');
+  var impliedEl = document.getElementById('bet-implied-probs');
+  var bet = getBetById(bets, 1) || getBetByName(bets, 'Match Winner');
+
+  if (!bet) {
+    mainOddsEl.innerHTML = noDataHtml();
+    impliedEl.innerHTML = '';
+    return;
+  }
+
+  var homeOdd = getOddValue(bet, 'Home') || getOddValue(bet, '1') || '-';
+  var drawOdd = getOddValue(bet, 'Draw') || getOddValue(bet, 'X') || '-';
+  var awayOdd = getOddValue(bet, 'Away') || getOddValue(bet, '2') || '-';
+
+  mainOddsEl.innerHTML =
+    '<div class="bet-odd-btn"><div class="bet-odd-label">EV</div><div class="bet-odd-val">' + homeOdd + '</div><div class="bet-odd-prob">' + esc(home).substring(0,12) + '</div></div>' +
+    '<div class="bet-odd-btn"><div class="bet-odd-label">X</div><div class="bet-odd-val" style="color:var(--gold);">' + drawOdd + '</div><div class="bet-odd-prob">Beraberlik</div></div>' +
+    '<div class="bet-odd-btn"><div class="bet-odd-label">DEP</div><div class="bet-odd-val" style="color:var(--accent2);">' + awayOdd + '</div><div class="bet-odd-prob">' + esc(away).substring(0,12) + '</div></div>';
+
+  // Implied prob
+  var hp = homeOdd !== '-' ? impliedProb(homeOdd) : 0;
+  var dp = drawOdd !== '-' ? impliedProb(drawOdd) : 0;
+  var ap = awayOdd !== '-' ? impliedProb(awayOdd) : 0;
+  impliedEl.innerHTML = '<div style="display:flex;justify-content:space-around;margin-top:6px;">' +
+    '<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">Olasılık</div><div style="font-size:13px;font-weight:700;color:var(--accent);">' + hp + '%</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">Olasılık</div><div style="font-size:13px;font-weight:700;color:var(--gold);">' + dp + '%</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">Olasılık</div><div style="font-size:13px;font-weight:700;color:var(--accent2);">' + ap + '%</div></div>' +
+    '</div>';
+}
+
+// ── HANDİKAP ──
+function renderHandicap(bets, home, away) {
+  var el = document.getElementById('bet-handicap-content');
+  var html = '';
+
+  // Asian Handicap (id:4)
+  var asian = getBetById(bets, 4) || getBetByName(bets, 'Asian Handicap');
+  if (asian && asian.values && asian.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px;">Asian Handicap</div>';
+    html += '<div class="bet-handicap-list">';
+    asian.values.slice(0, 6).forEach(function(v) {
+      html += '<div class="bet-handicap-item"><div class="bet-handicap-name">' + esc(v.value) + '</div><div class="bet-handicap-odd">' + v.odd + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  // European Handicap (id:9)
+  var euro = getBetById(bets, 9) || getBetByName(bets, 'European Handicap');
+  if (euro && euro.values && euro.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin:12px 0 6px;">European Handicap</div>';
+    html += '<div class="bet-handicap-list">';
+    euro.values.slice(0, 6).forEach(function(v) {
+      html += '<div class="bet-handicap-item"><div class="bet-handicap-name">' + esc(v.value) + '</div><div class="bet-handicap-odd">' + v.odd + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  // Draw No Bet (id:2 veya 109)
+  var dnb = getBetById(bets, 109) || getBetById(bets, 2) || getBetByName(bets, 'Draw No Bet');
+  if (dnb && dnb.values && dnb.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin:12px 0 6px;">Draw No Bet</div>';
+    html += '<div class="bet-odds-row" style="grid-template-columns:1fr 1fr;">';
+    dnb.values.slice(0, 2).forEach(function(v) {
+      html += '<div class="bet-odd-btn"><div class="bet-odd-label">' + esc(v.value) + '</div><div class="bet-odd-val">' + v.odd + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  if (!html) html = noDataHtml();
+  el.innerHTML = html;
+}
+
+// ── GOL ORANLARI ──
+function renderGoals(bets) {
+  // Alt/Üst Goals (id:5)
+  var goalsEl = document.getElementById('bet-goals-content');
+  var overUnder = getBetById(bets, 5) || getBetByName(bets, 'Goals Over/Under');
+  if (overUnder && overUnder.values && overUnder.values.length) {
+    var html = '<div class="bet-goals-grid">';
+    // Belirli seviyeleri filtrele
+    var targets = ['Under 1.5','Over 1.5','Under 2.5','Over 2.5','Under 3.5','Over 3.5'];
+    var found = 0;
+    overUnder.values.forEach(function(v) {
+      if (targets.indexOf(v.value) !== -1) {
+        var isOver = v.value.indexOf('Over') !== -1;
+        var color = isOver ? 'var(--accent)' : 'var(--accent2)';
+        var prob = impliedProb(v.odd);
+        html += '<div class="bet-goal-item">' +
+          '<div class="bet-goal-label">' + esc(v.value) + '</div>' +
+          '<div class="bet-goal-val" style="color:' + color + ';">' + v.odd + '</div>' +
+          '<div class="bet-goal-prob" style="color:' + color + ';">%' + prob + ' olasılık</div>' +
+          '</div>';
+        found++;
+      }
+    });
+    html += '</div>';
+    goalsEl.innerHTML = found ? html : noDataHtml();
+  } else {
+    goalsEl.innerHTML = noDataHtml();
+  }
+
+  // KG Var/Yok (id:8)
+  var kgEl = document.getElementById('bet-kg-content');
+  var btts = getBetById(bets, 8) || getBetByName(bets, 'Both Teams Score');
+  if (btts && btts.values && btts.values.length) {
+    var kgHtml = '<div class="bet-odds-row" style="grid-template-columns:1fr 1fr;">';
+    btts.values.slice(0, 2).forEach(function(v) {
+      var isYes = v.value === 'Yes';
+      var color = isYes ? 'var(--accent)' : 'var(--accent2)';
+      var label = isYes ? 'KG VAR' : 'KG YOK';
+      kgHtml += '<div class="bet-odd-btn">' +
+        '<div class="bet-odd-label" style="color:' + color + ';">' + label + '</div>' +
+        '<div class="bet-odd-val" style="color:' + color + ';">' + v.odd + '</div>' +
+        '<div class="bet-odd-prob">%' + impliedProb(v.odd) + ' olasılık</div>' +
+        '</div>';
+    });
+    kgHtml += '</div>';
+    kgEl.innerHTML = kgHtml;
+  } else {
+    kgEl.innerHTML = noDataHtml();
+  }
+
+  // İlk Yarı Alt/Üst (id:6)
+  var htGoalsEl = document.getElementById('bet-ht-goals-content');
+  var htOverUnder = getBetById(bets, 6) || getBetByName(bets, 'First Half - Goals Over/Under');
+  if (htOverUnder && htOverUnder.values && htOverUnder.values.length) {
+    var htHtml = '<div class="bet-goals-grid">';
+    var htTargets = ['Under 0.5','Over 0.5','Under 1.5','Over 1.5'];
+    var htFound = 0;
+    htOverUnder.values.forEach(function(v) {
+      if (htTargets.indexOf(v.value) !== -1) {
+        var isOver = v.value.indexOf('Over') !== -1;
+        var color = isOver ? 'var(--accent)' : 'var(--accent2)';
+        htHtml += '<div class="bet-goal-item">' +
+          '<div class="bet-goal-label">İY ' + esc(v.value) + '</div>' +
+          '<div class="bet-goal-val" style="color:' + color + ';">' + v.odd + '</div>' +
+          '<div class="bet-goal-prob" style="color:' + color + ';">%' + impliedProb(v.odd) + '</div>' +
+          '</div>';
+        htFound++;
+      }
+    });
+    htHtml += '</div>';
+    htGoalsEl.innerHTML = htFound ? htHtml : noDataHtml();
+  } else {
+    htGoalsEl.innerHTML = noDataHtml();
+  }
+}
+
+// ── DEVRE ANALİZLERİ ──
+function renderHalftime(bets, home, away) {
+  var el = document.getElementById('bet-halftime-content');
+  var html = '';
+
+  // İlk Yarı 1/X/2 (id:13)
+  var ht1x2 = getBetById(bets, 13) || getBetByName(bets, 'First Half - Winner');
+  if (ht1x2 && ht1x2.values && ht1x2.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">İlk Yarı 1/X/2</div>';
+    html += '<div class="bet-odds-row">';
+    ['Home','Draw','Away'].forEach(function(key) {
+      var v = ht1x2.values.find(function(x) { return x.value === key; });
+      var label = key === 'Home' ? esc(home).substring(0,10) : key === 'Away' ? esc(away).substring(0,10) : 'Beraberlik';
+      var color = key === 'Home' ? 'var(--accent)' : key === 'Away' ? 'var(--accent2)' : 'var(--gold)';
+      html += '<div class="bet-odd-btn"><div class="bet-odd-label">' + (key === 'Home' ? 'EV' : key === 'Away' ? 'DEP' : 'X') + '</div><div class="bet-odd-val" style="color:' + color + ';">' + (v ? v.odd : '-') + '</div><div class="bet-odd-prob">' + label + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  // 2. Devre 1/X/2 (id:3)
+  var ht2x = getBetById(bets, 3) || getBetByName(bets, 'Second Half - Winner');
+  if (ht2x && ht2x.values && ht2x.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin:14px 0 8px;">2. Devre 1/X/2</div>';
+    html += '<div class="bet-odds-row">';
+    ['Home','Draw','Away'].forEach(function(key) {
+      var v = ht2x.values.find(function(x) { return x.value === key; });
+      var color = key === 'Home' ? 'var(--accent)' : key === 'Away' ? 'var(--accent2)' : 'var(--gold)';
+      html += '<div class="bet-odd-btn"><div class="bet-odd-label">' + (key === 'Home' ? 'EV' : key === 'Away' ? 'DEP' : 'X') + '</div><div class="bet-odd-val" style="color:' + color + ';">' + (v ? v.odd : '-') + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  // Çifte Şans (id:12)
+  var dc = getBetById(bets, 12) || getBetByName(bets, 'Double Chance');
+  if (dc && dc.values && dc.values.length) {
+    html += '<div style="font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin:14px 0 8px;">Çifte Şans</div>';
+    html += '<div class="bet-odds-row">';
+    dc.values.slice(0, 3).forEach(function(v) {
+      html += '<div class="bet-odd-btn"><div class="bet-odd-label" style="font-size:9px;">' + esc(v.value) + '</div><div class="bet-odd-val">' + v.odd + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  el.innerHTML = html || noDataHtml();
+}
+
+// ── DOĞRU SKOR ──
+function renderCorrectScore(bets) {
+  var el = document.getElementById('bet-scores-grid');
+  var bet = getBetById(bets, 10) || getBetByName(bets, 'Correct Score');
+
+  if (!bet || !bet.values || !bet.values.length) {
+    el.innerHTML = noDataHtml();
+    return;
+  }
+
+  // En düşük oranlı (en muhtemel) 6 skoru göster
+  var sorted = bet.values.slice().sort(function(a, b) {
+    return parseFloat(a.odd) - parseFloat(b.odd);
+  }).slice(0, 6);
+
+  el.innerHTML = sorted.map(function(v, i) {
+    return '<div class="bet-score-item">' +
+      '<div class="bet-score-result">' + esc(v.value) + '</div>' +
+      '<div class="bet-score-odd">' + v.odd + '</div>' +
+      '<div class="bet-score-rank">#' + (i+1) + ' OLASI</div>' +
+      '</div>';
+  }).join('');
+}
+
+// ── GÜÇ KARŞILAŞTIRMASI ──
+function renderComparison(pred, home, away) {
+  var el = document.getElementById('bet-comparison-content');
+
+  if (!pred || !pred.comparison) {
+    el.innerHTML = noDataHtml('Karşılaştırma verisi yok');
+    return;
+  }
+
+  var comp = pred.comparison;
+  var html = '';
+
+  var items = [
+    {key: 'form', label: 'Form'},
+    {key: 'att', label: 'Hücum'},
+    {key: 'def', label: 'Savunma'},
+    {key: 'goals', label: 'Gol Gücü'},
+    {key: 'total', label: 'Genel Güç'}
+  ];
+
+  items.forEach(function(item) {
+    if (!comp[item.key]) return;
+    var hVal = parseInt(comp[item.key].home) || 0;
+    var aVal = parseInt(comp[item.key].away) || 0;
+    // Savunmada düşük = iyi, ters çevirme
+    if (item.key === 'def') { hVal = 100 - hVal; aVal = 100 - aVal; }
+    var total = hVal + aVal || 1;
+    var hPct = Math.round(hVal / total * 100);
+    var aPct = 100 - hPct;
+
+    html += '<div class="bet-power-item">' +
+      '<div class="bet-power-label">' + item.label + '</div>' +
+      '<div class="bet-power-header">' +
+      '<span style="color:var(--accent);">' + esc(home).substring(0,12) + ' ' + hPct + '%</span>' +
+      '<span style="color:var(--accent2);">' + aPct + '% ' + esc(away).substring(0,12) + '</span>' +
+      '</div>' +
+      '<div class="bet-power-track">' +
+      '<div class="bet-power-home" style="width:' + hPct + '%;"></div>' +
+      '<div class="bet-power-away" style="width:' + aPct + '%;"></div>' +
+      '</div>' +
+      '</div>';
+  });
+
+  el.innerHTML = html || noDataHtml('Karşılaştırma verisi yok');
+}
+
+// ── RİSK GÖSTERGESİ ──
+function renderRiskIndicator(bets) {
+  var el = document.getElementById('bet-risk-content');
+  var bet = getBetById(bets, 1) || getBetByName(bets, 'Match Winner');
+
+  if (!bet) {
+    el.innerHTML = noDataHtml('Risk hesaplanamadı');
+    return;
+  }
+
+  var homeOdd = parseFloat(getOddValue(bet, 'Home') || getOddValue(bet, '1') || 0);
+  var drawOdd = parseFloat(getOddValue(bet, 'Draw') || getOddValue(bet, 'X') || 0);
+  var awayOdd = parseFloat(getOddValue(bet, 'Away') || getOddValue(bet, '2') || 0);
+
+  var odds = [homeOdd, drawOdd, awayOdd].filter(function(o) { return o > 0; });
+  if (odds.length < 2) { el.innerHTML = noDataHtml(); return; }
+
+  var minOdd = Math.min.apply(null, odds);
+  var maxOdd = Math.max.apply(null, odds);
+  var spread = maxOdd - minOdd;
+
+  var riskLevel, riskText, riskClass;
+  if (spread < 1.2) {
+    riskLevel = 'DÜŞÜK';
+    riskText = 'Maç dengeli seyrediyor. Oranlar yakın. Favori belli değil.';
+    riskClass = 'low';
+  } else if (spread < 2.5) {
+    riskLevel = 'ORTA';
+    riskText = 'Bir taraf hafif favori. Sürpriz ihtimali mevcut.';
+    riskClass = 'mid';
+  } else {
+    riskLevel = 'YÜKSEK';
+    riskText = 'Belirgin bir favori var. Favori kaybederse yüksek sürpriz primi.';
+    riskClass = 'high';
+  }
+
+  el.innerHTML =
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">' +
+    '<span class="bet-risk-badge ' + riskClass + '">' + riskLevel + ' RİSK</span>' +
+    '<div style="font-size:11px;color:var(--muted);">Spread: ' + spread.toFixed(2) + '</div>' +
+    '</div>' +
+    '<div style="font-size:12px;color:var(--text);line-height:1.6;">' + riskText + '</div>' +
+    '<div style="margin-top:12px;display:flex;justify-content:space-around;">' +
+    '<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">En düşük oran</div><div style="font-family:\'Bebas Neue\',sans-serif;font-size:22px;color:var(--accent);">' + minOdd.toFixed(2) + '</div></div>' +
+    '<div style="text-align:center;"><div style="font-size:9px;color:var(--muted);">En yüksek oran</div><div style="font-family:\'Bebas Neue\',sans-serif;font-size:22px;color:var(--accent2);">' + maxOdd.toFixed(2) + '</div></div>' +
+    '</div>';
 }
 
 </script>
