@@ -178,7 +178,7 @@ module.exports = async function handler(req, res) {
     const feedUrl = feeds[Math.floor(Math.random() * feeds.length)];
     try {
       const rssRes = await fetch(
-        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=25`
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`
       );
       if (!rssRes.ok) return res.status(502).json({ error: 'News unavailable' });
       return res.status(200).json(await rssRes.json());
