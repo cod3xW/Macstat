@@ -2184,6 +2184,120 @@ body {
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
 .fade-up { animation: fadeUp 0.4s ease forwards; }
 
+/* ── PROFİL MENÜ ── */
+.profile-backdrop {
+  display: none;
+  position: fixed; inset: 0; z-index: 900;
+  background: rgba(0,0,0,0.5);
+}
+.profile-backdrop.open { display: block; }
+.profile-panel {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 56px);
+  right: 12px;
+  width: 260px;
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  animation: fadeUp 0.18s ease forwards;
+}
+.profile-header {
+  padding: 14px 16px;
+  background: var(--s2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+}
+.profile-avatar-lg {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--accent); color: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; flex-shrink: 0;
+}
+.profile-name { font-size: 13px; font-weight: 700; }
+.profile-email { font-size: 10px; color: var(--muted); margin-top: 2px; word-break: break-all; }
+.profile-section {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.profile-section-title {
+  font-size: 9px; color: var(--muted); letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 8px;
+}
+.profile-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+.profile-row-label { font-size: 12px; font-weight: 600; }
+.profile-row-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.profile-toggle {
+  width: 40px; height: 22px;
+  border-radius: 11px; position: relative;
+  cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+}
+.profile-toggle-thumb {
+  position: absolute; top: 2px;
+  width: 18px; height: 18px;
+  border-radius: 50%; transition: left 0.2s;
+}
+.profile-logout {
+  width: 100%; padding: 14px 16px;
+  text-align: left; background: none; border: none;
+  font-size: 13px; font-weight: 700; color: #e74c3c;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ── HABERLER ── */
+.news-filter-bar {
+  display: flex; gap: 8px;
+  padding: 10px 16px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.news-filter-bar::-webkit-scrollbar { display: none; }
+.news-filter-btn {
+  flex-shrink: 0; padding: 6px 14px;
+  border-radius: 20px; border: 1px solid var(--border);
+  background: var(--s2); color: var(--muted);
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.news-filter-btn.active {
+  background: var(--accent); color: #000;
+  border-color: var(--accent);
+}
+.news-card {
+  display: flex; gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer; transition: background 0.15s;
+  text-decoration: none;
+}
+.news-card:active { background: var(--s2); }
+.news-card-img {
+  width: 72px; height: 56px; border-radius: 8px;
+  object-fit: cover; flex-shrink: 0;
+  background: var(--s2);
+}
+.news-card-body { flex: 1; min-width: 0; }
+.news-card-source {
+  font-size: 9px; color: var(--accent);
+  font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; margin-bottom: 4px;
+}
+.news-card-title {
+  font-size: 12px; font-weight: 700;
+  line-height: 1.4; color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.news-card-date {
+  font-size: 10px; color: var(--muted); margin-top: 4px;
+}
+
 /* ══════════════════════════════════════
    BAHİS ANALİZİ — YENİ SEKMELER
    ══════════════════════════════════════ */
@@ -2983,6 +3097,23 @@ body {
 
 </div>
 
+<!-- ═══ HABERLER SAYFASI ═══ -->
+<div class="page" id="page-news">
+  <div style="padding:14px 16px 0;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">HABERLER</div>
+    <div style="font-size:10px;color:var(--muted);margin-top:1px;">Futbol dünyasından son dakika</div>
+  </div>
+
+  <div class="news-filter-bar" id="news-filter-bar">
+    <div class="news-filter-btn active" onclick="selectNewsLang(this,'tr')">🇹🇷 Türkçe</div>
+    <div class="news-filter-btn" onclick="selectNewsLang(this,'en')">🇬🇧 English</div>
+  </div>
+
+  <div id="news-list" style="padding-bottom:16px;">
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Haberler yükleniyor...</div></div>
+  </div>
+</div>
+
 <!-- ═══ AYARLAR SAYFASI ═══ -->
 <div class="page" id="page-settings">
   <div style="padding:14px 16px 10px;">
@@ -3139,6 +3270,72 @@ body {
   </div>
 </div>
 
+<!-- ═══ PROFİL MENÜ ═══ -->
+<div class="profile-backdrop" id="profile-backdrop" onclick="closeProfileMenu()">
+  <div class="profile-panel" onclick="event.stopPropagation()">
+
+    <div class="profile-header">
+      <div class="profile-avatar-lg" id="pm-avatar">?</div>
+      <div>
+        <div class="profile-name" id="pm-name">-</div>
+        <div class="profile-email" id="pm-email">-</div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">🎨 Tema</div>
+      <div class="profile-row">
+        <div>
+          <div class="profile-row-label">Karanlık Mod</div>
+        </div>
+        <div id="pm-theme-toggle" class="profile-toggle" onclick="pmToggleTheme()"
+          style="background:var(--accent);">
+          <div id="pm-theme-thumb" class="profile-toggle-thumb"
+            style="left:20px;background:#000;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">🔔 Bildirimler</div>
+      <div class="profile-row">
+        <div>
+          <div class="profile-row-label">⚽ Gol Bildirimi</div>
+        </div>
+        <div id="pm-notif-toggle" class="profile-toggle" onclick="pmToggleNotif()"
+          style="background:var(--accent);">
+          <div id="pm-notif-thumb" class="profile-toggle-thumb"
+            style="left:20px;background:#000;"></div>
+        </div>
+      </div>
+      <div class="profile-row">
+        <div>
+          <div class="profile-row-label">🟥 Kırmızı Kart</div>
+        </div>
+        <div id="pm-card-toggle" class="profile-toggle" onclick="pmToggleCard()"
+          style="background:var(--s3);border:1px solid var(--border);">
+          <div id="pm-card-thumb" class="profile-toggle-thumb"
+            style="left:2px;background:var(--muted);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title">ℹ️ Hakkında</div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Versiyon</span><span style="font-weight:700;">1.0.0</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;">
+          <span style="color:var(--muted);">Veri Kaynağı</span><span style="font-weight:700;">API-Football</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="profile-logout" onclick="doLogout()">🚪 Çıkış Yap</button>
+  </div>
+</div>
+
 <!-- ═══ AUTH OVERLAY ═══ -->
 <div class="auth-overlay" id="auth-overlay">
   <div class="auth-card">
@@ -3267,9 +3464,9 @@ body {
     <div class="nav-icon">📊</div>
     <div class="nav-label">ORANLAR</div>
   </div>
-  <div class="nav-item" onclick="goPage('settings',this)">
-    <div class="nav-icon">⚙️</div>
-    <div class="nav-label">AYARLAR</div>
+  <div class="nav-item" onclick="goPage('news',this)">
+    <div class="nav-icon">📰</div>
+    <div class="nav-label">HABERLER</div>
   </div>
 </div>
 
@@ -4106,6 +4303,7 @@ function goPage(name, el) {
   if (name === 'analysis') loadDashboard();
   if (name === 'history') loadHistoryPage();
   if (name === 'betting') initBettingPage();
+  if (name === 'news') initNewsPage();
 }
 
 // ═══ LIVE MATCHES ═══
@@ -6483,6 +6681,118 @@ function renderSpecialBets(bets, home, away) {
   }
 }
 
+
+// ═══ PROFİL MENÜ ═══
+function openProfileMenu() {
+  // Toggle durumlarını senkronize et
+  var pt = document.getElementById('pm-theme-toggle');
+  var pth = document.getElementById('pm-theme-thumb');
+  var isDark = currentTheme === 'dark';
+  pt.style.background = isDark ? 'var(--accent)' : 'var(--s3)';
+  pth.style.left = isDark ? '20px' : '2px';
+  pth.style.background = isDark ? '#000' : 'var(--muted)';
+
+  var pnt = document.getElementById('pm-notif-toggle');
+  var pnth = document.getElementById('pm-notif-thumb');
+  pnt.style.background = notifEnabled ? 'var(--accent)' : 'var(--s3)';
+  pnth.style.left = notifEnabled ? '20px' : '2px';
+  pnth.style.background = notifEnabled ? '#000' : 'var(--muted)';
+
+  var pct = document.getElementById('pm-card-toggle');
+  var pcth = document.getElementById('pm-card-thumb');
+  pct.style.background = cardNotifEnabled ? 'var(--accent)' : 'var(--s3)';
+  pcth.style.left = cardNotifEnabled ? '20px' : '2px';
+  pcth.style.background = cardNotifEnabled ? '#000' : 'var(--muted)';
+
+  document.getElementById('profile-backdrop').classList.add('open');
+}
+
+function closeProfileMenu() {
+  document.getElementById('profile-backdrop').classList.remove('open');
+}
+
+function pmToggleTheme() {
+  var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+  // Toggle görseli güncelle
+  var isDark = newTheme === 'dark';
+  document.getElementById('pm-theme-toggle').style.background = isDark ? 'var(--accent)' : 'var(--s3)';
+  document.getElementById('pm-theme-thumb').style.left = isDark ? '20px' : '2px';
+  document.getElementById('pm-theme-thumb').style.background = isDark ? '#000' : 'var(--muted)';
+}
+
+function pmToggleNotif() {
+  notifEnabled = !notifEnabled;
+  var on = notifEnabled;
+  document.getElementById('pm-notif-toggle').style.background = on ? 'var(--accent)' : 'var(--s3)';
+  document.getElementById('pm-notif-thumb').style.left = on ? '20px' : '2px';
+  document.getElementById('pm-notif-thumb').style.background = on ? '#000' : 'var(--muted)';
+  if (on) requestNotifPermission();
+}
+
+function pmToggleCard() {
+  cardNotifEnabled = !cardNotifEnabled;
+  var on = cardNotifEnabled;
+  document.getElementById('pm-card-toggle').style.background = on ? 'var(--accent)' : 'var(--s3)';
+  document.getElementById('pm-card-thumb').style.left = on ? '20px' : '2px';
+  document.getElementById('pm-card-thumb').style.background = on ? '#000' : 'var(--muted)';
+  if (on) requestNotifPermission();
+}
+
+// ═══ HABERLER ═══
+var currentNewsLang = 'tr';
+var newsLoaded = false;
+
+function selectNewsLang(btn, lang) {
+  document.querySelectorAll('.news-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  currentNewsLang = lang;
+  newsLoaded = false;
+  loadNewsPage();
+}
+
+function initNewsPage() {
+  if (!newsLoaded) loadNewsPage();
+}
+
+async function loadNewsPage() {
+  var list = document.getElementById('news-list');
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  newsLoaded = true;
+  try {
+    var res = await apiFetch('?action=news&lang=' + currentNewsLang);
+    var data = await res.json();
+
+    if (!data.items || !data.items.length) {
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Haber bulunamadı</div>';
+      return;
+    }
+
+    list.innerHTML = data.items.map(function(item) {
+      var title = esc(item.title || '');
+      var img = item.thumbnail || item.enclosure && item.enclosure.link || '';
+      var date = item.pubDate ? new Date(item.pubDate).toLocaleDateString(
+        currentNewsLang === 'tr' ? 'tr-TR' : 'en-GB',
+        {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}
+      ) : '';
+      var source = esc(data.feed && data.feed.title ? data.feed.title.split(' ')[0] : '');
+      var link = item.link || '#';
+
+      return '<a class="news-card" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' +
+        (img ? '<img class="news-card-img" src="' + esc(img) + '" onerror="this.style.display=\'none\'" loading="lazy">' : '') +
+        '<div class="news-card-body">' +
+          '<div class="news-card-source">' + source + '</div>' +
+          '<div class="news-card-title">' + title + '</div>' +
+          '<div class="news-card-date">' + date + '</div>' +
+        '</div>' +
+        '</a>';
+    }).join('');
+
+  } catch(e) {
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Haberler yüklenemedi</div>';
+  }
+}
+
 </script>
 
 <!-- Firebase Auth -->
@@ -6519,7 +6829,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
 // iOS fix: position:fixed elements don't work correctly inside overflow:auto containers
-['picker-overlay', 'match-detail-overlay', 'auth-overlay'].forEach(id => {
+['picker-overlay', 'match-detail-overlay', 'auth-overlay', 'profile-backdrop'].forEach(id => {
   const el = document.getElementById(id);
   if (el) document.body.appendChild(el);
 });
@@ -6552,12 +6862,17 @@ auth.onAuthStateChanged(user => {
 
 function updateHeaderUser(user) {
   const name = user.displayName || user.email.split('@')[0];
+  const email = user.email || '';
   const initial = name.charAt(0).toUpperCase();
-  document.getElementById('header-right').innerHTML = `
-    <div class="user-badge" onclick="doLogout()">
-      <div class="user-avatar">${initial}</div>
-      <span>${name}</span>
-    </div>`;
+  document.getElementById('header-right').innerHTML =
+    '<div class="user-badge" onclick="openProfileMenu()">' +
+      '<div class="user-avatar">' + initial + '</div>' +
+      '<span>' + name.split(' ')[0] + '</span>' +
+    '</div>';
+  // Profil menüsünü doldur
+  document.getElementById('pm-avatar').textContent = initial;
+  document.getElementById('pm-name').textContent = name;
+  document.getElementById('pm-email').textContent = email;
 }
 
 // ── AUTH TAB SWITCH ──

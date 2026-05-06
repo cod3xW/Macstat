@@ -1,8 +1,19 @@
 const ALLOWED_ACTIONS = new Set([
   'today','live','standings','upcoming','nextmatches',
   'match','statistics','lineups','players','events','search',
-  'odds','predictions','bettingfixtures'
+  'odds','predictions','bettingfixtures','news'
 ]);
+
+const NEWS_FEEDS = {
+  tr: [
+    'https://www.sporx.com/rss/',
+    'https://www.ntvspor.net/rss/son-dakika'
+  ],
+  en: [
+    'https://feeds.bbci.co.uk/sport/football/rss.xml',
+    'https://www.skysports.com/rss/12040'
+  ]
+};
 
 const ALLOWED_ORIGINS = [
   'https://macstat-git-main-ern2000ylmz-2562s-projects.vercel.app',
@@ -131,6 +142,19 @@ module.exports = async function handler(req, res) {
   } else if (action === 'bettingfixtures') {
     if (!league) return res.status(400).json({ error: 'league required' });
     url = `${BASE}/fixtures?league=${league}&next=10&status=NS`;
+  } else if (action === 'news') {
+    const lang = req.query.lang === 'en' ? 'en' : 'tr';
+    const feeds = NEWS_FEEDS[lang];
+    const feedUrl = feeds[Math.floor(Math.random() * feeds.length)];
+    try {
+      const rssRes = await fetch(
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}&count=25`
+      );
+      if (!rssRes.ok) return res.status(502).json({ error: 'News unavailable' });
+      return res.status(200).json(await rssRes.json());
+    } catch {
+      return res.status(500).json({ error: 'News fetch failed' });
+    }
   } else if (team && isNumeric(team)) {
     url = `${BASE}/fixtures?team=${team}&last=10`;
   } else {
