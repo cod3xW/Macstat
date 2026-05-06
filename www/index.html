@@ -1486,13 +1486,17 @@ body {
 /* ── BETTER LINEUP PITCH ── */
 .lineup-pitch-v2 {
   width: 100%;
-  height: 380px;
-  background: linear-gradient(180deg, #1a5e2a 0%, #1e7030 25%, #1e7030 75%, #1a5e2a 100%);
+  height: 440px;
+  background: linear-gradient(180deg,
+    #1a5e2a 0%, #1d6b2e 12%, #1e7030 24%,
+    #1e7030 50%, #1e7030 76%,
+    #1d6b2e 88%, #1a5e2a 100%
+  );
   border-radius: 12px;
   position: relative;
   overflow: hidden;
   margin-bottom: 16px;
-  border: 2px solid rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,255,255,0.1);
 }
 
 .pitch-stripe {
@@ -1574,31 +1578,35 @@ body {
 }
 
 .lineup-dot-v2 {
-  width: 30px; height: 30px;
+  width: 27px; height: 27px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 10px;
+  font-size: 9.5px;
   font-weight: 800;
-  margin: 0 auto 3px;
-  border: 2px solid rgba(255,255,255,0.4);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  margin: 0 auto 2px;
+  border: 2px solid rgba(255,255,255,0.5);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  flex-shrink: 0;
 }
 
-.lineup-dot-v2.home { background: var(--accent); color: #000; }
-.lineup-dot-v2.away { background: var(--accent2); color: #fff; }
+.lineup-dot-v2.home     { background: var(--accent); color: #000; }
+.lineup-dot-v2.away     { background: var(--accent2); color: #fff; }
+.lineup-dot-v2.home.gk  { background: #f5a623; color: #000; border-color: rgba(255,255,255,0.7); }
+.lineup-dot-v2.away.gk  { background: #8e44ad; color: #fff; border-color: rgba(255,255,255,0.7); }
 
 .lineup-name-v2 {
-  font-size: 8px;
+  font-size: 7px;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,1);
   white-space: nowrap;
-  max-width: 52px;
+  max-width: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.55);
   border-radius: 3px;
   padding: 1px 3px;
+  letter-spacing: 0.2px;
 }
 
 /* ── LIVE MATCH SIMULATION ── */
@@ -5250,106 +5258,181 @@ async function loadDetailLineup(fixtureId) {
       return;
     }
 
-    const home = lineups[0];
-    const away = lineups[1];
+    const home = lineups[0] || {};
+    const away = lineups[1] || {};
+    const homePlayers = home.startXI || [];
+    const awayPlayers = away.startXI || [];
 
-    // Build pitch with players
-    const homePlayers = home?.startXI || [];
-    const awayPlayers = away?.startXI || [];
+    // ── POZİSYON HESAPLAMA ──
+    // API'nin grid alanını kullan ("satır:sütun" formatı, satır 1 = kaleci)
+    // Saha DİKEY: ev takımı üstte (y=0-50%), deplasman altta (y=50-100%)
+    function buildPositions(players, side) {
+      // grid'e göre satır grupla
+      const rowMap = {};
+      players.forEach(function(p, idx) {
+        var grid = (p.player && p.player.grid) ? p.player.grid : '';
+        var parts = grid.split(':');
+        var row = parseInt(parts[0]) || 99;
+        var col = parseInt(parts[1]) || idx;
+        if (!rowMap[row]) rowMap[row] = [];
+        rowMap[row].push({ idx: idx, col: col });
+      });
 
-    // Formation positions
-    function getPositions(formation, side) {
-      const rows = formation ? formation.split('-').map(Number) : [4,3,3];
-      const positions = [];
-      const totalRows = rows.length + 1;
+      var sortedRows = Object.keys(rowMap).map(Number).sort(function(a,b){return a-b;});
+      var totalRows  = sortedRows.length;
+      var result     = {};
 
-      // Goalkeeper
-      positions.push({x: side === 'home' ? 7 : 93, y: 50});
+      sortedRows.forEach(function(rowNum, rowIdx) {
+        var inRow = rowMap[rowNum].sort(function(a,b){return a.col-b.col;});
+        var count = inRow.length;
 
-      rows.forEach((count, rowIdx) => {
-        const rowPct = side === 'home'
-          ? 15 + (rowIdx + 1) * (75 / (totalRows))
-          : 85 - (rowIdx + 1) * (75 / (totalRows));
-        for (let i = 0; i < count; i++) {
-          const y = 10 + (80 / (count + 1)) * (i + 1);
-          positions.push({x: rowPct, y});
+        // y: ev takımı üstten aşağı (6%→46%), deplasman alttan yukarı (94%→54%)
+        var span = 40;
+        var yStart = side === 'home' ? 6 : 94;
+        var yStep  = totalRows > 1 ? span / (totalRows - 1) : 0;
+        var y = side === 'home'
+          ? yStart + yStep * rowIdx
+          : yStart - yStep * rowIdx;
+
+        // x: oyuncuları yatayda eşit dağıt (kenar boşluğu dahil)
+        inRow.forEach(function(item, colIdx) {
+          var x = 10 + (80 / (count + 1)) * (colIdx + 1);
+          result[item.idx] = { x: +x.toFixed(1), y: +y.toFixed(1) };
+        });
+      });
+
+      return result;
+    }
+
+    // grid verisi yoksa formation string'inden fallback hesapla
+    function buildPositionsFallback(formation, side) {
+      var rows = formation ? formation.split('-').map(Number) : [4,3,3];
+      var totalRows = rows.length; // kaleci hariç
+      var positions = [];
+
+      // Kaleci
+      positions.push({ x: 50, y: side === 'home' ? 6 : 94 });
+
+      rows.forEach(function(count, rowIdx) {
+        var span = 40;
+        var y = side === 'home'
+          ? 6  + (span / (totalRows)) * (rowIdx + 1)
+          : 94 - (span / (totalRows)) * (rowIdx + 1);
+        for (var i = 0; i < count; i++) {
+          var x = 10 + (80 / (count + 1)) * (i + 1);
+          positions.push({ x: +x.toFixed(1), y: +y.toFixed(1) });
         }
       });
       return positions;
     }
 
-    const homePositions = getPositions(home?.formation, 'home');
-    const awayPositions = getPositions(away?.formation, 'away');
+    // Hangi yöntemi kullanalım
+    var hasGrid = homePlayers.length > 0 && homePlayers[0].player && homePlayers[0].player.grid;
 
-    const pitchHTML = `
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:11px;font-weight:700;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);"></div>
-          <span style="color:var(--accent)">${home?.team?.name || '-'}</span>
-          <span style="color:var(--muted);font-size:10px;">(${home?.formation || '-'})</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="color:var(--muted);font-size:10px;">(${away?.formation || '-'})</span>
-          <span style="color:var(--accent2)">${away?.team?.name || '-'}</span>
-          <div style="width:10px;height:10px;border-radius:50%;background:var(--accent2);"></div>
-        </div>
-      </div>
-      <div class="lineup-pitch-v2">
-        <div class="pitch-stripe"></div>
-        <div class="pitch-border"></div>
-        <div class="pitch-center-line-h"></div>
-        <div class="pitch-center-circle-v2"></div>
-        <div class="pitch-penalty-top"></div>
-        <div class="pitch-penalty-bottom"></div>
-        <div class="pitch-goal-top"></div>
-        <div class="pitch-goal-bottom"></div>
-        ${homePlayers.slice(0,11).map((p, i) => {
-          const pos = homePositions[i] || {x:50, y:50};
-          const surname = (p.player?.name || '?').split(' ').pop();
-          const num = p.player?.number || '';
-          return `<div class="lineup-player-v2" style="left:${pos.x}%;top:${pos.y}%">
-            <div class="lineup-dot-v2 home">${num}</div>
-            <div class="lineup-name-v2">${surname}</div>
-          </div>`;
-        }).join('')}
-        ${awayPlayers.slice(0,11).map((p, i) => {
-          const pos = awayPositions[i] || {x:50, y:50};
-          const surname = (p.player?.name || '?').split(' ').pop();
-          const num = p.player?.number || '';
-          return `<div class="lineup-player-v2" style="left:${pos.x}%;top:${pos.y}%">
-            <div class="lineup-dot-v2 away">${num}</div>
-            <div class="lineup-name-v2">${surname}</div>
-          </div>`;
-        }).join('')}
-      </div>`;
+    var homePos, awayPos;
+    if (hasGrid) {
+      homePos = buildPositions(homePlayers, 'home');
+      awayPos = buildPositions(awayPlayers, 'away');
+    } else {
+      var hArr = buildPositionsFallback(home.formation, 'home');
+      var aArr = buildPositionsFallback(away.formation, 'away');
+      homePos = {}; hArr.forEach(function(p,i){ homePos[i]=p; });
+      awayPos = {}; aArr.forEach(function(p,i){ awayPos[i]=p; });
+    }
 
-    // Subs table
-    const homeSubs = home?.substitutes || [];
-    const awaySubs = away?.substitutes || [];
+    // ── OYUNCU HTML ──
+    function playerDot(p, i, pos, side) {
+      var isGK  = p.player && p.player.pos === 'G';
+      var num   = (p.player && p.player.number) ? p.player.number : '?';
+      var fullName = (p.player && p.player.name) ? p.player.name : '?';
+      // Soyadı al, çok uzunsa kırp
+      var nameParts = fullName.split(' ');
+      var surname = nameParts[nameParts.length - 1].substring(0, 9);
+      var safePos = pos || { x: 50, y: side === 'home' ? 25 : 75 };
+      return '<div class="lineup-player-v2" style="left:' + safePos.x + '%;top:' + safePos.y + '%">' +
+        '<div class="lineup-dot-v2 ' + side + (isGK ? ' gk' : '') + '">' + num + '</div>' +
+        '<div class="lineup-name-v2">' + esc(surname) + '</div>' +
+        '</div>';
+    }
 
-    const subsHTML = `
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div>
-          <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🔄 ${home?.team?.name || ''} Yedekler</div>
-          ${homeSubs.map(p => `
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);">
-              <div style="width:20px;height:20px;border-radius:50%;background:rgba(0,240,168,0.15);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--accent);flex-shrink:0;">${p.player?.number || '-'}</div>
-              <div style="font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.player?.name || '-'}</div>
-            </div>`).join('')}
-        </div>
-        <div>
-          <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🔄 ${away?.team?.name || ''} Yedekler</div>
-          ${awaySubs.map(p => `
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);">
-              <div style="width:20px;height:20px;border-radius:50%;background:rgba(255,61,107,0.15);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--accent2);flex-shrink:0;">${p.player?.number || '-'}</div>
-              <div style="font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.player?.name || '-'}</div>
-            </div>`).join('')}
-        </div>
-      </div>`;
+    // ── PITCH HTML ──
+    var pitchHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+        '<div style="display:flex;align-items:center;gap:6px;">' +
+          '<div style="width:11px;height:11px;border-radius:50%;background:var(--accent);flex-shrink:0;"></div>' +
+          '<span style="font-size:12px;font-weight:700;color:var(--accent);">' + esc(home.team && home.team.name || '-') + '</span>' +
+          '<span style="font-size:10px;color:var(--muted);">' + (home.formation || '') + '</span>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;">' +
+          '<span style="font-size:10px;color:var(--muted);">' + (away.formation || '') + '</span>' +
+          '<span style="font-size:12px;font-weight:700;color:var(--accent2);">' + esc(away.team && away.team.name || '-') + '</span>' +
+          '<div style="width:11px;height:11px;border-radius:50%;background:var(--accent2);flex-shrink:0;"></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="lineup-pitch-v2">' +
+        '<div class="pitch-stripe"></div>' +
+        '<div class="pitch-border"></div>' +
+        '<div class="pitch-center-line-h"></div>' +
+        '<div class="pitch-center-circle-v2"></div>' +
+        '<div class="pitch-penalty-top"></div>' +
+        '<div class="pitch-penalty-bottom"></div>' +
+        '<div class="pitch-goal-top"></div>' +
+        '<div class="pitch-goal-bottom"></div>' +
+        // Üst ve alt kale etiketi
+        '<div style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:8px;color:rgba(255,255,255,0.5);letter-spacing:1px;">' + esc((home.team && home.team.name || '').substring(0,12).toUpperCase()) + '</div>' +
+        '<div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:8px;color:rgba(255,255,255,0.5);letter-spacing:1px;">' + esc((away.team && away.team.name || '').substring(0,12).toUpperCase()) + '</div>' +
+        homePlayers.slice(0, 11).map(function(p, i){ return playerDot(p, i, homePos[i], 'home'); }).join('') +
+        awayPlayers.slice(0, 11).map(function(p, i){ return playerDot(p, i, awayPos[i], 'away'); }).join('') +
+      '</div>';
 
-    el.innerHTML = pitchHTML + subsHTML;
+    // ── TEKNIK DIREKTÖR ──
+    var coachHTML = '';
+    if (home.coach || away.coach) {
+      coachHTML =
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">' +
+          '<div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:8px;">' +
+            '<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Teknik Direktör</div>' +
+            '<div style="font-size:11px;font-weight:700;">' + esc((home.coach && home.coach.name) || '-') + '</div>' +
+          '</div>' +
+          '<div style="background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:8px;">' +
+            '<div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;">Teknik Direktör</div>' +
+            '<div style="font-size:11px;font-weight:700;">' + esc((away.coach && away.coach.name) || '-') + '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    // ── YEDEKLER ──
+    var homeSubs = home.substitutes || [];
+    var awaySubs = away.substitutes || [];
+
+    function subRow(p, side) {
+      var color = side === 'home' ? 'var(--accent)' : 'var(--accent2)';
+      var bg    = side === 'home' ? 'rgba(0,240,168,0.12)' : 'rgba(255,61,107,0.12)';
+      return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);">' +
+        '<div style="width:22px;height:22px;border-radius:50%;background:' + bg + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:' + color + ';flex-shrink:0;">' + ((p.player && p.player.number) || '-') + '</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + esc((p.player && p.player.name) || '-') + '</div>' +
+          (p.player && p.player.pos ? '<div style="font-size:9px;color:var(--muted);">' + p.player.pos + '</div>' : '') +
+        '</div>' +
+        '</div>';
+    }
+
+    var subsHTML =
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+        '<div>' +
+          '<div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🔄 ' + esc((home.team && home.team.name) || 'Ev') + '</div>' +
+          homeSubs.map(function(p){ return subRow(p,'home'); }).join('') +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;">🔄 ' + esc((away.team && away.team.name) || 'Dep') + '</div>' +
+          awaySubs.map(function(p){ return subRow(p,'away'); }).join('') +
+        '</div>' +
+      '</div>';
+
+    el.innerHTML = pitchHTML + coachHTML + subsHTML;
 
   } catch(e) {
+    console.error('Lineup error:', e);
     el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Yüklenemedi</div>';
   }
 }
