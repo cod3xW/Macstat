@@ -2564,7 +2564,7 @@ body {
 <div class="page active" id="page-analysis">
 
   <div class="hero">
-    <div class="hero-label">Takım Seç & Analiz Et</div>
+    <div class="hero-label" data-i18n="hero_label">Takım Seç & Analiz Et</div>
     <div class="matchup-card">
       <!-- STEP 1: Team selection -->
       <div id="step-team-select">
@@ -2576,8 +2576,8 @@ body {
           </div>
           <div style="color:var(--muted);font-size:18px;">›</div>
         </div>
-        <button class="analyze-btn" style="margin-top:12px;" onclick="loadUpcomingMatches()">
-          <span>📅</span> Yaklaşan Maçları Getir
+        <button class="analyze-btn" style="margin-top:12px;" onclick="loadUpcomingMatches()" data-i18n="btn_upcoming">
+          📅 Yaklaşan Maçları Getir
         </button>
       </div>
 
@@ -2586,9 +2586,9 @@ body {
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
           <img id="upcoming-team-crest" src="" style="width:24px;height:24px;object-fit:contain;">
           <div style="font-size:13px;font-weight:700;" id="upcoming-team-name">-</div>
-          <div style="margin-left:auto;font-size:11px;color:var(--accent);cursor:pointer;" onclick="resetTeamSelect()">← Değiştir</div>
+          <div style="margin-left:auto;font-size:11px;color:var(--accent);cursor:pointer;" onclick="resetTeamSelect()" data-i18n="change_team">← Değiştir</div>
         </div>
-        <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Yaklaşan Maçlar — Analiz için seç:</div>
+        <div style="font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;" data-i18n="upcoming_label">Yaklaşan Maçlar — Analiz için seç:</div>
         <div id="upcoming-matches-list"></div>
       </div>
     </div>
@@ -2600,18 +2600,18 @@ body {
 
     <!-- CANLI SKORLAR -->
     <div class="section" style="margin-top:16px;">
-      <div class="section-title">🔴 Canlı Skorlar</div>
+      <div class="section-title" data-i18n="sec_live_scores">🔴 Canlı Skorlar</div>
       <div id="live-scores-widget" style="display:flex;flex-direction:column;gap:6px;">
         <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
       </div>
       <div style="text-align:center;margin-top:8px;">
-        <span style="font-size:10px;color:var(--muted);cursor:pointer;" onclick="loadDashboardLive()">🔄 Yenile</span>
+        <span style="font-size:10px;color:var(--muted);cursor:pointer;" onclick="loadDashboardLive()" data-i18n="refresh">🔄 Yenile</span>
       </div>
     </div>
 
     <!-- BUGÜNÜN MAÇ LARİ -->
     <div class="section" style="margin-top:16px;">
-      <div class="section-title">📅 Bugünün Maçları</div>
+      <div class="section-title" data-i18n="sec_today">📅 Bugünün Maçları</div>
       <div id="today-widget" style="display:flex;flex-direction:column;gap:6px;">
         <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
       </div>
@@ -2619,7 +2619,7 @@ body {
 
     <!-- FORM TABLOSU -->
     <div class="section" style="margin-top:16px;">
-      <div class="section-title">🔥 Süper Lig Form Tablosu</div>
+      <div class="section-title" data-i18n="sec_form">🔥 Süper Lig Form Tablosu</div>
       <div id="form-widget" style="display:flex;flex-direction:column;gap:5px;">
         <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
       </div>
@@ -2627,7 +2627,7 @@ body {
 
     <!-- İSTATİSTİK KARTLARI -->
     <div class="section" style="margin-top:16px;">
-      <div class="section-title">📈 Sezon İstatistikleri</div>
+      <div class="section-title" data-i18n="sec_season_stats">📈 Sezon İstatistikleri</div>
       <div id="stats-widget" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
         <div class="loading-wrap" style="padding:20px;grid-column:span 2;"><div class="spinner"></div></div>
       </div>
@@ -2635,7 +2635,7 @@ body {
 
     <!-- HAFTANIN MAÇI -->
     <div class="section" style="margin-top:16px;padding-bottom:16px;">
-      <div class="section-title">🏆 Haftanın Maçı</div>
+      <div class="section-title" data-i18n="sec_match_week">🏆 Haftanın Maçı</div>
       <div id="match-of-week-widget">
         <div class="loading-wrap" style="padding:20px;"><div class="spinner"></div></div>
       </div>
@@ -2648,24 +2648,24 @@ body {
 
     <!-- AI TAHMİN -->
     <div class="section fade-up">
-      <div class="section-title">🤖 Yapay Zeka Tahmini</div>
+      <div class="section-title" data-i18n="sec_ai">🤖 Yapay Zeka Tahmini</div>
       <div class="ai-card">
         <div class="ai-header">
           <div class="ai-tag">AI ANALYSIS</div>
-          <div class="ai-title">Kazanma İhtimali</div>
+          <div class="ai-title" data-i18n="win_chance">Kazanma İhtimali</div>
         </div>
         <div class="ai-scores">
           <div class="ai-score-item">
             <div class="ai-score-pct w" id="ai-home-pct">-</div>
-            <div class="ai-score-label" id="ai-home-label">Ev Sahibi</div>
+            <div class="ai-score-label" id="ai-home-label" data-i18n="home_team">Ev Sahibi</div>
           </div>
           <div class="ai-score-item">
             <div class="ai-score-pct d" id="ai-draw-pct">-</div>
-            <div class="ai-score-label">Beraberlik</div>
+            <div class="ai-score-label" data-i18n="draw">Beraberlik</div>
           </div>
           <div class="ai-score-item">
             <div class="ai-score-pct l" id="ai-away-pct">-</div>
-            <div class="ai-score-label" id="ai-away-label">Deplasman</div>
+            <div class="ai-score-label" id="ai-away-label" data-i18n="away_team">Deplasman</div>
           </div>
         </div>
         <div class="ai-bar">
@@ -2673,13 +2673,13 @@ body {
           <div class="ai-bar-d" id="ai-bar-d" style="width:0%"></div>
           <div class="ai-bar-l" id="ai-bar-l" style="flex:1"></div>
         </div>
-        <div class="ai-insight" id="ai-insight">Analiz yükleniyor...</div>
+        <div class="ai-insight" id="ai-insight" data-i18n="loading">Yükleniyor...</div>
       </div>
     </div>
 
     <!-- H2H -->
     <div class="section">
-      <div class="section-title">⚔️ Son 10 Maç Özeti</div>
+      <div class="section-title" data-i18n="sec_last10">⚔️ Son 10 Maç Özeti</div>
       <div class="h2h-row">
         <div class="h2h-card">
           <div class="h2h-num g" id="h2h-w">-</div>
@@ -2687,7 +2687,7 @@ body {
         </div>
         <div class="h2h-card">
           <div class="h2h-num d" id="h2h-d">-</div>
-          <div class="h2h-label">Beraberlik</div>
+          <div class="h2h-label" data-i18n="draw">Beraberlik</div>
         </div>
         <div class="h2h-card">
           <div class="h2h-num l" id="h2h-l">-</div>
@@ -2698,7 +2698,7 @@ body {
 
     <!-- KG & ALT/ÜST -->
     <div class="section">
-      <div class="section-title">⚡ KG & Alt/Üst Analizi</div>
+      <div class="section-title" data-i18n="sec_btts">⚡ KG & Alt/Üst Analizi</div>
       <div class="kg-card">
         <div class="kg-row">
           <div class="kg-info">
@@ -2734,38 +2734,38 @@ body {
     <!-- TABS -->
     <div style="padding: 0 16px">
       <div class="tabs">
-        <div class="tab-btn active" onclick="switchTab(this,'tab-matches')">📋 Son Maçlar</div>
-        <div class="tab-btn" onclick="switchTab(this,'tab-stats')">📊 İstatistik</div>
-        <div class="tab-btn" onclick="switchTab(this,'tab-timing')">⏱️ Dakika</div>
-        <div class="tab-btn" onclick="switchTab(this,'tab-ha')">🏠 Ev/Dep</div>
-        <div class="tab-btn" onclick="switchTab(this,'tab-referee')">🟨 Hakem</div>
-        <div class="tab-btn" onclick="switchTab(this,'tab-players')">👟 Oyuncular</div>
+        <div class="tab-btn active" onclick="switchTab(this,'tab-matches')"><span data-i18n="tab_last10">📋 Son Maçlar</span></div>
+        <div class="tab-btn" onclick="switchTab(this,'tab-stats')"><span data-i18n="tab_stats">📊 İstatistik</span></div>
+        <div class="tab-btn" onclick="switchTab(this,'tab-timing')"><span data-i18n="tab_minute">⏱️ Dakika</span></div>
+        <div class="tab-btn" onclick="switchTab(this,'tab-ha')"><span data-i18n="tab_ha">🏠 Ev/Dep</span></div>
+        <div class="tab-btn" onclick="switchTab(this,'tab-referee')"><span data-i18n="tab_referee">🟨 Hakem</span></div>
+        <div class="tab-btn" onclick="switchTab(this,'tab-players')"><span data-i18n="tab_players">👟 Oyuncular</span></div>
       </div>
     </div>
 
     <!-- TAB: SON MAÇLAR -->
     <div id="tab-matches" class="section">
-      <div class="section-title" id="home-matches-label">EV SAHİBİ</div>
+      <div class="section-title" id="home-matches-label" data-i18n="sec_home">EV SAHİBİ</div>
       <div class="match-list" id="home-match-list">
-        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
       </div>
-      <div class="section-title" style="margin-top:14px" id="away-matches-label">DEPLASMAN</div>
+      <div class="section-title" style="margin-top:14px" id="away-matches-label" data-i18n="sec_away">DEPLASMAN</div>
       <div class="match-list" id="away-match-list">
-        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
       </div>
     </div>
 
     <!-- TAB: İSTATİSTİK -->
     <div id="tab-stats" class="section" style="display:none">
-      <div class="section-title">TAKIM KARŞILAŞTIRMASI (Son 10 Maç Ort.)</div>
+      <div class="section-title" data-i18n="sec_comparison">TAKIM KARŞILAŞTIRMASI (Son 10 Maç Ort.)</div>
       <div class="stat-compare" id="stat-compare">
-        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
       </div>
     </div>
 
     <!-- TAB: DAKİKA -->
     <div id="tab-timing" class="section" style="display:none">
-      <div class="section-title">DAKİKA ANALİZİ</div>
+      <div class="section-title" data-i18n="sec_minute">DAKİKA ANALİZİ</div>
       <div class="timing-grid" id="timing-grid">
         <div class="loading-wrap" style="grid-column:span 2"><div class="spinner"></div></div>
       </div>
@@ -2773,7 +2773,7 @@ body {
 
     <!-- TAB: EV/DEP -->
     <div id="tab-ha" class="section" style="display:none">
-      <div class="section-title">EV / DEPLASMAN PERFORMANSI</div>
+      <div class="section-title" data-i18n="sec_ha_perf">EV / DEPLASMAN PERFORMANSI</div>
       <div class="ha-grid" id="ha-grid">
         <div class="loading-wrap" style="grid-column:span 2"><div class="spinner"></div></div>
       </div>
@@ -2781,7 +2781,7 @@ body {
 
     <!-- TAB: HAKEM -->
     <div id="tab-referee" class="section" style="display:none">
-      <div class="section-title">HAKEM ANALİZİ</div>
+      <div class="section-title" data-i18n="sec_referee">HAKEM ANALİZİ</div>
       <div id="referee-content">
         <div class="loading-wrap"><div class="spinner"></div></div>
       </div>
@@ -2789,7 +2789,7 @@ body {
 
     <!-- TAB: OYUNCULAR -->
     <div id="tab-players" class="section" style="display:none">
-      <div class="section-title">ANAHTAR OYUNCULAR</div>
+      <div class="section-title" data-i18n="sec_key_players">ANAHTAR OYUNCULAR</div>
       <div id="players-content">
         <div class="loading-wrap"><div class="spinner"></div></div>
       </div>
@@ -2805,7 +2805,7 @@ body {
   <div id="live-list-view">
     <div style="padding:14px 16px 10px; display:flex; align-items:center; justify-content:space-between;">
       <div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">CANLI MAÇLAR</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;" data-i18n="live_title">CANLI MAÇLAR</div>
         <div style="font-size:10px;color:var(--muted);margin-top:1px;">Gerçek zamanlı güncelleme</div>
       </div>
       <div style="display:flex;align-items:center;gap:5px;background:rgba(255,61,107,0.12);border:1px solid rgba(255,61,107,0.3);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--accent2);">
@@ -2814,14 +2814,14 @@ body {
       </div>
     </div>
     <div id="live-matches-container" style="padding:0 16px;">
-      <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Canlı maçlar yükleniyor...</div></div>
+      <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading_live">Canlı maçlar yükleniyor...</div></div>
     </div>
   </div>
 
   <!-- MATCH DETAIL VIEW -->
   <div id="live-detail-view" style="display:none;">
     <div style="padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);">
-      <button onclick="backToLiveList()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-size:12px;cursor:pointer;">← Geri</button>
+      <button onclick="backToLiveList()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--text);font-size:12px;cursor:pointer;" data-i18n="btn_back">← Geri</button>
       <div style="font-size:12px;font-weight:600;" id="detail-league-name">Süper Lig</div>
     </div>
 
@@ -2863,9 +2863,9 @@ body {
     </div>
 
     <div class="live-tabs">
-      <div class="live-tab active" onclick="switchLiveTab(this,'lv-both')">⊞ Tümü</div>
-      <div class="live-tab" onclick="switchLiveTab(this,'lv-events')">⚡ Olaylar</div>
-      <div class="live-tab" onclick="switchLiveTab(this,'lv-chat')">💬 Sohbet</div>
+      <div class="live-tab active" onclick="switchLiveTab(this,'lv-both')"><span data-i18n="tab_all">⊞ Tümü</span></div>
+      <div class="live-tab" onclick="switchLiveTab(this,'lv-events')"><span data-i18n="tab_events">⚡ Olaylar</span></div>
+      <div class="live-tab" onclick="switchLiveTab(this,'lv-chat')"><span data-i18n="tab_chat">💬 Sohbet</span></div>
     </div>
 
     <div class="live-main">
@@ -2889,7 +2889,7 @@ body {
 <!-- ═══ LİGLER SAYFASI ═══ -->
 <div class="page" id="page-leagues">
   <div style="padding:14px 16px 10px;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">LİGLER</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;" data-i18n="leagues_title">LİGLER</div>
     <div style="font-size:10px;color:var(--muted);margin-top:1px;">Puan tablosu & fikstür</div>
   </div>
 
@@ -2907,18 +2907,18 @@ body {
 
   <!-- League Sub Tabs -->
   <div style="display:flex;border-bottom:1px solid var(--border);background:var(--s1);">
-    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);cursor:pointer;" onclick="switchLeagueTab(this,'standings')">📊 Puan Tablosu</div>
-    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;" onclick="switchLeagueTab(this,'fixtures')">📅 Fikstür</div>
+    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--accent);border-bottom:2px solid var(--accent);cursor:pointer;" onclick="switchLeagueTab(this,'standings')">📊 <span data-i18n="standings">Puan Tablosu</span></div>
+    <div style="flex:1;padding:9px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;" onclick="switchLeagueTab(this,'fixtures')">📅 <span data-i18n="fixtures">Fikstür</span></div>
   </div>
 
   <!-- Standings -->
   <div id="league-standings" style="padding:12px 16px;">
-    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
   </div>
 
   <!-- Fixtures -->
   <div id="league-fixtures" style="padding:12px 16px;display:none;">
-    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
   </div>
 </div>
 
@@ -2926,7 +2926,7 @@ body {
 <div class="page" id="page-betting">
 
   <div style="padding:14px 16px 0;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">ORAN ANALİZİ</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;" data-i18n="odds_title">ORAN ANALİZİ</div>
     <div style="font-size:10px;color:var(--muted);margin-top:1px;">İstatistiksel tahmin ve oran karşılaştırması</div>
     <div style="margin-top:6px;padding:6px 10px;background:rgba(255,255,255,0.05);border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
       <div style="font-size:9px;color:var(--muted);line-height:1.5;">ℹ️ Bu veriler yalnızca bilgi ve istatistik amaçlıdır. Uygulama herhangi bir bahis işlemi gerçekleştirmez.</div>
@@ -2946,7 +2946,7 @@ body {
 
   <!-- MAÇ LİSTESİ -->
   <div id="betting-matches-list" style="padding:10px 16px 0;">
-    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Maçlar yükleniyor...</div></div>
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading_matches">Maçlar yükleniyor...</div></div>
   </div>
 
   <!-- DETAY GÖRÜNÜMLERİ (başta gizli) -->
@@ -2954,7 +2954,7 @@ body {
 
     <!-- Geri butonu + skor başlığı -->
     <div style="padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);">
-      <button onclick="closeBettingDetail()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;">← Geri</button>
+      <button onclick="closeBettingDetail()" style="background:var(--s2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;color:var(--text);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;" data-i18n="btn_back">← Geri</button>
       <div style="font-size:12px;font-weight:600;color:var(--muted);" id="bet-league-name">Lig</div>
     </div>
 
@@ -2975,13 +2975,13 @@ body {
       <!-- Yükleniyor göstergesi -->
       <div id="bet-loading" class="loading-wrap" style="padding:30px;">
         <div class="spinner"></div>
-        <div class="loading-text">Oranlar ve tahminler yükleniyor...</div>
+        <div class="loading-text" data-i18n="loading_odds">Oranlar ve tahminler yükleniyor...</div>
       </div>
 
       <!-- AI TAHMİN BÖLÜMÜ -->
       <div id="bet-ai-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">🤖 AI Tahmin</div>
+          <div class="bet-section-title" data-i18n="bet_ai">🤖 AI Tahmin</div>
           <div id="bet-ai-bars"></div>
           <div class="bet-advice-box" id="bet-advice-box"></div>
         </div>
@@ -2990,7 +2990,7 @@ body {
       <!-- 1/X/2 ORANLARI -->
       <div id="bet-odds-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">📊 1/X/2 Oranları</div>
+          <div class="bet-section-title" data-i18n="bet_1x2">📊 1/X/2 Oranları</div>
           <div class="bet-odds-row" id="bet-main-odds"></div>
           <div id="bet-implied-probs"></div>
         </div>
@@ -2999,7 +2999,7 @@ body {
       <!-- HANDİKAP ORANLARI -->
       <div id="bet-handicap-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">⚖️ Handikap Oranları</div>
+          <div class="bet-section-title" data-i18n="bet_handicap">⚖️ Handikap Oranları</div>
           <div id="bet-handicap-content"></div>
         </div>
       </div>
@@ -3007,15 +3007,15 @@ body {
       <!-- GOL ORANLARI -->
       <div id="bet-goals-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">⚽ Gol Oranları (Alt/Üst)</div>
+          <div class="bet-section-title" data-i18n="bet_goals">⚽ Gol Oranları (Alt/Üst)</div>
           <div id="bet-goals-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">🔀 KG Var / Yok</div>
+          <div class="bet-section-title" data-i18n="bet_btts">🔀 KG Var / Yok</div>
           <div id="bet-kg-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">1️⃣ İlk Yarı Alt/Üst</div>
+          <div class="bet-section-title" data-i18n="bet_ht_ou">1️⃣ İlk Yarı Alt/Üst</div>
           <div id="bet-ht-goals-content"></div>
         </div>
       </div>
@@ -3023,7 +3023,7 @@ body {
       <!-- DEVRE ANALİZLERİ -->
       <div id="bet-halftime-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">⏱️ Devre Analizleri</div>
+          <div class="bet-section-title" data-i18n="bet_halftime">⏱️ Devre Analizleri</div>
           <div id="bet-halftime-content"></div>
         </div>
       </div>
@@ -3031,7 +3031,7 @@ body {
       <!-- DOĞRU SKOR -->
       <div id="bet-score-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">🎰 En Muhtemel Skorlar</div>
+          <div class="bet-section-title" data-i18n="bet_scores">🎰 En Muhtemel Skorlar</div>
           <div class="bet-score-grid" id="bet-scores-grid"></div>
         </div>
       </div>
@@ -3039,7 +3039,7 @@ body {
       <!-- GÜÇ KARŞILAŞTIRMASI -->
       <div id="bet-comparison-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">💪 Güç Karşılaştırması</div>
+          <div class="bet-section-title" data-i18n="bet_power">💪 Güç Karşılaştırması</div>
           <div id="bet-comparison-content"></div>
         </div>
       </div>
@@ -3047,7 +3047,7 @@ body {
       <!-- RİSK GÖSTERGESİ -->
       <div id="bet-risk-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">🚦 Risk Göstergesi</div>
+          <div class="bet-section-title" data-i18n="bet_risk">🚦 Risk Göstergesi</div>
           <div id="bet-risk-content"></div>
         </div>
       </div>
@@ -3055,7 +3055,7 @@ body {
       <!-- DEVRE/MAÇ SONUCU (HT/FT) -->
       <div id="bet-htft-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">⏱️/🏁 Devre/Maç Sonucu (HT/FT)</div>
+          <div class="bet-section-title" data-i18n="bet_htft">⏱️/🏁 Devre/Maç Sonucu (HT/FT)</div>
           <div id="bet-htft-content"></div>
         </div>
       </div>
@@ -3063,15 +3063,15 @@ body {
       <!-- TEK/ÇİFT GOL -->
       <div id="bet-oddeven-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">🔢 Tek/Çift Toplam Gol</div>
+          <div class="bet-section-title" data-i18n="bet_odd_even">🔢 Tek/Çift Toplam Gol</div>
           <div id="bet-oddeven-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">🔢 2. Devre Tek/Çift</div>
+          <div class="bet-section-title" data-i18n="bet_2h_odd_even">🔢 2. Devre Tek/Çift</div>
           <div id="bet-oddeven2h-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">⚽ 2. Devre Alt/Üst</div>
+          <div class="bet-section-title" data-i18n="bet_2h_ou">⚽ 2. Devre Alt/Üst</div>
           <div id="bet-2h-goals-content"></div>
         </div>
       </div>
@@ -3079,15 +3079,15 @@ body {
       <!-- ÖZEL BAHISLER -->
       <div id="bet-special-section" style="display:none;">
         <div class="bet-card">
-          <div class="bet-section-title">🥅 İlk Gol Atan Takım</div>
+          <div class="bet-section-title" data-i18n="bet_first_goal">🥅 İlk Gol Atan Takım</div>
           <div id="bet-firstgoal-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">🛡️ Gol Vermeden Kazanma</div>
+          <div class="bet-section-title" data-i18n="bet_clean_sheet">🛡️ Gol Vermeden Kazanma</div>
           <div id="bet-cleansheet-content"></div>
         </div>
         <div class="bet-card">
-          <div class="bet-section-title">📈 Toplam Gol Aralığı</div>
+          <div class="bet-section-title" data-i18n="bet_total_range">📈 Toplam Gol Aralığı</div>
           <div id="bet-goalrange-content"></div>
         </div>
       </div>
@@ -3100,7 +3100,7 @@ body {
 <!-- ═══ HABERLER SAYFASI ═══ -->
 <div class="page" id="page-news">
   <div style="padding:14px 16px 0;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">HABERLER</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;" data-i18n="news_title">HABERLER</div>
     <div style="font-size:10px;color:var(--muted);margin-top:1px;">Futbol dünyasından son dakika</div>
   </div>
 
@@ -3110,7 +3110,7 @@ body {
   </div>
 
   <div id="news-list" style="padding-bottom:16px;">
-    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Haberler yükleniyor...</div></div>
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading_news">Haberler yükleniyor...</div></div>
   </div>
 </div>
 
@@ -3191,13 +3191,13 @@ body {
 <div class="picker-overlay" id="picker-overlay">
   <div class="picker-sheet">
     <div class="picker-header">
-      <div class="picker-title">TAKIM SEÇ</div>
+      <div class="picker-title" data-i18n="pick_title">TAKIM SEÇ</div>
       <div class="picker-close" onclick="closePicker()">✕</div>
     </div>
     <div class="search-input-wrap">
       <div class="search-wrap-inner">
         <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="team-search-input" placeholder="Takım ara... (örn: Barcelona, Arsenal)" oninput="handleTeamSearch(this.value)">
+        <input type="text" class="search-input" id="team-search-input" placeholder="Takım ara... (örn: Barcelona, Arsenal)" data-i18n-placeholder="search_placeholder" oninput="handleTeamSearch(this.value)">
       </div>
       <div class="search-results" id="search-results" style="display:none"></div>
     </div>
@@ -3210,7 +3210,7 @@ body {
 <!-- ═══ MAÇ DETAY SAYFASI ═══ -->
 <div class="match-detail-overlay" id="match-detail-overlay">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeMatchDetail()">← Geri</button>
+    <button class="back-btn" onclick="closeMatchDetail()"><span data-i18n="btn_back">← Geri</span></button>
     <div class="detail-league-info">
       <img id="detail-league-logo" src="" style="width:16px;height:16px;object-fit:contain;" onerror="this.style.display='none'">
       <span id="detail-league-text">-</span>
@@ -3226,7 +3226,7 @@ body {
       <div class="detail-score-center">
         <div class="detail-score-nums" id="d-score">- : -</div>
         <div class="detail-score-status" id="d-status">-</div>
-        <div class="detail-score-ht" id="d-ht">İY: -</div>
+        <div class="detail-score-ht" id="d-ht"><span id="d-ht-label" data-i18n="ht_label">İY</span>: -</div>
       </div>
       <div class="detail-team">
         <img class="detail-team-logo" id="d-away-logo" src="" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22/>'">
@@ -3241,31 +3241,31 @@ body {
   </div>
 
   <div class="detail-tabs">
-    <div class="detail-tab active" onclick="switchDetailTab(this,'dt-events')">⚡ Olaylar</div>
-    <div class="detail-tab" onclick="switchDetailTab(this,'dt-stats')">📊 İstatistik</div>
-    <div class="detail-tab" onclick="switchDetailTab(this,'dt-lineup')">👕 Kadro</div>
-    <div class="detail-tab" onclick="switchDetailTab(this,'dt-players')">👟 Oyuncular</div>
+    <div class="detail-tab active" onclick="switchDetailTab(this,'dt-events')"><span data-i18n="tab_events">⚡ Olaylar</span></div>
+    <div class="detail-tab" onclick="switchDetailTab(this,'dt-stats')"><span data-i18n="tab_stats">📊 İstatistik</span></div>
+    <div class="detail-tab" onclick="switchDetailTab(this,'dt-lineup')"><span data-i18n="tab_lineup">👕 Kadro</span></div>
+    <div class="detail-tab" onclick="switchDetailTab(this,'dt-players')"><span data-i18n="tab_players">👟 Oyuncular</span></div>
   </div>
 
   <div class="detail-content">
     <!-- EVENTS -->
     <div id="dt-events">
-      <div id="d-events-list" class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+      <div id="d-events-list" class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
     </div>
 
     <!-- STATS -->
     <div id="dt-stats" style="display:none">
-      <div id="d-stats-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+      <div id="d-stats-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
     </div>
 
     <!-- LINEUP -->
     <div id="dt-lineup" style="display:none">
-      <div id="d-lineup-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+      <div id="d-lineup-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
     </div>
 
     <!-- PLAYERS -->
     <div id="dt-players" style="display:none">
-      <div id="d-players-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+      <div id="d-players-content" class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
     </div>
   </div>
 </div>
@@ -3283,10 +3283,10 @@ body {
     </div>
 
     <div class="profile-section">
-      <div class="profile-section-title">🎨 Tema</div>
+      <div class="profile-section-title" data-i18n="pm_theme">🎨 Tema</div>
       <div class="profile-row">
         <div>
-          <div class="profile-row-label">Karanlık Mod</div>
+          <div class="profile-row-label" data-i18n="pm_dark_mode">Karanlık Mod</div>
         </div>
         <div id="pm-theme-toggle" class="profile-toggle" onclick="pmToggleTheme()"
           style="background:var(--accent);">
@@ -3297,10 +3297,10 @@ body {
     </div>
 
     <div class="profile-section">
-      <div class="profile-section-title">🔔 Bildirimler</div>
+      <div class="profile-section-title" data-i18n="pm_notifs">🔔 Bildirimler</div>
       <div class="profile-row">
         <div>
-          <div class="profile-row-label">⚽ Gol Bildirimi</div>
+          <div class="profile-row-label" data-i18n="pm_goal_notif">⚽ Gol Bildirimi</div>
         </div>
         <div id="pm-notif-toggle" class="profile-toggle" onclick="pmToggleNotif()"
           style="background:var(--accent);">
@@ -3310,7 +3310,7 @@ body {
       </div>
       <div class="profile-row">
         <div>
-          <div class="profile-row-label">🟥 Kırmızı Kart</div>
+          <div class="profile-row-label" data-i18n="pm_card_notif">🟥 Kırmızı Kart</div>
         </div>
         <div id="pm-card-toggle" class="profile-toggle" onclick="pmToggleCard()"
           style="background:var(--s3);border:1px solid var(--border);">
@@ -3321,18 +3321,28 @@ body {
     </div>
 
     <div class="profile-section">
-      <div class="profile-section-title">ℹ️ Hakkında</div>
+      <div class="profile-section-title" data--i18n="pm_language">🌐 Dil / Language</div>
+      <div class="profile-row" style="justify-content:flex-start;gap:10px;">
+        <button class="pm-lang-btn active" data-lang="tr" onclick="setLanguage('tr');closeProfileMenu();"
+          style="padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--accent);color:#000;font-weight:700;font-size:12px;cursor:pointer;">🇹🇷 TR</button>
+        <button class="pm-lang-btn" data-lang="en" onclick="setLanguage('en');closeProfileMenu();"
+          style="padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:var(--s3);color:var(--text);font-weight:700;font-size:12px;cursor:pointer;">🇬🇧 EN</button>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="profile-section-title" data-i18n="pm_about">ℹ️ Hakkında</div>
       <div style="display:flex;flex-direction:column;gap:6px;">
         <div style="display:flex;justify-content:space-between;font-size:12px;">
-          <span style="color:var(--muted);">Versiyon</span><span style="font-weight:700;">1.0.0</span>
+          <span style="color:var(--muted);" data-i18n="pm_version">Versiyon</span><span style="font-weight:700;">1.0.0</span>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:12px;">
-          <span style="color:var(--muted);">Veri Kaynağı</span><span style="font-weight:700;">API-Football</span>
+          <span style="color:var(--muted);" data-i18n="pm_data_source">Veri Kaynağı</span><span style="font-weight:700;">API-Football</span>
         </div>
       </div>
     </div>
 
-    <button class="profile-logout" onclick="doLogout()">🚪 Çıkış Yap</button>
+    <button class="profile-logout" onclick="doLogout()" data-i18n="pm_logout">🚪 Çıkış Yap</button>
   </div>
 </div>
 
@@ -3417,7 +3427,7 @@ body {
 
   <!-- Team Selector -->
   <div style="padding:14px 16px 10px;">
-    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;">GEÇMİŞ MAÇLAR</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;" data-i18n="history_title">GEÇMİŞ MAÇLAR</div>
     <div style="font-size:10px;color:var(--muted);margin-top:1px;">Takım seç, tüm istatistikleri gör</div>
   </div>
 
@@ -3435,7 +3445,7 @@ body {
 
   <!-- Stats Overview -->
   <div id="history-content" style="padding:0 16px;">
-    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>
+    <div class="loading-wrap"><div class="spinner"></div><div class="loading-text" data-i18n="loading">Yükleniyor...</div></div>
   </div>
 
 </div>
@@ -3446,27 +3456,27 @@ body {
 <div class="bottom-nav">
   <div class="nav-item active" onclick="goPage('analysis',this)">
     <div class="nav-icon">🔍</div>
-    <div class="nav-label">ANALİZ</div>
+    <div class="nav-label" data-i18n="nav_analysis">ANALİZ</div>
   </div>
   <div class="nav-item" onclick="goPage('live',this)">
     <div class="nav-icon">🔴</div>
-    <div class="nav-label">CANLI</div>
+    <div class="nav-label" data-i18n="nav_live">CANLI</div>
   </div>
   <div class="nav-item" onclick="goPage('history',this)">
     <div class="nav-icon">📋</div>
-    <div class="nav-label">GEÇMİŞ</div>
+    <div class="nav-label" data-i18n="nav_history">GEÇMİŞ</div>
   </div>
   <div class="nav-item" onclick="goPage('leagues',this)">
     <div class="nav-icon">🏆</div>
-    <div class="nav-label">LİGLER</div>
+    <div class="nav-label" data-i18n="nav_leagues">LİGLER</div>
   </div>
   <div class="nav-item" onclick="goPage('betting',this)">
     <div class="nav-icon">📊</div>
-    <div class="nav-label">ORANLAR</div>
+    <div class="nav-label" data-i18n="nav_odds">ORANLAR</div>
   </div>
   <div class="nav-item" onclick="goPage('news',this)">
     <div class="nav-icon">📰</div>
-    <div class="nav-label">HABERLER</div>
+    <div class="nav-label" data-i18n="nav_news">HABERLER</div>
   </div>
 </div>
 
@@ -3484,6 +3494,7 @@ var notifEnabled = true;
 var cardNotifEnabled = false;
 var notifIdCounter = 100;
 var currentTheme = 'dark';
+var currentLang = localStorage.getItem('lang') || 'tr';
 var currentLeagueId = '203';
 var currentLeagueTab = 'standings';
 var pickerTarget = 'main';
@@ -3493,6 +3504,249 @@ var simInterval = null;
 var ballInterval = null;
 var currentMatchEvents = [];
 var simEventIndex = 0;
+
+// ═══ I18N ═══
+var TRANSLATIONS = {
+  tr: {
+    // Nav
+    nav_analysis:'ANALİZ', nav_live:'CANLI', nav_history:'GEÇMİŞ',
+    nav_leagues:'LİGLER', nav_odds:'ORANLAR', nav_news:'HABERLER',
+    // Profile menu
+    pm_theme:'🎨 Tema', pm_dark_mode:'Karanlık Mod', pm_notifs:'🔔 Bildirimler',
+    pm_goal_notif:'⚽ Gol Bildirimi', pm_card_notif:'🟥 Kırmızı Kart',
+    pm_language:'🌐 Dil', pm_about:'ℹ️ Hakkında', pm_version:'Versiyon',
+    pm_data_source:'Veri Kaynağı', pm_logout:'🚪 Çıkış Yap',
+    // Page titles
+    live_title:'CANLI MAÇLAR', leagues_title:'LİGLER', news_title:'HABERLER',
+    history_title:'GEÇMİŞ MAÇLAR', odds_title:'ORAN ANALİZİ', analysis_title:'ANALİZ',
+    standings:'Puan Tablosu', fixtures:'Fikstür',
+    // Auth
+    auth_tagline:'Pro Maç Analizi', auth_login:'Giriş Yap', auth_register:'Kayıt Ol',
+    // Analysis hero
+    hero_label:'Takım Seç & Analiz Et',
+    btn_upcoming:'📅 Yaklaşan Maçları Getir',
+    btn_analyze:'🔍 Analiz Et',
+    btn_analyzing:'⏳ Analiz Ediliyor...',
+    change_team:'← Değiştir',
+    upcoming_label:'Yaklaşan Maçlar — Analiz için seç:',
+    // Dashboard sections
+    sec_live_scores:'🔴 Canlı Skorlar',
+    sec_today:'📅 Bugünün Maçları',
+    sec_form:'🔥 Süper Lig Form Tablosu',
+    sec_season_stats:'📈 Sezon İstatistikleri',
+    sec_match_week:'🏆 Haftanın Maçı',
+    refresh:'🔄 Yenile',
+    // Analysis result sections
+    sec_ai:'🤖 Yapay Zeka Tahmini',
+    sec_last10:'⚔️ Son 10 Maç Özeti',
+    sec_btts:'⚡ KG & Alt/Üst Analizi',
+    sec_home:'EV SAHİBİ', sec_away:'DEPLASMAN',
+    sec_comparison:'TAKIM KARŞILAŞTIRMASI (Son 10 Maç Ort.)',
+    sec_minute:'DAKİKA ANALİZİ',
+    sec_ha_perf:'EV / DEPLASMAN PERFORMANSI',
+    sec_referee:'HAKEM ANALİZİ',
+    sec_key_players:'ANAHTAR OYUNCULAR',
+    recent_matches:'— SON MAÇLAR',
+    win_chance:'Kazanma İhtimali',
+    home_team:'Ev Sahibi', draw:'Beraberlik', away_team:'Deplasman',
+    last_n_avg:'Son {n} maç ortalaması',
+    first45:'İlk 45 dakikada gol ihtimali',
+    // Betting sections
+    bet_ai:'🤖 AI Tahmin',
+    bet_1x2:'📊 1/X/2 Oranları',
+    bet_handicap:'⚖️ Handikap Oranları',
+    bet_goals:'⚽ Gol Oranları (Alt/Üst)',
+    bet_btts:'🔀 KG Var / Yok',
+    bet_ht_ou:'1️⃣ İlk Yarı Alt/Üst',
+    bet_halftime:'⏱️ Devre Analizleri',
+    bet_scores:'🎰 En Muhtemel Skorlar',
+    bet_power:'💪 Güç Karşılaştırması',
+    bet_risk:'🚦 Risk Göstergesi',
+    bet_htft:'⏱️/🏁 Devre/Maç Sonucu (HT/FT)',
+    bet_odd_even:'🔢 Tek/Çift Toplam Gol',
+    bet_2h_odd_even:'🔢 2. Devre Tek/Çift',
+    bet_2h_ou:'⚽ 2. Devre Alt/Üst',
+    bet_first_goal:'🥅 İlk Gol Atan Takım',
+    bet_clean_sheet:'🛡️ Gol Vermeden Kazanma',
+    bet_total_range:'📈 Toplam Gol Aralığı',
+    bookmakers_best:'{n} bahisçiden en iyi oranlar',
+    // Loading / empty / error states
+    loading:'Yükleniyor...',
+    loading_live:'Canlı maçlar yükleniyor...',
+    loading_matches:'Maçlar yükleniyor...',
+    loading_fixtures:'Fikstür yükleniyor...',
+    loading_odds:'Oranlar ve tahminler yükleniyor...',
+    loading_news:'Haberler yükleniyor...',
+    err_load:'⚠️ Yüklenemedi',
+    err_data:'⚠️ Veri yüklenemedi',
+    err_data2:t('err_data2'),
+    err_api_plan:'⚠️ Veri yüklenemedi. API planınız bu veriyi desteklemiyor olabilir.',
+    no_upcoming:'Yaklaşan maç bulunamadı',
+    no_live:'⏰ Şu an canlı maç yok',
+    no_today:'📅 Bugün maç yok',
+    no_fixtures:'Fikstür bulunamadı',
+    no_standings:'Puan tablosu bulunamadı',
+    no_team:'Takım bulunamadı',
+    no_stats:'İstatistik bulunamadı',
+    no_lineup:'Kadro bilgisi yok',
+    no_players:'Oyuncu istatistikleri yok',
+    no_events:'Olay bulunamadı',
+    no_match:'Maç bulunamadı',
+    no_match2:'Maç bulunamadı. Farklı takımlar deneyin.',
+    no_league_fixtures:'Bu lig için yaklaşan maç bulunamadı',
+    no_news:'Haber bulunamadı',
+    news_error:'⚠️ Haberler yüklenemedi',
+    // Match detail
+    live_match_label:'Canlı Maç',
+    match_ended:'Maç Sona Erdi',
+    // Dynamic
+    favorite_label:'favori', balanced:'Dengeli maç.', prediction:'Tahmin',
+    search_placeholder:'Takım ara...',
+    // Tabs
+    tab_last10:'📋 Son Maçlar', tab_stats:'📊 İstatistik', tab_minute:'⏱️ Dakika',
+    tab_ha:'🏠 Ev/Dep', tab_referee:'🟨 Hakem', tab_players:'👟 Oyuncular',
+    tab_events:'⚡ Olaylar', tab_all:'⊞ Tümü', tab_chat:'💬 Sohbet',
+    tab_lineup:'👕 Kadro',
+    btn_back:'← Geri', ht_label:'İY',
+    pick_title:'TAKIM SEÇ'
+  },
+  en: {
+    // Nav
+    nav_analysis:'ANALYSIS', nav_live:'LIVE', nav_history:'HISTORY',
+    nav_leagues:'LEAGUES', nav_odds:'ODDS', nav_news:'NEWS',
+    // Profile menu
+    pm_theme:'🎨 Theme', pm_dark_mode:'Dark Mode', pm_notifs:'🔔 Notifications',
+    pm_goal_notif:'⚽ Goal Alert', pm_card_notif:'🟥 Red Card',
+    pm_language:'🌐 Language', pm_about:'ℹ️ About', pm_version:'Version',
+    pm_data_source:'Data Source', pm_logout:'🚪 Log Out',
+    // Page titles
+    live_title:'LIVE MATCHES', leagues_title:'LEAGUES', news_title:'NEWS',
+    history_title:'MATCH HISTORY', odds_title:'ODDS ANALYSIS', analysis_title:'ANALYSIS',
+    standings:'Standings', fixtures:'Fixtures',
+    // Auth
+    auth_tagline:'Pro Match Analysis', auth_login:'Log In', auth_register:'Sign Up',
+    // Analysis hero
+    hero_label:'Select Team & Analyze',
+    btn_upcoming:'📅 Get Upcoming Matches',
+    btn_analyze:'🔍 Analyze',
+    btn_analyzing:'⏳ Analyzing...',
+    change_team:'← Change',
+    upcoming_label:'Upcoming Matches — Select to analyze:',
+    // Dashboard sections
+    sec_live_scores:'🔴 Live Scores',
+    sec_today:'📅 Today\'s Matches',
+    sec_form:'🔥 Super Lig Form Table',
+    sec_season_stats:'📈 Season Statistics',
+    sec_match_week:'🏆 Match of the Week',
+    refresh:'🔄 Refresh',
+    // Analysis result sections
+    sec_ai:'🤖 AI Prediction',
+    sec_last10:'⚔️ Last 10 Matches',
+    sec_btts:'⚡ BTTS & Over/Under',
+    sec_home:'HOME', sec_away:'AWAY',
+    sec_comparison:'TEAM COMPARISON (Last 10 Avg)',
+    sec_minute:'MINUTE ANALYSIS',
+    sec_ha_perf:'HOME / AWAY PERFORMANCE',
+    sec_referee:'REFEREE ANALYSIS',
+    sec_key_players:'KEY PLAYERS',
+    recent_matches:'— RECENT MATCHES',
+    win_chance:'Win Probability',
+    home_team:'Home', draw:'Draw', away_team:'Away',
+    last_n_avg:'Last {n} matches average',
+    first45:'Goal probability in first 45 min',
+    // Betting sections
+    bet_ai:'🤖 AI Prediction',
+    bet_1x2:'📊 1/X/2 Odds',
+    bet_handicap:'⚖️ Handicap Odds',
+    bet_goals:'⚽ Goal Odds (Over/Under)',
+    bet_btts:'🔀 BTTS Yes/No',
+    bet_ht_ou:'1️⃣ Half Time Over/Under',
+    bet_halftime:'⏱️ Half Time Analysis',
+    bet_scores:'🎰 Most Likely Scores',
+    bet_power:'💪 Power Comparison',
+    bet_risk:'🚦 Risk Indicator',
+    bet_htft:'⏱️/🏁 Half/Full Time Result (HT/FT)',
+    bet_odd_even:'🔢 Total Goals Odd/Even',
+    bet_2h_odd_even:'🔢 2nd Half Odd/Even',
+    bet_2h_ou:'⚽ 2nd Half Over/Under',
+    bet_first_goal:'🥅 First Goal Team',
+    bet_clean_sheet:'🛡️ Clean Sheet Win',
+    bet_total_range:'📈 Total Goal Range',
+    bookmakers_best:'Best odds from {n} bookmakers',
+    // Loading / empty / error states
+    loading:'Loading...',
+    loading_live:'Loading live matches...',
+    loading_matches:'Loading matches...',
+    loading_fixtures:'Loading fixtures...',
+    loading_odds:'Loading odds and predictions...',
+    loading_news:'Loading news...',
+    err_load:'⚠️ Failed to load',
+    err_data:'⚠️ Failed to load data',
+    err_data2:'⚠️ Failed to load data. Please try again.',
+    err_api_plan:'⚠️ Failed to load data. Your API plan may not support this.',
+    no_upcoming:'No upcoming matches found',
+    no_live:'⏰ No live matches right now',
+    no_today:'📅 No matches today',
+    no_fixtures:'No fixtures found',
+    no_standings:'Standings not found',
+    no_team:'Team not found',
+    no_stats:'No statistics found',
+    no_lineup:'No lineup available',
+    no_players:'No player statistics',
+    no_events:'No events found',
+    no_match:'Match not found',
+    no_match2:'No data found. Try different teams.',
+    no_league_fixtures:'No upcoming matches for this league',
+    no_news:'No news found',
+    news_error:'⚠️ Failed to load news',
+    // Match detail
+    live_match_label:'Live Match',
+    match_ended:'Match Ended',
+    // Dynamic
+    favorite_label:'favorite', balanced:'Balanced match.', prediction:'Prediction',
+    search_placeholder:'Search team...',
+    // Tabs
+    tab_last10:'📋 Last Matches', tab_stats:'📊 Statistics', tab_minute:'⏱️ Minutes',
+    tab_ha:'🏠 H/A', tab_referee:'🟨 Referee', tab_players:'👟 Players',
+    tab_events:'⚡ Events', tab_all:'⊞ All', tab_chat:'💬 Chat',
+    tab_lineup:'👕 Lineup',
+    btn_back:'← Back', ht_label:'HT',
+    pick_title:'SELECT TEAM'
+  }
+};
+
+function t(key) {
+  var lang = currentLang || 'tr';
+  return (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || TRANSLATIONS['tr'][key] || key;
+}
+
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+  // Update placeholder attributes
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    el.setAttribute('placeholder', t(el.getAttribute('data-i18n-placeholder')));
+  });
+  // Sync news tab language buttons
+  var newsFilterBtns = document.querySelectorAll('.news-filter-btn');
+  newsFilterBtns.forEach(function(b) { b.classList.remove('active'); });
+  var targetBtn = lang === 'en' ? newsFilterBtns[1] : newsFilterBtns[0];
+  if (targetBtn) targetBtn.classList.add('active');
+  currentNewsLang = lang;
+  newsLoaded = false;
+  // Update language toggle buttons in profile menu
+  document.querySelectorAll('.pm-lang-btn').forEach(function(b) {
+    var isActive = b.getAttribute('data-lang') === lang;
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? 'var(--accent)' : 'var(--s3)';
+    b.style.color = isActive ? '#000' : 'var(--text)';
+  });
+}
 
 // ═══ TEAMS DATABASE ═══
 const TEAMS = {
@@ -3728,7 +3982,7 @@ async function loadUpcomingMatches() {
   document.getElementById('upcoming-team-name').textContent = team.name;
 
   const list = document.getElementById('upcoming-matches-list');
-  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch('?action=nextmatches&team=' + team.id);
@@ -3736,7 +3990,7 @@ async function loadUpcomingMatches() {
     const matches = (data.response || []).slice(0, 5);
 
     if (!matches.length) {
-      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Yaklaşan maç bulunamadı</div>';
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">' + t('no_upcoming') + '</div>';
       return;
     }
 
@@ -3766,7 +4020,7 @@ async function loadUpcomingMatches() {
       </div>`;
     }).join('');
   } catch(e) {
-    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -3777,7 +4031,7 @@ async function analyzeUpcomingMatch(fixtureId, homeId, awayId, homeName, awayNam
 
   // Show results section
   document.getElementById('results-wrap').style.display = 'block';
-  document.getElementById('ai-insight').textContent = 'Veriler hesaplanıyor...';
+  document.getElementById('ai-insight').textContent = t('loading');
 
   try {
     const [homeRes, awayRes] = await Promise.all([
@@ -3799,12 +4053,12 @@ async function analyzeUpcomingMatch(fixtureId, homeId, awayId, homeName, awayNam
     renderReferee(homeMatches, awayMatches);
     renderPlayers(homeMatches, awayMatches);
 
-    document.getElementById('home-matches-label').textContent = homeName.toUpperCase() + ' — SON MAÇLAR';
-    document.getElementById('away-matches-label').textContent = awayName.toUpperCase() + ' — SON MAÇLAR';
+    document.getElementById('home-matches-label').textContent = homeName.toUpperCase() + ' ' + t('recent_matches');
+    document.getElementById('away-matches-label').textContent = awayName.toUpperCase() + ' ' + t('recent_matches');
 
     document.getElementById('results-wrap').scrollIntoView({behavior:'smooth', block:'start'});
   } catch(e) {
-    document.getElementById('ai-insight').textContent = '⚠️ Veri yüklenemedi.';
+    document.getElementById('ai-insight').textContent = t('err_data');
   }
 }
 
@@ -3819,11 +4073,11 @@ document.getElementById('picker-overlay').addEventListener('click', function(e) 
 // ═══ ANALYSIS ═══
 async function runAnalysis() {
   const btn = document.getElementById('analyze-btn');
-  btn.innerHTML = '<span>⏳</span> Analiz Ediliyor...';
+  btn.innerHTML = t('btn_analyzing');
   btn.disabled = true;
 
   document.getElementById('results-wrap').style.display = 'block';
-  document.getElementById('ai-insight').textContent = 'Veriler hesaplanıyor...';
+  document.getElementById('ai-insight').textContent = t('loading');
 
   try {
     const [homeRes, awayRes] = await Promise.all([
@@ -3835,8 +4089,8 @@ async function runAnalysis() {
     const awayMatches = awayRes.response || [];
 
     if (!homeMatches.length && !awayMatches.length) {
-      document.getElementById('ai-insight').textContent = '⚠️ Veri bulunamadı. Farklı takımlar deneyin.';
-      btn.innerHTML = '<span>🔍</span> Analiz Et';
+      document.getElementById('ai-insight').textContent = t('no_match2');
+      btn.innerHTML = t('btn_analyze');
       btn.disabled = false;
       return;
     }
@@ -3853,17 +4107,17 @@ async function runAnalysis() {
     renderReferee(homeMatches, awayMatches);
     renderPlayers(homeMatches, awayMatches);
 
-    document.getElementById('home-matches-label').textContent = selectedHome.name.toUpperCase() + ' — SON MAÇLAR';
-    document.getElementById('away-matches-label').textContent = selectedAway.name.toUpperCase() + ' — SON MAÇLAR';
+    document.getElementById('home-matches-label').textContent = selectedHome.name.toUpperCase() + ' ' + t('recent_matches');
+    document.getElementById('away-matches-label').textContent = selectedAway.name.toUpperCase() + ' ' + t('recent_matches');
 
     document.getElementById('results-wrap').scrollIntoView({behavior:'smooth', block:'start'});
 
   } catch(e) {
     console.error(e);
-    document.getElementById('ai-insight').textContent = '⚠️ Veri yüklenemedi. Lütfen tekrar deneyin.';
+    document.getElementById('ai-insight').textContent = t('err_data2');
   }
 
-  btn.innerHTML = '<span>🔍</span> Analiz Et';
+  btn.innerHTML = t('btn_analyze');
   btn.disabled = false;
 }
 
@@ -3941,7 +4195,7 @@ function renderAI(hm, am) {
   const kgText = hs.bothPct > 50 && as.bothPct > 50 ? 'KG var ihtimali yüksek.' : 'KG yok ihtimali göz önüne alınabilir.';
 
   document.getElementById('ai-insight').textContent =
-    `💡 ${fav} favori (%${favPct}). ${selectedHome.name} son ${hm.length} maçta ${hs.gf} gol attı, ${hs.ga} yedi. ${selectedAway.name}: ${as.gf} gol, ${as.ga} yedi. ${kgText}`;
+    `💡 ${fav} ${t("favorite_label")} (%${favPct}). ${selectedHome.name} ${hm.length}/${t("last_n_avg").replace("{n}",hm.length).split(" ")[1]}: ${hs.gf}g ${hs.ga}g. ${selectedAway.name}: ${as.gf}g ${as.ga}g. ${kgText}`;
 }
 
 // ── H2H ──
@@ -3977,17 +4231,17 @@ function renderKG(hm, am) {
   document.getElementById('kg-pct2').className = 'kg-pct ' + o25Class;
   document.getElementById('kg-bar2').style.width = avgO25 + '%';
   document.getElementById('kg-bar2').className = 'kg-bar-fill ' + o25Class;
-  document.getElementById('kg-sub2').textContent = `Son ${hm.length} maç ortalaması`;
+  document.getElementById('kg-sub2').textContent = t('last_n_avg').replace('{n}', hm.length);
 
   document.getElementById('kg-pct3').textContent = avgHT + '%';
   document.getElementById('kg-bar3').style.width = avgHT + '%';
-  document.getElementById('kg-sub3').textContent = 'İlk 45 dakikada gol ihtimali';
+  document.getElementById('kg-sub3').textContent = t('first45');
 }
 
 // ── MATCHES ──
 function renderMatches(matches, teamId, containerId) {
   const c = document.getElementById(containerId);
-  if (!matches.length) { c.innerHTML = '<div class="loading-wrap"><div class="loading-text">Maç bulunamadı</div></div>'; return; }
+  if (!matches.length) { c.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('no_match') + '</div></div>'; return; }
 
   c.innerHTML = matches.slice(0,10).map(m => {
     const isHome = m.teams.home.id === teamId;
@@ -4313,7 +4567,7 @@ let liveRefreshInterval = null;
 async function loadLiveMatches() {
   const container = document.getElementById('live-matches-container');
   if (!container) return;
-  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Canlı maçlar yükleniyor...</div></div>';
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading_live') + '</div></div>';
 
   try {
     const res = await apiFetch('?action=live');
@@ -4324,7 +4578,7 @@ async function loadLiveMatches() {
       container.innerHTML = `
         <div style="text-align:center;padding:40px 20px;">
           <div style="font-size:40px;margin-bottom:12px;">⏰</div>
-          <div style="font-size:14px;font-weight:700;margin-bottom:6px;">Şu an canlı maç yok</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px;" data-i18n="no_live">⏰ Şu an canlı maç yok</div>
           <div style="font-size:11px;color:var(--muted);">Maç saatlerinde tekrar kontrol et</div>
         </div>
         <div style="padding:0 0 10px;">
@@ -4371,7 +4625,7 @@ async function loadLiveMatches() {
     `).join('');
 
   } catch(e) {
-    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Veri yüklenemedi</div></div>';
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('err_data') + '</div></div>';
   }
 }
 
@@ -4384,7 +4638,7 @@ async function loadTodayMatches() {
     if (!list) return;
 
     if (!matches.length) {
-      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Bugün maç yok</div>';
+      list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">' + t('no_today') + '</div>';
       return;
     }
 
@@ -4434,7 +4688,7 @@ function startDetailSimulation() {
   document.getElementById('detail-away-name').textContent = 'Deplasman';
   document.getElementById('detail-score').textContent = '0 – 0';
   document.getElementById('detail-min').textContent = '⏱ 1\'';
-  document.getElementById('detail-league-name').textContent = 'Canlı Maç';
+  document.getElementById('detail-league-name').textContent = t('live_match_label');
 }
 
 // ═══ LEAGUES ═══
@@ -4469,7 +4723,7 @@ function switchLeagueTab(el, tab) {
 
 async function loadStandings(leagueId) {
   const container = document.getElementById('league-standings');
-  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=standings&league=${leagueId}`);
@@ -4477,7 +4731,7 @@ async function loadStandings(leagueId) {
     const standings = data.response?.[0]?.league?.standings?.[0] || data.response || [];
 
     if (!standings.length) {
-      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">Puan tablosu bulunamadı</div></div>';
+      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('no_standings') + '</div></div>';
       return;
     }
 
@@ -4518,13 +4772,13 @@ async function loadStandings(leagueId) {
         </table>
       </div>`;
   } catch(e) {
-    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Yüklenemedi</div></div>';
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('err_load') + '</div></div>';
   }
 }
 
 async function loadFixtures(leagueId) {
   const container = document.getElementById('league-fixtures');
-  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fikstür yükleniyor...</div></div>';
+  container.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading_fixtures') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=upcoming&league=${leagueId}`);
@@ -4532,7 +4786,7 @@ async function loadFixtures(leagueId) {
     const matches = (data.response || []).slice(0, 10);
 
     if (!matches.length) {
-      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">Fikstür bulunamadı</div></div>';
+      container.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('no_fixtures') + '</div></div>';
       return;
     }
 
@@ -4558,7 +4812,7 @@ async function loadFixtures(leagueId) {
         </div>`;
     }).join('');
   } catch(e) {
-    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">⚠️ Yüklenemedi</div></div>';
+    container.innerHTML = '<div class="loading-wrap"><div class="loading-text">' + t('err_load') + '</div></div>';
   }
 }
 
@@ -4824,7 +5078,7 @@ async function openMatchDetail(fixtureId) {
   document.getElementById('live-list-view').style.display = 'none';
   document.getElementById('live-detail-view').style.display = 'block';
 
-  document.getElementById('events-list').innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  document.getElementById('events-list').innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
   document.getElementById('chat-msgs').innerHTML = '<div style="padding:12px 8px;text-align:center;font-size:10px;color:var(--muted);">💬 İlk yorumu sen yap!</div>';
 
   try {
@@ -4881,7 +5135,7 @@ async function openMatchDetail(fixtureId) {
     startLiveSimulation(match.events || [], match.teams.home.id);
 
   } catch(e) {
-    document.getElementById('events-list').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+    document.getElementById('events-list').innerHTML = '<div style="padding:20px;text-align:center;color:var(--muted);">' + t('err_data') + '</div>';
   }
 }
 
@@ -4962,8 +5216,7 @@ function loadDashboard() {
   dashboardLoaded = true;
   loadDashboardLive();
   loadDashboardToday();
-  loadDashboardForm();
-  loadDashboardStats();
+  loadDashboardStandings();
   // Auto refresh live scores every 60 seconds
   if (liveRefreshTimer) clearInterval(liveRefreshTimer);
   liveRefreshTimer = setInterval(loadDashboardLive, 60000);
@@ -4978,7 +5231,7 @@ async function loadDashboardLive() {
     const matches = data.response || [];
 
     if (!matches.length) {
-      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">⏰ Şu an canlı maç yok</div>';
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">' + t('no_live') + '</div>';
       return;
     }
 
@@ -5017,7 +5270,7 @@ async function loadDashboardToday() {
       .slice(0, 8);
 
     if (!matches.length) {
-      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">📅 Bugün maç yok</div>';
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">' + t('no_today') + '</div>';
       return;
     }
 
@@ -5047,53 +5300,44 @@ async function loadDashboardToday() {
       </div>`;
     }).join('');
   } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
-// ── FORM TABLOSU ──
-async function loadDashboardForm() {
-  const el = document.getElementById('form-widget');
+// ── FORM + İSTATİSTİK (tek standings çağrısı) ──
+async function loadDashboardStandings() {
+  const formEl  = document.getElementById('form-widget');
+  const statsEl = document.getElementById('stats-widget');
   try {
     const res = await apiFetch('?action=standings&league=203');
     const data = await res.json();
     const standings = data.response?.[0]?.league?.standings?.[0] || [];
 
+    // FORM TABLOSU
     if (!standings.length) {
-      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Veri yok</div>';
-      return;
+      formEl.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Veri yok</div>';
+    } else {
+      const withForm = standings.map(s => ({
+        ...s,
+        formScore: (s.form || '').split('').reduce((acc, c) => acc + (c==='W'?3:c==='D'?1:0), 0)
+      })).sort((a,b) => b.formScore - a.formScore).slice(0, 8);
+
+      formEl.innerHTML = withForm.map((s, i) => {
+        const formChars = (s.form || '').split('').slice(-5);
+        return `<div class="form-team-row">
+          <div class="form-rank">${i+1}</div>
+          <img src="${s.team.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
+          <div class="form-team-name">${s.team.name}</div>
+          <div class="form-badges">
+            ${formChars.map(c => `<div class="form-badge ${c}">${c}</div>`).join('')}
+          </div>
+          <div class="form-pts">${s.points}</div>
+        </div>`;
+      }).join('');
     }
 
-    // Sort by form (last 5 matches)
-    const withForm = standings.map(s => ({
-      ...s,
-      formScore: (s.form || '').split('').reduce((acc, c) => acc + (c==='W'?3:c==='D'?1:0), 0)
-    })).sort((a,b) => b.formScore - a.formScore).slice(0, 8);
-
-    el.innerHTML = withForm.map((s, i) => {
-      const formChars = (s.form || '').split('').slice(-5);
-      return `<div class="form-team-row">
-        <div class="form-rank">${i+1}</div>
-        <img src="${s.team.logo}" style="width:18px;height:18px;object-fit:contain;" onerror="this.style.display='none'">
-        <div class="form-team-name">${s.team.name}</div>
-        <div class="form-badges">
-          ${formChars.map(c => `<div class="form-badge ${c}">${c}</div>`).join('')}
-        </div>
-        <div class="form-pts">${s.points}</div>
-      </div>`;
-    }).join('');
-  } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
-  }
-}
-
-// ── İSTATİSTİK KARTLARI ──
-async function loadDashboardStats() {
-  const el = document.getElementById('stats-widget');
-  try {
-    const res = await apiFetch('?action=standings&league=203');
-    const data = await res.json();
-    const standings = data.response?.[0]?.league?.standings?.[0] || [];
+    // İSTATİSTİK KARTLARI
+    if (!standings.length) return;
 
     if (!standings.length) return;
 
@@ -5119,7 +5363,7 @@ async function loadDashboardStats() {
       {icon:'🤝', val: mostDraws.all.draw, team: mostDraws.team.name, label: 'En Çok Beraberlik', logo: mostDraws.team.logo},
     ];
 
-    el.innerHTML = cards.map(c => `
+    statsEl.innerHTML = cards.map(c => `
       <div class="stat-widget-card">
         <div class="stat-widget-icon">${c.icon}</div>
         <img src="${c.logo}" style="width:24px;height:24px;object-fit:contain;margin:0 auto 4px;display:block;" onerror="this.style.display='none'">
@@ -5129,10 +5373,10 @@ async function loadDashboardStats() {
       </div>
     `).join('');
 
-    // Also load match of the week
     loadMatchOfWeek();
   } catch(e) {
-    el.innerHTML = '<div style="grid-column:span 2;text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    formEl.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">' + t('err_load') + '</div>';
+    statsEl.innerHTML = '<div style="grid-column:span 2;text-align:center;padding:16px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5145,7 +5389,7 @@ async function loadMatchOfWeek() {
     const matches = data.response || [];
 
     if (!matches.length) {
-      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">Yaklaşan maç bulunamadı</div>';
+      el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);font-size:12px;">' + t('no_upcoming') + '</div>';
       return;
     }
 
@@ -5180,7 +5424,7 @@ async function loadMatchOfWeek() {
       </div>
     `;
   } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:16px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5209,7 +5453,7 @@ async function handleTeamSearch(query) {
       const teams = data.response || [];
 
       if (!teams.length) {
-        resultsEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">Takım bulunamadı</div>';
+        resultsEl.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px;">' + t('no_team') + '</div>';
         return;
       }
 
@@ -5282,7 +5526,7 @@ function setDetailScoreboard(m) {
   document.getElementById('d-score').textContent = hg + ' – ' + ag;
 
   const status = m.fixture.status;
-  if (status.short === 'FT') document.getElementById('d-status').textContent = 'Maç Sona Erdi';
+  if (status.short === 'FT') document.getElementById('d-status').textContent = t('match_ended');
   else if (status.short === 'NS') document.getElementById('d-status').textContent = 'Başlamadı';
   else document.getElementById('d-status').textContent = (status.elapsed || '') + "' " + status.long;
 
@@ -5315,7 +5559,7 @@ function switchDetailTab(el, tabId) {
 // ── EVENTS ──
 async function loadDetailEvents(fixtureId) {
   const el = document.getElementById('d-events-list');
-  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=events&id=${fixtureId}`);
@@ -5323,7 +5567,7 @@ async function loadDetailEvents(fixtureId) {
     const events = data.response || [];
 
     if (!events.length) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">Olay bulunamadı</div>';
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">' + t('no_events') + '</div>';
       return;
     }
 
@@ -5362,7 +5606,7 @@ async function loadDetailEvents(fixtureId) {
     }).join('');
 
   } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5370,7 +5614,7 @@ async function loadDetailEvents(fixtureId) {
 async function loadDetailStats(fixtureId) {
   detailDataCache.stats = true;
   const el = document.getElementById('d-stats-content');
-  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=statistics&id=${fixtureId}`);
@@ -5378,7 +5622,7 @@ async function loadDetailStats(fixtureId) {
     const stats = data.response || [];
 
     if (stats.length < 2) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">İstatistik bulunamadı</div>';
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">' + t('no_stats') + '</div>';
       return;
     }
 
@@ -5439,7 +5683,7 @@ async function loadDetailStats(fixtureId) {
     `;
 
   } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5447,7 +5691,7 @@ async function loadDetailStats(fixtureId) {
 async function loadDetailLineup(fixtureId) {
   detailDataCache.lineup = true;
   const el = document.getElementById('d-lineup-content');
-  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=lineups&id=${fixtureId}`);
@@ -5455,7 +5699,7 @@ async function loadDetailLineup(fixtureId) {
     const lineups = data.response || [];
 
     if (!lineups.length) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">Kadro bilgisi yok</div>';
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">' + t('no_lineup') + '</div>';
       return;
     }
 
@@ -5634,7 +5878,7 @@ async function loadDetailLineup(fixtureId) {
 
   } catch(e) {
     console.error('Lineup error:', e);
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5642,7 +5886,7 @@ async function loadDetailLineup(fixtureId) {
 async function loadDetailPlayers(fixtureId) {
   detailDataCache.players = true;
   const el = document.getElementById('d-players-content');
-  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch(`?action=players&id=${fixtureId}`);
@@ -5650,7 +5894,7 @@ async function loadDetailPlayers(fixtureId) {
     const teams = data.response || [];
 
     if (!teams.length) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">Oyuncu istatistikleri yok</div>';
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">' + t('no_players') + '</div>';
       return;
     }
 
@@ -5695,7 +5939,7 @@ async function loadDetailPlayers(fixtureId) {
     `).join('');
 
   } catch(e) {
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_load') + '</div>';
   }
 }
 
@@ -5787,7 +6031,7 @@ function buildHomeAwaySection(matches, teamId) {
 async function loadHistoryPage() {
   const el = document.getElementById('history-content');
   const team = selectedHistoryTeam;
-  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  el.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
 
   try {
     const res = await apiFetch('?team=' + team.id);
@@ -5795,7 +6039,7 @@ async function loadHistoryPage() {
     const matches = data.response || [];
 
     if (!matches.length) {
-      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">Maç bulunamadı</div>';
+      el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('no_match') + '</div>';
       return;
     }
 
@@ -5855,7 +6099,7 @@ async function loadHistoryPage() {
 
   } catch(e) {
     console.error(e);
-    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_data') + '</div>';
   }
 }
 
@@ -5889,7 +6133,7 @@ function selectBettingLeague(el, leagueId) {
 // Maçları yükle
 async function loadBettingFixtures(leagueId) {
   var list = document.getElementById('betting-matches-list');
-  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Maçlar yükleniyor...</div></div>';
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading_matches') + '</div></div>';
 
   try {
     var res = await apiFetch('?action=bettingfixtures&league=' + leagueId);
@@ -5897,7 +6141,7 @@ async function loadBettingFixtures(leagueId) {
     var matches = (data.response || []).slice(0, 20);
 
     if (!matches.length) {
-      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;">Bu lig için yaklaşan maç bulunamadı</div>';
+      list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);font-size:12px;">' + t('no_league_fixtures') + '</div>';
       return;
     }
 
@@ -5921,7 +6165,7 @@ async function loadBettingFixtures(leagueId) {
     }).join('');
 
   } catch(e) {
-    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">⚠️ Veri yüklenemedi</div>';
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--muted);">' + t('err_data') + '</div>';
   }
 }
 
@@ -5968,7 +6212,7 @@ async function openBettingDetail(fixtureId, home, away, homeLogo, awayLogo, leag
   } catch(e) {
     document.getElementById('bet-loading').style.display = 'none';
     document.getElementById('bet-ai-section').style.display = 'block';
-    document.getElementById('bet-ai-bars').innerHTML = '<div class="bet-no-data">⚠️ Veri yüklenemedi. API planınız bu veriyi desteklemiyor olabilir.</div>';
+    document.getElementById('bet-ai-bars').innerHTML = '<div class="bet-no-data">' + t('err_api_plan') + '</div>';
     document.getElementById('bet-advice-box').style.display = 'none';
   }
 }
@@ -6065,7 +6309,7 @@ function renderBettingDetail(oddsData, predictionsData, home, away) {
     var bkInfo = document.createElement('div');
     bkInfo.setAttribute('data-bkinfo', '1');
     bkInfo.style.cssText = 'font-size:10px;color:var(--accent);text-align:center;margin-bottom:8px;';
-    bkInfo.textContent = bookmakerCount + ' bahisçiden en iyi oranlar';
+    bkInfo.textContent = t('bookmakers_best').replace('{n}', bookmakerCount);
     var loadEl = document.getElementById('bet-loading');
     loadEl.parentNode.insertBefore(bkInfo, loadEl.nextSibling);
   }
@@ -6133,7 +6377,7 @@ function renderAIPrediction(pred, home, away, bets) {
       var total = hp + dp + ap || 1;
       hp = Math.round(hp/total*100); dp = Math.round(dp/total*100); ap = 100-hp-dp;
       barsEl.innerHTML = buildProbBars(home, away, hp, dp, ap);
-      adviceEl.innerHTML = '<strong>Tahmin:</strong> ' + (hp > ap ? home + ' favori.' : ap > hp ? away + ' favori.' : 'Dengeli maç.') + ' Oranlardan hesaplandı.';
+      adviceEl.innerHTML = '<strong>' + t('prediction') + ':</strong> ' + (hp > ap ? home + ' ' + t('favorite_label') + '.' : ap > hp ? away + ' ' + t('favorite_label') + '.' : t('balanced')) + '';
     } else {
       barsEl.innerHTML = noDataHtml('Tahmin verisi yok');
       adviceEl.style.display = 'none';
@@ -6463,11 +6707,11 @@ function renderRiskIndicator(bets) {
     riskClass = 'low';
   } else if (spread < 2.5) {
     riskLevel = 'ORTA';
-    riskText = 'Bir taraf hafif favori. Sürpriz ihtimali mevcut.';
+    riskText = currentLang==='en'?'One side slightly favored. Upset possible.':'Bir taraf hafif favori. Sürpriz ihtimali mevcut.';
     riskClass = 'mid';
   } else {
     riskLevel = 'YÜKSEK';
-    riskText = 'Belirgin bir favori var. Favori kaybederse yüksek sürpriz primi.';
+    riskText = currentLang==='en'?'Clear favorite. High value if favorite loses.':'Belirgin bir favori var. Favori kaybederse yüksek sürpriz primi.';
     riskClass = 'high';
   }
 
@@ -6704,6 +6948,14 @@ function openProfileMenu() {
   pcth.style.left = cardNotifEnabled ? '20px' : '2px';
   pcth.style.background = cardNotifEnabled ? '#000' : 'var(--muted)';
 
+  // Sync language buttons
+  document.querySelectorAll('.pm-lang-btn').forEach(function(b) {
+    var isActive = b.getAttribute('data-lang') === currentLang;
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? 'var(--accent)' : 'var(--s3)';
+    b.style.color = isActive ? '#000' : 'var(--text)';
+  });
+
   document.getElementById('profile-backdrop').classList.add('open');
 }
 
@@ -6740,7 +6992,7 @@ function pmToggleCard() {
 }
 
 // ═══ HABERLER ═══
-var currentNewsLang = 'tr';
+var currentNewsLang = localStorage.getItem('lang') || 'tr';
 var newsLoaded = false;
 
 function selectNewsLang(btn, lang) {
@@ -6752,19 +7004,28 @@ function selectNewsLang(btn, lang) {
 }
 
 function initNewsPage() {
+  // Sync filter buttons with app language
+  if (currentNewsLang !== currentLang) {
+    currentNewsLang = currentLang;
+    newsLoaded = false;
+    var btns = document.querySelectorAll('.news-filter-btn');
+    btns.forEach(function(b) { b.classList.remove('active'); });
+    if (currentLang === 'en' && btns[1]) btns[1].classList.add('active');
+    else if (btns[0]) btns[0].classList.add('active');
+  }
   if (!newsLoaded) loadNewsPage();
 }
 
 async function loadNewsPage() {
   var list = document.getElementById('news-list');
-  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Yükleniyor...</div></div>';
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">' + t('loading') + '</div></div>';
   newsLoaded = true;
   try {
     var res = await apiFetch('?action=news&lang=' + currentNewsLang);
     var data = await res.json();
 
     if (!data.items || !data.items.length) {
-      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">Haber bulunamadı</div>';
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">' + t('no_news') + '</div>';
       return;
     }
 
@@ -6789,7 +7050,7 @@ async function loadNewsPage() {
     }).join('');
 
   } catch(e) {
-    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">⚠️ Haberler yüklenemedi</div>';
+    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">' + t('news_error') + '</div>';
   }
 }
 
@@ -7037,6 +7298,24 @@ function sendChat() {
   addChatMsg(text, name, true);
   input.value = '';
 }
+
+// Apply saved language on startup
+(function() {
+  var lang = localStorage.getItem('lang') || 'tr';
+  if (lang !== 'tr') {
+    // Only need to run if non-default; default Turkish text is already in HTML
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      el.textContent = (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || el.textContent;
+    });
+    // Sync lang buttons
+    document.querySelectorAll('.pm-lang-btn').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+      b.style.background = b.getAttribute('data-lang') === lang ? 'var(--accent)' : 'var(--s3)';
+      b.style.color = b.getAttribute('data-lang') === lang ? '#000' : 'var(--text)';
+    });
+  }
+})();
 </script>
 
 </body>

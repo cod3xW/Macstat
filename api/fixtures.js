@@ -28,6 +28,36 @@ const rateMap = new Map();
 const RATE_LIMIT = 30;
 const RATE_WINDOW = 60 * 1000;
 
+// In-memory response cache — TTLs per action type
+const apiCache = new Map();
+const CACHE_TTL = {
+  standings: 10 * 60 * 1000,   // 10 dakika
+  upcoming:  10 * 60 * 1000,
+  bettingfixtures: 10 * 60 * 1000,
+  today:      2 * 60 * 1000,   // 2 dakika
+  live:          30 * 1000,    // 30 saniye
+  nextmatches: 5 * 60 * 1000,
+  predictions: 30 * 60 * 1000, // 30 dakika
+  odds:        10 * 60 * 1000,
+};
+
+function getCached(key) {
+  const entry = apiCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.ts > entry.ttl) { apiCache.delete(key); return null; }
+  return entry.data;
+}
+
+function setCache(key, data, ttl) {
+  apiCache.set(key, { data, ts: Date.now(), ttl });
+  if (apiCache.size > 200) {
+    const now = Date.now();
+    for (const [k, v] of apiCache) {
+      if (now - v.ts > v.ttl) apiCache.delete(k);
+    }
+  }
+}
+
 function checkRateLimit(ip) {
   const now = Date.now();
   const entry = rateMap.get(ip) || { count: 0, start: now };
@@ -161,12 +191,20 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid request' });
   }
 
+  const cacheKey = url;
+  const ttl = CACHE_TTL[action] || (team ? CACHE_TTL.nextmatches : null);
+  if (ttl) {
+    const cached = getCached(cacheKey);
+    if (cached) return res.status(200).json(cached);
+  }
+
   try {
     const response = await fetch(url, {
       headers: { 'x-apisports-key': process.env.API_KEY }
     });
     if (!response.ok) return res.status(502).json({ error: 'Upstream error' });
     const data = await response.json();
+    if (ttl) setCache(cacheKey, data, ttl);
     res.status(200).json(data);
   } catch {
     res.status(500).json({ error: 'Internal error' });
