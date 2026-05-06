@@ -3274,6 +3274,7 @@ var selectedHistoryTeam = {id:645, name:'Galatasaray', league:'Süper Lig', cres
 var currentUser = null;
 var notifEnabled = true;
 var cardNotifEnabled = false;
+var notifIdCounter = 100;
 var currentTheme = 'dark';
 var currentLeagueId = '203';
 var currentLeagueTab = 'standings';
@@ -4396,9 +4397,10 @@ function toggleNotification() {
   const thumb = document.getElementById('notif-thumb');
   if (notifEnabled) {
     toggle.style.background = 'var(--accent)';
+    toggle.style.border = 'none';
     thumb.style.left = '22px';
     thumb.style.background = '#000';
-    if (Notification.permission !== 'granted') Notification.requestPermission();
+    requestNotifPermission();
   } else {
     toggle.style.background = 'var(--s3)';
     toggle.style.border = '1px solid var(--border)';
@@ -4416,7 +4418,7 @@ function toggleCardNotif() {
     toggle.style.border = 'none';
     thumb.style.left = '22px';
     thumb.style.background = '#000';
-    if (Notification.permission !== 'granted') Notification.requestPermission();
+    requestNotifPermission();
   } else {
     toggle.style.background = 'var(--s3)';
     toggle.style.border = '1px solid var(--border)';
@@ -4425,14 +4427,59 @@ function toggleCardNotif() {
   }
 }
 
+async function requestNotifPermission() {
+  try {
+    var LN = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+    if (LN) { await LN.requestPermissions(); return; }
+    if (typeof Notification !== 'undefined' && Notification.permission !== 'granted') {
+      await Notification.requestPermission();
+    }
+  } catch(e) {}
+}
+
+// ── BİLDİRİM GÖNDERİCİ (Capacitor Local Notifications + Web fallback) ──
+async function sendLocalNotification(title, body) {
+  // iOS/Android: Capacitor Plugins bridge
+  try {
+    var LN = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.LocalNotifications;
+    if (LN) {
+      var perm = await LN.requestPermissions();
+      if (perm && perm.display === 'granted') {
+        await LN.schedule({
+          notifications: [{
+            id: notifIdCounter++,
+            title: title,
+            body: body,
+            schedule: { at: new Date(Date.now() + 300) },
+            sound: 'default',
+            smallIcon: 'ic_stat_icon_config_sample'
+          }]
+        });
+      }
+      return;
+    }
+  } catch(e) { console.error('LocalNotification error:', e); }
+  // Web Notification fallback (desktop browser)
+  try {
+    if (typeof Notification !== 'undefined') {
+      if (Notification.permission === 'granted') {
+        new Notification(title, { body: body, icon: '/favicon.ico' });
+      } else if (Notification.permission !== 'denied') {
+        var p = await Notification.requestPermission();
+        if (p === 'granted') new Notification(title, { body: body, icon: '/favicon.ico' });
+      }
+    }
+  } catch(e) {}
+}
+
 function sendGoalNotification(homeTeam, awayTeam, score) {
   if (!notifEnabled) return;
-  if (Notification.permission === 'granted') {
-    new Notification('⚽ GOL!', {
-      body: `${homeTeam} ${score} ${awayTeam}`,
-      icon: '/favicon.ico'
-    });
-  }
+  sendLocalNotification('⚽ GOL!', `${homeTeam} ${score} ${awayTeam}`);
+}
+
+function sendCardNotification(team, playerName) {
+  if (!cardNotifEnabled) return;
+  sendLocalNotification('🟥 KIRMIZI KART!', `${team} — ${playerName || 'Oyuncu'}`);
 }
 
 // ═══ PITCH SIMULATION ═══
@@ -4617,6 +4664,7 @@ async function openMatchDetail(fixtureId) {
         addLiveEvent({min: ev.time.elapsed, type, icon, title, sub});
 
         if (ev.type === 'Goal') sendGoalNotification(home.name, away.name, `${goals.home}-${goals.away}`);
+        if (ev.type === 'Card' && ev.detail === 'Red Card') sendCardNotification(ev.team?.name || '', ev.player?.name || '');
       });
     }
 

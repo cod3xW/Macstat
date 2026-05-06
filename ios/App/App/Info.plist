@@ -45,6 +45,8 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>MacStat gol ve kırmızı kart bildirimlerini göstermek için izin istiyor.</string>
 	<key>GIDClientID</key>
 	<string>121255329329-q62gb0dr7gngihj2rcaeo0rth7qhjutb.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
